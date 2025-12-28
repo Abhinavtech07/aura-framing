@@ -1,129 +1,162 @@
+<!-- FULLY FIXED VERSION: ADS LOAD FIRST + 20s CIRCULAR TIMER -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neon Offers & Earn Hub</title>
-
-  <!-- IMPORTANT: No script blocked, no display:none for ads -->
-  <style>
-    :root{--bg:#05010a;--purple:#9b5cff;--neon:#c77dff}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui;background:radial-gradient(circle at top,#14001f,#05010a 70%);color:#fff}
-
-    header{text-align:center;padding:26px}
-    header h1{color:var(--neon);text-shadow:0 0 10px var(--purple),0 0 30px var(--purple)}
-
-    .wrap{max-width:1200px;margin:auto;padding:16px}
-
-    /* SLIDESHOW (ADS NEVER HIDDEN DURING LOAD) */
-    .slideshow{max-width:360px;margin:20px auto;border:2px solid var(--purple);box-shadow:0 0 20px var(--purple);border-radius:16px;padding:8px}
-    .slide{display:block;text-align:center}
-    .slide.hidden{display:none}
-
-    /* OFFER CARDS */
-    .options{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin:30px 0}
-    .card{background:#12061f;border:2px solid var(--purple);box-shadow:0 0 20px rgba(155,92,255,.5);border-radius:18px;padding:20px;text-align:center}
-    .card h3{color:var(--neon)}
-    .btn{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:30px;color:var(--neon);border:2px solid var(--purple);text-decoration:none;font-weight:700}
-    .btn:hover{background:var(--purple);color:#000}
-
-    /* FLOATING AD */
-    .floating-ad{position:fixed;bottom:15px;right:15px;z-index:99999;background:#000;border:2px solid var(--purple);border-radius:14px;box-shadow:0 0 25px var(--purple);padding:6px}
-
-    /* MOBILE CTA */
-    .mobile-cta{display:none}
-    @media(max-width:768px){
-      .mobile-cta{display:flex;position:fixed;bottom:0;left:0;width:100%;z-index:99998;justify-content:center;background:linear-gradient(90deg,#9b5cff,#c77dff)}
-      .mobile-cta a{padding:14px 20px;font-weight:900;color:#000;text-decoration:none}
-    }
-
-    footer{text-align:center;padding:20px;font-size:13px;color:#cbb6ff}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn Neon</title>
+<style>
+body{margin:0;background:#050008;color:#fff;font-family:Arial,Helvetica,sans-serif}
+.neon{color:#b56cff;text-shadow:0 0 10px #b56cff}
+#loader{position:fixed;inset:0;background:#050008;display:flex;align-items:center;justify-content:center;z-index:99999;flex-direction:column}
+.circle{
+width:180px;
+height:180px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+background:#1a0026;
+}
+.circle::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:50%;
+/* Dual‑tone neon gradient ring */
+background: conic-gradient(
+  #c77dff 0deg,
+  #9d4edd var(--deg, 0deg),
+  #1a0026 0deg
+);
+mask: radial-gradient(circle at center, transparent 62%, black 63%);
+-webkit-mask: radial-gradient(circle at center, transparent 62%, black 63%);
+transition: filter 0.3s ease;
+}
+@media (prefers-reduced-motion: reduce){.circle::before{transition:none}}
+.circle span{position:relative;font-size:30px;font-weight:bold}
+#ad-wrapper{display:none}
+.slideshow{max-width:320px;margin:20px auto}
+.slide{display:none}
+.slide.active{display:block}
+.floating{position:fixed;bottom:20px;right:10px;z-index:9999}
+.box{background:#0e0018;border:1px solid #b56cff;border-radius:12px;padding:25px;margin:20px;box-shadow:0 0 20px #7f3cff}
+.btn{display:block;margin:10px 0;padding:12px;border-radius:10px;text-align:center;background:#7f3cff;color:#fff;text-decoration:none;font-weight:bold}
+</style>
 </head>
 <body>
 
-<header>
-  <h1>⚡ Neon Offers & Earn</h1>
-  <p>Real offers • Refer & Earn • High paying links</p>
-</header>
+<!-- LOADER -->
+<div id="loader">
+  <div class="circle" id="circle"><span id="time">20</span></div>
+</div>
 
-<div class="mobile-cta"><a href="#options">🔥 Earn Now</a></div>
+<!-- MAIN CONTENT -->
+<div id="ad-wrapper">
+<h1 class="neon" style="text-align:center">Earn With Offers</h1>
 
-<div class="wrap">
-
-  <!-- SLIDESHOW WITH YOUR EXACT ADS -->
-  <div class="slideshow">
-
-    <!-- SLIDE 1 : 50x320 BANNER -->
-    <div class="slide" id="slide1">
-      <script>
-        atOptions = {
-          'key' : '1f337db27a0d5b62ae02902a6ad75bd1',
-          'format' : 'iframe',
-          'height' : 50,
-          'width' : 320,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/1f337db27a0d5b62ae02902a6ad75bd1/invoke.js"></script>
-    </div>
-
-    <!-- SLIDE 2 : 300x250 BANNER -->
-    <div class="slide hidden" id="slide2">
-      <script>
-        atOptions = {
-          'key' : '13e99a8cec718bb998fd929e5d986f1e',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/13e99a8cec718bb998fd929e5d986f1e/invoke.js"></script>
-    </div>
-
+<!-- SLIDESHOW -->
+<div class="slideshow">
+  <div class="slide active">
+    <script>
+      atOptions={key:'1f337db27a0d5b62ae02902a6ad75bd1',format:'iframe',height:50,width:320,params:{}};
+    </script>
+    <script src="https://www.highperformanceformat.com/1f337db27a0d5b62ae02902a6ad75bd1/invoke.js"></script>
   </div>
-
-  <!-- OPTIONS -->
-  <div class="options" id="options">
-    <div class="card">
-      <h3>🚀 Giant Method Website</h3>
-      <p>High converting platform with massive earning potential.</p>
-      <a class="btn" href="method.html">Open Guide</a>
-    </div>
-    <div class="card">
-      <h3>💰 Refer & Earn ₹400</h3>
-      <p>Earn ₹400 per successful referral.</p>
-      <a class="btn" href="earn.html">Start Now</a>
-    </div>
+  <div class="slide">
+    <script>
+      atOptions={key:'13e99a8cec718bb998fd929e5d986f1e',format:'iframe',height:250,width:300,params:{}};
+    </script>
+    <script src="https://www.highperformanceformat.com/13e99a8cec718bb998fd929e5d986f1e/invoke.js"></script>
   </div>
+</div>
 
-  <!-- NATIVE BANNER (YOUR EXACT CODE) -->
-  <div style="text-align:center;margin:30px 0">
-    <div id="container-321b2d611b0c8db166ec76303f1333a3"></div>
-    <script async="async" data-cfasync="false" src="https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js"></script>
-  </div>
+<!-- NATIVE -->
+<div class="box">
+  <div id="container-321b2d611b0c8db166ec76303f1333a3"></div>
+  <script async data-cfasync="false" src="https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js"></script>
+</div>
+
+<!-- OPTIONS -->
+<div class="box">
+  <a class="btn" href="method.html">🔥 Giant Method Website</a>
+  <a class="btn" href="earn.html">💰 Refer & Earn ₹400</a>
+</div>
 
 </div>
 
-<!-- FLOATING SOCIAL BAR (YOUR EXACT CODE) -->
-<div class="floating-ad">
+<!-- FLOATING SOCIAL BAR -->
+<div class="floating">
   <script src="https://pl27363246.effectivegatecpm.com/0b/b3/0b/0bb30b99557c786021391a5cb13150e5.js"></script>
 </div>
 
-<footer>
-  <p>Disclaimer: Ads & affiliate links. Please interact voluntarily.</p>
-</footer>
-
 <script>
-  /* SIMPLE SLIDESHOW (NO SCRIPT RELOAD) */
-  let s = 1;
-  setInterval(() => {
-    document.getElementById('slide1').classList.toggle('hidden', s !== 1);
-    document.getElementById('slide2').classList.toggle('hidden', s !== 2);
-    s = s === 1 ? 2 : 1;
-  }, 6000);
+// SMOOTH TIMER + CIRCLE (60 FPS)
+let total=20000;
+let start=null;
+const span=document.getElementById('time');
+const circle=document.getElementById('circle');
+function easeOutCubic(x){return 1-Math.pow(1-x,3)}
+function animate(ts){
+  if(!start) start=ts;
+  const elapsed=ts-start;
+  const raw=Math.min(elapsed/total,1);
+  const progress=easeOutCubic(raw);
+  const remaining=Math.ceil((total-elapsed)/1000);
+  span.textContent=remaining>0?remaining:0;
+  circle.style.setProperty('--deg',(progress*360)+'deg');
+  if(raw<1){
+    requestAnimationFrame(animate);
+  } else {
+    document.getElementById('loader').style.display='none';
+    document.getElementById('ad-wrapper').style.display='block';
+  }
+}
+requestAnimationFrame(animate);
+
+// SLIDESHOW
+let i=0;const slides=document.querySelectorAll('.slide');
+setInterval(()=>{slides[i].classList.remove('active');i=(i+1)%slides.length;slides[i].classList.add('active');},6000);
+
+// SOFT GLOW PULSE
+let glow=0,dir=1;
+setInterval(()=>{
+  glow+=dir*0.5;
+  if(glow>20||glow<10) dir*=-1;
+  circle.style.boxShadow=`0 0 ${glow}px #b56cff`;
+},80);
+
+// PREPARING TEXT ANIMATION
+const prep=document.createElement('div');
+prep.textContent='Preparing offers';
+prep.style.marginTop='12px';
+prep.style.fontSize='14px';
+prep.style.opacity='0.8';
+document.getElementById('loader').appendChild(prep);
+let dots=0;
+setInterval(()=>{dots=(dots+1)%4;prep.textContent='Preparing offers'+'.'.repeat(dots);},500);
+
+// GEO + DIRECT LINK ROTATION
+const indiaLinks=[
+ 'https://www.effectivegatecpm.com/eszwggg0?key=784e73c7dc4b992d827cc02a85d064b7',
+ 'https://www.effectivegatecpm.com/i63pbecy1?key=6ca31a0952a0956430a016a37ca0fd57'
+];
+const globalLinks=[
+ 'https://www.effectivegatecpm.com/hte0hzu0v?key=fb45638729e3933cb3d3e10867a09592'
+];
+fetch('https://ipapi.co/json').then(r=>r.json()).then(d=>{
+ const pool=d.country_code==='IN'?indiaLinks:globalLinks;
+ const link=pool[Math.floor(Math.random()*pool.length)];
+ document.querySelectorAll('.btn').forEach(b=>b.href=link);
+});
+
+// MOBILE MICRO FEEDBACK (VIBRATION)
+if(navigator.vibrate){
+ document.querySelectorAll('.btn').forEach(b=>{
+  b.addEventListener('click',()=>navigator.vibrate(15));
+ });
+}
 </script>
 
 </body>
