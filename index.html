@@ -1,4 +1,4 @@
-<!-- FULLY OPTIMIZED EARN PAGE: MAXIMUM REVENUE + NEON STYLE -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,31 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Earn Neon Pro</title>
 <style>
-body{margin:0;background:#050008;color:#fff;font-family:Arial,Helvetica,sans-serif}
-.neon{color:#b56cff;text-shadow:0 0 10px #b56cff}
-#loader{position:fixed;inset:0;background:#050008;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:99999}
-.circle{width:180px;height:180px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:#1a0026}
-.circle::before{content:"";position:absolute;inset:0;border-radius:50%;background: conic-gradient(#c77dff 0deg,#9d4edd var(--deg,0deg),#1a0026 0deg);mask: radial-gradient(circle at center, transparent 62%, black 63%);-webkit-mask: radial-gradient(circle at center, transparent 62%, black 63%);transition: filter 0.3s ease}
-@media (prefers-reduced-motion: reduce){.circle::before{transition:none}}
-.circle span{position:relative;font-size:30px;font-weight:bold}
-#ad-wrapper{display:none}
-.slideshow{max-width:320px;margin:20px auto}
-.slide{display:none}
-.slide.active{display:block}
-.floating{position:fixed;bottom:20px;right:10px;z-index:9999}
-.box{background:#0e0018;border:1px solid #b56cff;border-radius:12px;padding:25px;margin:20px;box-shadow:0 0 20px #7f3cff}
-.btn{display:block;margin:10px 0;padding:12px;border-radius:10px;text-align:center;background:#7f3cff;color:#fff;text-decoration:none;font-weight:bold}
-.share-buttons{display:flex;justify-content:center;gap:10px;margin-top:15px}
-.share-buttons a{padding:8px 12px;border-radius:8px;background:#9d4edd;color:#fff;text-decoration:none;font-size:14px}
+body{margin:0;background:#050008;color:#fff;font-family:Arial,Helvetica,sans-serif}.neon{color:#b56cff;text-shadow:0 0 10px #b56cff}#loader{position:fixed;inset:0;background:#050008;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:99999}.circle{width:180px;height:180px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:#1a0026}.circle::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(#c77dff 0deg,#9d4edd var(--deg,0deg),#1a0026 0deg);mask:radial-gradient(circle at center,transparent 62%,black 63%);-webkit-mask:radial-gradient(circle at center,transparent 62%,black 63%);transition:filter .3s ease}@media (prefers-reduced-motion:reduce){.circle::before{transition:none}}.circle span{position:relative;font-size:30px;font-weight:bold}#ad-wrapper{display:none}.slideshow{max-width:320px;margin:20px auto}.slide{display:none}.slide.active{display:block}.floating{position:fixed;bottom:20px;right:10px;z-index:9999}.box{background:#0e0018;border:1px solid #b56cff;border-radius:12px;padding:25px;margin:20px;box-shadow:0 0 20px #7f3cff}.btn{display:block;margin:10px 0;padding:12px;border-radius:10px;text-align:center;background:#7f3cff;color:#fff;text-decoration:none;font-weight:bold}.share-buttons{display:flex;justify-content:center;gap:10px;margin-top:15px}.share-buttons a{padding:8px 12px;border-radius:8px;background:#9d4edd;color:#fff;text-decoration:none;font-size:14px}
 </style>
-<script src="ads.js" onerror="adBlockDetected()"></script>
 <script>
-function adBlockDetected(){
-  document.body.innerHTML = "<h2 style='text-align:center;margin-top:80px;'>! Please disable ad-block to continue !</h2>";
-}
+    function adBlockDetected() {
+      document.body.innerHTML = `<h2 style="text-align:center;margin-top:80px;color:white;">Please disable AdBlock and refresh the page to continue.</h2>`;
+    }
 </script>
+<script src="ads.js" onerror="adBlockDetected()"></script>
 </head>
 <body>
+
 
 <!-- LOADER -->
 <div id="loader">
@@ -80,58 +66,14 @@ function adBlockDetected(){
 </div>
 
 <script>
-// TIMER + CIRCLE
-let total=20000,start=null;
-const span=document.getElementById('time');
-const circle=document.getElementById('circle');
-const prepText=document.getElementById('prep-text');
-function easeOutCubic(x){return 1-Math.pow(1-x,3)}
-function animate(ts){
-  if(!start) start=ts;
-  const elapsed=ts-start;
-  const raw=Math.min(elapsed/total,1);
-  const progress=easeOutCubic(raw);
-  span.textContent=Math.ceil((total-elapsed)/1000);
-  circle.style.setProperty('--deg',(progress*360)+'deg');
-  prepText.textContent='Preparing offers'+'.'.repeat(Math.floor((elapsed/500)%4));
-  if(raw<1){
-    requestAnimationFrame(animate);
-  } else {
-    document.getElementById('loader').style.display='none';
-    document.getElementById('ad-wrapper').style.display='block';
-  }
-}
-requestAnimationFrame(animate);
-
-// SLIDESHOW
-let i=0;const slides=document.querySelectorAll('.slide');
-setInterval(()=>{slides[i].classList.remove('active');i=(i+1)%slides.length;slides[i].classList.add('active');},6000);
-
-// SOFT GLOW
-let glow=0,dir=1;setInterval(()=>{glow+=dir*0.5;if(glow>20||glow<10)dir*=-1;circle.style.boxShadow=`0 0 ${glow}px #b56cff`;},80);
-
-// GEO + LINK ROTATION
-const indiaLinks=['https://www.effectivegatecpm.com/npduikdx5r?key=a47124781a70d21a5b37523b9d77bfc4'];
-const globalLinks=['https://www.effectivegatecpm.com/b4uce6mzip?key=cebfcc16c54f020f5b91f22d264746df'];
-fetch('https://ipapi.co/json').then(r=>r.json()).then(d=>{
- const pool=d.country_code==='IN'?indiaLinks:globalLinks;
- const link=pool[Math.floor(Math.random()*pool.length)];
- document.querySelectorAll('.btn').forEach(b=>b.href=link);
-});
-
-// MOBILE VIBRATION
-if(navigator.vibrate){document.querySelectorAll('.btn').forEach(b=>{b.addEventListener('click',()=>navigator.vibrate(15));});}
-
-// SHARE BUTTONS
-const shareBtns={
-  whatsapp:document.getElementById('share-whatsapp'),
-  telegram:document.getElementById('share-telegram'),
-  instagram:document.getElementById('share-instagram')
-};
-shareBtns.whatsapp.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for WhatsApp!'))};
-shareBtns.telegram.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for Telegram!'))};
-shareBtns.instagram.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for Instagram!'))};
+let total=20000,start=null;const span=document.getElementById('time');const circle=document.getElementById('circle');const prepText=document.getElementById('prep-text');function easeOutCubic(x){return 1-Math.pow(1-x,3)}function animate(ts){if(!start)start=ts;const elapsed=ts-start;const raw=Math.min(elapsed/total,1);const progress=easeOutCubic(raw);span.textContent=Math.ceil((total-elapsed)/1000);circle.style.setProperty('--deg',`${progress*360}deg`);prepText.textContent='Preparing offers'+'.'.repeat(Math.floor(elapsed/500%4));if(raw<1){requestAnimationFrame(animate)}else{document.getElementById('loader').style.display='none';document.getElementById('ad-wrapper').style.display='block'}}requestAnimationFrame(animate);
+let i=0;const slides=document.querySelectorAll('.slide');setInterval(()=>{slides[i].classList.remove('active');i=(i+1)%slides.length;slides[i].classList.add('active')},6000);
+let glow=0,dir=1;setInterval(()=>{glow+=dir*.5;if(glow>20||glow<10)dir*=-1;circle.style.boxShadow=`0 0 ${glow}px #b56cff`},80);
+const indiaLinks=['https://www.effectivegatecpm.com/eszwggg0?key=784e73c7dc4b992d827cc02a85d064b7','https://www.effectivegatecpm.com/i63pbecy1?key=6ca31a0952a0956430a016a37ca0fd57'];const globalLinks=['https://www.effectivegatecpm.com/hte0hzu0v?key=fb45638729e3933cb3d3e10867a09592'];fetch('https://ipapi.co/json').then(r=>r.json()).then(d=>{const pool=d.country_code==='IN'?indiaLinks:globalLinks;const link=pool[Math.floor(Math.random()*pool.length)];document.querySelectorAll('.btn').forEach(b=>b.href=link)});
+if(navigator.vibrate)document.querySelectorAll('.btn').forEach(b=>{b.addEventListener('click',()=>navigator.vibrate(15))});
+const shareBtns={whatsapp:document.getElementById('share-whatsapp'),telegram:document.getElementById('share-telegram'),instagram:document.getElementById('share-instagram')};shareBtns.whatsapp.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for WhatsApp!'))};shareBtns.telegram.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for Telegram!'))};shareBtns.instagram.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for Instagram!'))};
 </script>
+
 
 </body>
 </html>
