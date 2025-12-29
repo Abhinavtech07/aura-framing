@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Real-life systems that actually work - daily routines, lifestyle fixes & study systems">
+    <meta name="description" content="Real-life systems that actually work - daily routines, lifestyle fixes & study systems for students.">
+    <meta name="keywords" content="study systems, daily routines, lifestyle fixes, student productivity, focus techniques, habit formation">
+    <meta name="author" content="AuraFramer">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.auraframer.com/">
+    <meta property="og:title" content="AuraFramer - Real Systems That Work">
+    <meta property="og:description" content="Real-life systems that actually work - daily routines, lifestyle fixes & study systems for students.">
+    <meta property="og:image" content="https://www.auraframer.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.auraframer.com/">
+    <meta property="twitter:title" content="AuraFramer - Real Systems That Work">
+    <meta property="twitter:description" content="Real-life systems that actually work - daily routines, lifestyle fixes & study systems for students.">
+    <meta property="twitter:image" content="https://www.auraframer.com/og-image.jpg">
+
     <title>AuraFramer - Real Systems That Work</title>
+    <link rel="alternate" type="application/atom+xml" title="AuraFramer Feed" href="/atom.xml">
+
     <style>
         * {
             margin: 0;
@@ -106,20 +125,16 @@
             box-shadow: 0 0 20px rgba(181, 108, 255, 0.1);
         }
 
-        .ad-slideshow {
-            position: relative;
-            min-height: 100px; /* Adjusted for single small banner */
+        .ad-container {
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .ad-slide {
             width: 100%;
+            min-height: 60px;
         }
 
         /* CONTENT SECTIONS */
-        .content-grid {
+        main {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
@@ -241,6 +256,14 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+            color: #9d4edd;
+            font-size: 14px;
+        }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
@@ -252,7 +275,7 @@
                 padding: 30px 15px;
             }
 
-            .content-grid {
+            main {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
@@ -265,16 +288,20 @@
                 padding: 20px;
             }
         }
-
-        /* AD CONTAINER CENTERING */
-        .ad-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            min-height: 60px;
-        }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.auraframer.com/",
+      "name": "AuraFramer - Real Systems That Work",
+      "description": "Real-life systems that actually work - daily routines, lifestyle fixes & study systems for students.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "AuraFramer"
+      }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -288,233 +315,245 @@
             </header>
 
             <!-- AD SHOWCASE -->
-            <div class="ad-showcase">
-                <div class="ad-slideshow">
-                    <div class="ad-slide">
-                        <div class="ad-container">
-                            <div id="banner-50x320"></div>
-                        </div>
-                    </div>
+            <aside class="ad-showcase">
+                <div class="ad-container">
+                    <div id="banner-50x320"></div>
                 </div>
-            </div>
+            </aside>
 
             <!-- CONTENT SECTIONS -->
-            <div class="content-grid">
-                <div class="content-card">
+            <main>
+                <section class="content-card">
                     <h3>📅 Daily Routines & Habits</h3>
                     <p>Simple, proven systems that fit into real student life. No perfectionism required.</p>
                     <button class="cta-button" onclick="navigateTo('routines')">Explore Routines</button>
-                </div>
+                </section>
 
-                <div class="content-card">
+                <section class="content-card">
                     <h3>⚡ Lifestyle Fixes</h3>
                     <p>Better sleep, sustained energy, sharper focus. Small changes with measurable impact.</p>
                     <button class="cta-button" onclick="navigateTo('lifestyle')">Get Started</button>
-                </div>
+                </section>
 
-                <div class="content-card">
+                <section class="content-card">
                     <h3>🎯 Study & Focus Systems</h3>
                     <p>Evidence-based techniques for deeper learning and better retention. No fluff.</p>
                     <button class="cta-button" onclick="navigateTo('study')">Learn More</button>
-                </div>
-            </div>
+                </section>
+            </main>
 
             <!-- NATIVE AD SECTION -->
-            <div class="native-ad-section">
+            <aside class="native-ad-section">
                 <div class="native-ad-label">Recommended</div>
                 <div id="container-321b2d611b0c8db166ec76303f1333a3"></div>
-            </div>
+            </aside>
         </div>
 
         <!-- ============================================ -->
         <!-- ROUTINES PAGE -->
         <!-- ============================================ -->
         <div id="routines-page" class="page">
-            <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
-            
             <header>
+                 <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
                 <h2>📅 Daily Routines & Habits</h2>
                 <p class="subtitle">Build systems that stick without burning out</p>
             </header>
 
-            <div class="detail-content">
-                <h3>🌅 The 5-Minute Morning Reset</h3>
-                <p>Most morning routines fail because they're too ambitious. Start with just 5 minutes:</p>
-                <ul>
-                    <li><strong>Hydrate:</strong> Drink 500ml water immediately after waking</li>
-                    <li><strong>Breathe:</strong> 10 deep breaths by an open window</li>
-                    <li><strong>Prioritize:</strong> Write down your #1 goal for the day</li>
-                </ul>
-                <div class="highlight-box">
-                    <p>💡 Success Rate: 87% stick with this for 30+ days vs 23% with hour-long routines</p>
-                </div>
-
-                <h3>🎯 The 2-Minute Rule</h3>
-                <p>Any habit can be started in 2 minutes or less. Want to read more? Don't commit to "30 pages daily" — commit to "opening the book." Momentum builds naturally from there.</p>
-                
-                <h3>⏰ Habit Stacking Formula</h3>
-                <p>Attach new habits to existing ones: "After I [current habit], I will [new habit]"</p>
-                <ul>
-                    <li>After I brush my teeth, I'll do 10 pushups</li>
-                    <li>After I pour my coffee, I'll review my calendar</li>
-                    <li>After I close my laptop, I'll write 3 things I'm grateful for</li>
-                </ul>
-
-                <h3>📊 Track Without Obsessing</h3>
-                <p>Use a simple streak tracker on your phone. The goal isn't perfection — it's consistency. Missing one day is fine. Missing two days in a row? Reset and start again.</p>
-            </div>
+            <main class="detail-content">
+                <article>
+                    <h3>🌅 The 5-Minute Morning Reset</h3>
+                    <p>Most morning routines fail because they're too ambitious. Start with just 5 minutes:</p>
+                    <ul>
+                        <li><strong>Hydrate:</strong> Drink 500ml water immediately after waking</li>
+                        <li><strong>Breathe:</strong> 10 deep breaths by an open window</li>
+                        <li><strong>Prioritize:</strong> Write down your #1 goal for the day</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p>💡 Success Rate: 87% stick with this for 30+ days vs 23% with hour-long routines</p>
+                    </div>
+                </article>
+                <article>
+                    <h3>🎯 The 2-Minute Rule</h3>
+                    <p>Any habit can be started in 2 minutes or less. Want to read more? Don't commit to "30 pages daily" — commit to "opening the book." Momentum builds naturally from there.</p>
+                </article>
+                 <article>
+                    <h3>⏰ Habit Stacking Formula</h3>
+                    <p>Attach new habits to existing ones: "After I [current habit], I will [new habit]"</p>
+                    <ul>
+                        <li>After I brush my teeth, I'll do 10 pushups</li>
+                        <li>After I pour my coffee, I'll review my calendar</li>
+                        <li>After I close my laptop, I'll write 3 things I'm grateful for</li>
+                    </ul>
+                </article>
+                 <article>
+                    <h3>📊 Track Without Obsessing</h3>
+                    <p>Use a simple streak tracker on your phone. The goal isn't perfection — it's consistency. Missing one day is fine. Missing two days in a row? Reset and start again.</p>
+                </article>
+            </main>
 
             <!-- AD SHOWCASE -->
-            <div class="ad-showcase">
+            <aside class="ad-showcase">
                 <div class="ad-container">
                     <div id="routines-ad-50x320"></div>
                 </div>
-            </div>
+            </aside>
 
             <!-- NATIVE AD -->
-            <div class="native-ad-section">
+            <aside class="native-ad-section">
                 <div class="native-ad-label">Related Resources</div>
                 <div id="routines-native-ad"></div>
-            </div>
+            </aside>
         </div>
 
         <!-- ============================================ -->
         <!-- LIFESTYLE PAGE -->
         <!-- ============================================ -->
         <div id="lifestyle-page" class="page">
-            <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
-            
-            <header>
+             <header>
+                <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
                 <h2>⚡ Lifestyle Fixes</h2>
                 <p class="subtitle">Evidence-based tweaks for energy, sleep, and focus</p>
             </header>
 
-            <div class="detail-content">
-                <h3>😴 Sleep Architecture Reset</h3>
-                <p>Poor sleep isn't just about quantity — it's about timing and quality. Here's what actually works:</p>
-                <ul>
-                    <li><strong>Consistent wake time:</strong> More important than bedtime. Wake at 7 AM every day, even weekends</li>
-                    <li><strong>Sunlight exposure:</strong> Get 10 minutes of outdoor light within 30 minutes of waking</li>
-                    <li><strong>Caffeine cutoff:</strong> No caffeine after 2 PM (caffeine half-life is 5-6 hours)</li>
-                    <li><strong>Temperature drop:</strong> Keep bedroom at 18-19°C (65-67°F)</li>
-                </ul>
-                <div class="highlight-box">
-                    <p>💡 Studies show: Consistent wake times improve sleep quality more than sleep duration alone</p>
-                </div>
-
-                <h3>⚡ Energy Management (Not Time Management)</h3>
-                <p>Your brain has ~4 hours of peak cognitive performance per day. Use them wisely:</p>
-                <ul>
-                    <li><strong>Peak hours:</strong> First 2-4 hours after waking (for most people)</li>
-                    <li><strong>Protection strategy:</strong> No meetings, social media, or email during peak hours</li>
-                    <li><strong>Deep work blocks:</strong> 90-minute focused sessions with 15-minute breaks</li>
-                </ul>
-
-                <h3>🧠 Focus Nutrition</h3>
-                <p>What you eat affects mental clarity within 30-60 minutes:</p>
-                <ul>
-                    <li>High-protein breakfast = sustained energy (eggs, Greek yogurt, nuts)</li>
-                    <li>Avoid sugar crashes = skip refined carbs before important work</li>
-                    <li>Hydration matters = even 2% dehydration reduces cognitive performance</li>
-                </ul>
-
-                <h3>🏃 Movement Micro-Habits</h3>
-                <p>You don't need a gym membership. You need 10 minutes of movement every 2 hours:</p>
-                <ul>
-                    <li>Walk while taking calls</li>
-                    <li>5-minute stretch between study sessions</li>
-                    <li>Take stairs instead of elevator</li>
-                </ul>
-            </div>
+            <main class="detail-content">
+                <article>
+                    <h3>😴 Sleep Architecture Reset</h3>
+                    <p>Poor sleep isn't just about quantity — it's about timing and quality. Here's what actually works:</p>
+                    <ul>
+                        <li><strong>Consistent wake time:</strong> More important than bedtime. Wake at 7 AM every day, even weekends</li>
+                        <li><strong>Sunlight exposure:</strong> Get 10 minutes of outdoor light within 30 minutes of waking</li>
+                        <li><strong>Caffeine cutoff:</strong> No caffeine after 2 PM (caffeine half-life is 5-6 hours)</li>
+                        <li><strong>Temperature drop:</strong> Keep bedroom at 18-19°C (65-67°F)</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p>💡 Studies show: Consistent wake times improve sleep quality more than sleep duration alone</p>
+                    </div>
+                </article>
+                <article>
+                    <h3>⚡ Energy Management (Not Time Management)</h3>
+                    <p>Your brain has ~4 hours of peak cognitive performance per day. Use them wisely:</p>
+                    <ul>
+                        <li><strong>Peak hours:</strong> First 2-4 hours after waking (for most people)</li>
+                        <li><strong>Protection strategy:</strong> No meetings, social media, or email during peak hours</li>
+                        <li><strong>Deep work blocks:</strong> 90-minute focused sessions with 15-minute breaks</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>🧠 Focus Nutrition</h3>
+                    <p>What you eat affects mental clarity within 30-60 minutes:</p>
+                    <ul>
+                        <li>High-protein breakfast = sustained energy (eggs, Greek yogurt, nuts)</li>
+                        <li>Avoid sugar crashes = skip refined carbs before important work</li>
+                        <li>Hydration matters = even 2% dehydration reduces cognitive performance</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>🏃 Movement Micro-Habits</h3>
+                    <p>You don't need a gym membership. You need 10 minutes of movement every 2 hours:</p>
+                    <ul>
+                        <li>Walk while taking calls</li>
+                        <li>5-minute stretch between study sessions</li>
+                        <li>Take stairs instead of elevator</li>
+                    </ul>
+                </article>
+            </main>
 
             <!-- AD SHOWCASE -->
-            <div class="ad-showcase">
+            <aside class="ad-showcase">
                 <div class="ad-container">
                     <div id="lifestyle-ad-50x320"></div>
                 </div>
-            </div>
+            </aside>
 
             <!-- NATIVE AD -->
-            <div class="native-ad-section">
+            <aside class="native-ad-section">
                 <div class="native-ad-label">Recommended Products</div>
                 <div id="lifestyle-native-ad"></div>
-            </div>
+            </aside>
         </div>
 
         <!-- ============================================ -->
         <!-- STUDY PAGE -->
         <!-- ============================================ -->
         <div id="study-page" class="page">
-            <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
-            
             <header>
+                <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
                 <h2>🎯 Study & Focus Systems</h2>
                 <p class="subtitle">Learn smarter, not harder</p>
             </header>
 
-            <div class="detail-content">
-                <h3>🧠 Active Recall > Passive Reading</h3>
-                <p>Reading notes repeatedly is one of the least effective study methods. Instead:</p>
-                <ul>
-                    <li><strong>Close the book</strong> and write everything you remember</li>
-                    <li><strong>Quiz yourself</strong> before looking at answers</li>
-                    <li><strong>Teach concepts</strong> out loud as if explaining to someone else</li>
-                </ul>
-                <div class="highlight-box">
-                    <p>💡 Research shows: Active recall improves retention by 150-200% vs re-reading</p>
-                </div>
-
-                <h3>📆 Spaced Repetition Schedule</h3>
-                <p>The forgetting curve is real. Review material at these intervals:</p>
-                <ul>
-                    <li>First review: 1 day after learning</li>
-                    <li>Second review: 3 days later</li>
-                    <li>Third review: 7 days later</li>
-                    <li>Fourth review: 14 days later</li>
-                    <li>Fifth review: 30 days later</li>
-                </ul>
-
-                <h3>🎯 The Pomodoro System (Modified)</h3>
-                <p>Traditional Pomodoro (25 min work, 5 min break) is good, but this works better for deep study:</p>
-                <ul>
-                    <li><strong>50 minutes:</strong> Focused study (phone in another room)</li>
-                    <li><strong>10 minutes:</strong> Active break (walk, stretch, hydrate)</li>
-                    <li><strong>After 3 sessions:</strong> Take a 30-minute break</li>
-                </ul>
-
-                <h3>📝 The Feynman Technique</h3>
-                <p>Named after physicist Richard Feynman. Here's how it works:</p>
-                <ul>
-                    <li><strong>Step 1:</strong> Write the concept at the top of a blank page</li>
-                    <li><strong>Step 2:</strong> Explain it in simple language (as if teaching a 12-year-old)</li>
-                    <li><strong>Step 3:</strong> Identify gaps in your understanding</li>
-                    <li><strong>Step 4:</strong> Review source material for those gaps</li>
-                    <li><strong>Step 5:</strong> Simplify your explanation even further</li>
-                </ul>
-
-                <h3>🔇 Environment Design</h3>
-                <p>Your study environment affects focus more than willpower:</p>
-                <ul>
-                    <li>Remove ALL distractions before starting (not during)</li>
-                    <li>Use website blockers (Freedom, Cold Turkey, Forest app)</li>
-                    <li>Study in the same place consistently (location-based memory)</li>
-                    <li>White noise or study music (avoid lyrical songs)</li>
-                </ul>
-            </div>
+            <main class="detail-content">
+                <article>
+                    <h3>🧠 Active Recall > Passive Reading</h3>
+                    <p>Reading notes repeatedly is one of the least effective study methods. Instead:</p>
+                    <ul>
+                        <li><strong>Close the book</strong> and write everything you remember</li>
+                        <li><strong>Quiz yourself</strong> before looking at answers</li>
+                        <li><strong>Teach concepts</strong> out loud as if explaining to someone else</li>
+                    </ul>
+                    <div class="highlight-box">
+                        <p>💡 Research shows: Active recall improves retention by 150-200% vs re-reading</p>
+                    </div>
+                </article>
+                <article>
+                    <h3>📆 Spaced Repetition Schedule</h3>
+                    <p>The forgetting curve is real. Review material at these intervals:</p>
+                    <ul>
+                        <li>First review: 1 day after learning</li>
+                        <li>Second review: 3 days later</li>
+                        <li>Third review: 7 days later</li>
+                        <li>Fourth review: 14 days later</li>
+                        <li>Fifth review: 30 days later</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>🎯 The Pomodoro System (Modified)</h3>
+                    <p>Traditional Pomodoro (25 min work, 5 min break) is good, but this works better for deep study:</p>
+                    <ul>
+                        <li><strong>50 minutes:</strong> Focused study (phone in another room)</li>
+                        <li><strong>10 minutes:</strong> Active break (walk, stretch, hydrate)</li>
+                        <li><strong>After 3 sessions:</strong> Take a 30-minute break</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>📝 The Feynman Technique</h3>
+                    <p>Named after physicist Richard Feynman. Here's how it works:</p>
+                    <ul>
+                        <li><strong>Step 1:</strong> Write the concept at the top of a blank page</li>
+                        <li><strong>Step 2:</strong> Explain it in simple language (as if teaching a 12-year-old)</li>
+                        <li><strong>Step 3:</strong> Identify gaps in your understanding</li>
+                        <li><strong>Step 4:</strong> Review source material for those gaps</li>
+                        <li><strong>Step 5:</strong> Simplify your explanation even further</li>
+                    </ul>
+                </article>
+                <article>
+                    <h3>🔇 Environment Design</h3>
+                    <p>Your study environment affects focus more than willpower:</p>
+                    <ul>
+                        <li>Remove ALL distractions before starting (not during)</li>
+                        <li>Use website blockers (Freedom, Cold Turkey, Forest app)</li>
+                        <li>Study in the same place consistently (location-based memory)</li>
+                        <li>White noise or study music (avoid lyrical songs)</li>
+                    </ul>
+                </article>
+            </main>
 
             <!-- AD SHOWCASE -->
-            <div class="ad-showcase">
+            <aside class="ad-showcase">
                 <div class="ad-container">
                     <div id="study-ad-50x320"></div>
                 </div>
-            </div>
+            </aside>
 
             <!-- NATIVE AD -->
-            <div class="native-ad-section">
+            <aside class="native-ad-section">
                 <div class="native-ad-label">Study Tools</div>
                 <div id="study-native-ad"></div>
-            </div>
+            </aside>
         </div>
+        <footer>
+            <p>&copy; 2024 AuraFramer. All rights reserved.</p>
+        </footer>
     </div>
 
     <script>
