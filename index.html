@@ -1,34 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Earn Neon Pro</title>
+<title>AuraFramer • Real Life Systems</title>
 <style>
-body{margin:0;background:#050008;color:#fff;font-family:Arial,Helvetica,sans-serif}.neon{color:#b56cff;text-shadow:0 0 10px #b56cff}#loader{position:fixed;inset:0;background:#050008;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:99999}.circle{width:180px;height:180px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:#1a0026}.circle::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(#c77dff 0deg,#9d4edd var(--deg,0deg),#1a0026 0deg);mask:radial-gradient(circle at center,transparent 62%,black 63%);-webkit-mask:radial-gradient(circle at center,transparent 62%,black 63%);transition:filter .3s ease}@media (prefers-reduced-motion:reduce){.circle::before{transition:none}}.circle span{position:relative;font-size:30px;font-weight:bold}#ad-wrapper{display:none}.slideshow{max-width:320px;margin:20px auto}.slide{display:none}.slide.active{display:block}.floating{position:fixed;bottom:20px;right:10px;z-index:9999}.box{background:#0e0018;border:1px solid #b56cff;border-radius:12px;padding:25px;margin:20px;box-shadow:0 0 20px #7f3cff}.btn{display:block;margin:10px 0;padding:12px;border-radius:10px;text-align:center;background:#7f3cff;color:#fff;text-decoration:none;font-weight:bold}.share-buttons{display:flex;justify-content:center;gap:10px;margin-top:15px}.share-buttons a{padding:8px 12px;border-radius:8px;background:#9d4edd;color:#fff;text-decoration:none;font-size:14px}
+/* ===== BASE THEME ===== */
+body{margin:0;background:#050008;color:#fff;font-family:Arial,Helvetica,sans-serif}
+.neon{color:#b56cff;text-shadow:0 0 10px #b56cff}
+a{text-decoration:none}
+
+/* ===== LOADER ===== */
+#loader{position:fixed;inset:0;background:#050008;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999}
+.circle{width:220px;height:220px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:#1a0026}
+.circle::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(#c77dff var(--deg,0deg),#1a0026 0deg);mask:radial-gradient(circle,transparent 62%,black 63%);-webkit-mask:radial-gradient(circle,transparent 62%,black 63%)}
+.circle span{position:relative;font-size:28px;font-weight:bold}
+
+/* ===== MAIN WRAPPER ===== */
+#ad-wrapper{display:none;padding-bottom:80px}
+
+/* ===== SECTIONS ===== */
+.section{margin:20px;border-radius:14px;padding:20px;background:#0e0018;border:1px solid #b56cff;box-shadow:0 0 18px #7f3cff}
+.section h2{margin-top:0}
+
+.btn{display:block;margin-top:14px;padding:14px;border-radius:12px;text-align:center;background:#7f3cff;color:#fff;font-weight:bold}
+
+/* ===== SLIDESHOW ===== */
+.slideshow{max-width:320px;margin:20px auto}
+.slide{display:none}
+.slide.active{display:block}
+
+/* ===== FLOATING AD ===== */
+.floating{position:fixed;bottom:20px;right:10px;z-index:9999}
+
+/* ===== SUBPAGE ===== */
+.subpage{display:none;padding:20px}
+.back{margin-bottom:20px;display:inline-block;color:#c77dff}
 </style>
-<script>
-    function adBlockDetected() {
-      document.body.innerHTML = `<h2 style="text-align:center;margin-top:80px;color:white;">Please disable AdBlock and refresh the page to continue.</h2>`;
-    }
-</script>
-<script src="ads.js" onerror="adBlockDetected()"></script>
 </head>
 <body>
-
 
 <!-- LOADER -->
 <div id="loader">
   <div class="circle" id="circle"><span id="time">20</span></div>
-  <div id="prep-text" style="margin-top:12px;font-size:14px;opacity:0.8">Preparing offers</div>
+  <div id="prep" style="margin-top:12px;font-size:14px;opacity:.8">Preparing offers</div>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN PAGE -->
 <div id="ad-wrapper">
-<h1 class="neon" style="text-align:center">Earn With Offers</h1>
+<h1 class="neon" style="text-align:center">Real-Life Systems That Actually Work</h1>
+<p style="text-align:center;opacity:.85">Daily routines, lifestyle fixes & study systems for real students and real life.</p>
 
-<!-- SLIDESHOW -->
+<!-- SLIDESHOW ADS -->
 <div class="slideshow">
   <div class="slide active">
     <script>atOptions={key:'1f337db27a0d5b62ae02902a6ad75bd1',format:'iframe',height:50,width:320,params:{}};</script>
@@ -40,40 +63,133 @@ body{margin:0;background:#050008;color:#fff;font-family:Arial,Helvetica,sans-ser
   </div>
 </div>
 
-<!-- NATIVE -->
-<div class="box">
-  <div id="container-321b2d611b0c8db166ec76303f1333a3"></div>
-  <script async data-cfasync="false" src="https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js"></script>
+<!-- CONTENT SECTIONS -->
+<div class="section">
+<h2>Daily Routines / Habits</h2>
+<p>Simple habits that improve energy, confidence and clarity — no extreme discipline.</p>
+<a class="btn" onclick="openPage('routines')">Explore Routines →</a>
+<a class="btn" href="https://www.effectivegatecpm.com/eszwggg0?key=784e73c7dc4b992d827cc02a85d064b7" target="_blank" style="background:#9d4edd">Unlock Routine Guide →</a>
 </div>
 
-<!-- OPTIONS -->
-<div class="box">
-  <a class="btn" href="method.html">🔥 Giant Method Website</a>
-  <a class="btn" href="earn.html">💰 Refer & Earn ₹400</a>
+<div class="section">
+<h2>Lifestyle Fixes</h2>
+<p>Fix tiredness, poor sleep and brain fog using safe lifestyle changes.</p>
+<a class="btn" onclick="openPage('lifestyle')">Fix Your Lifestyle →</a>
+<a class="btn" href="https://www.effectivegatecpm.com/i63pbecy1?key=6ca31a0952a0956430a016a37ca0fd57" target="_blank" style="background:#9d4edd">View Lifestyle Plan →</a>
+</div>
 
-  <!-- SOCIAL SHARE BUTTONS -->
-  <div class="share-buttons">
-    <a href="#" id="share-whatsapp">WhatsApp</a>
-    <a href="#" id="share-telegram">Telegram</a>
-    <a href="#" id="share-instagram">Instagram</a>
-  </div>
+<div class="section">
+<h2>Study & Focus Systems</h2>
+<p>Smart study methods for better results in less time.</p>
+<a class="btn" onclick="openPage('study')">Improve Focus →</a>
+<a class="btn" href="https://www.effectivegatecpm.com/hte0hzu0v?key=fb45638729e3933cb3d3e10867a09592" target="_blank" style="background:#9d4edd">Access Focus System →</a>
+</div>
+
+<!-- NATIVE AD -->
+<div class="section">
+<div id="container-321b2d611b0c8db166ec76303f1333a3"></div>
+<script async data-cfasync="false" src="https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js"></script>
 </div>
 </div>
 
-<!-- FLOATING SOCIAL BAR -->
+<!-- SUBPAGES -->
+<div id="routines" class="subpage">
+<a class="back" onclick="goBack()">← Back</a>
+<h2>Daily Routines That Work</h2>
+<ul>
+<li>Morning Energy Reset (10 min)</li>
+<li>Night Calm Routine</li>
+<li>Consistency without burnout</li>
+</ul>
+</div>
+
+<div id="lifestyle" class="subpage">
+<a class="back" onclick="goBack()">← Back</a>
+<h2>Lifestyle Fixes</h2>
+<ul>
+<li>Sleep timing reset</li>
+<li>Energy through movement</li>
+<li>Focus without caffeine</li>
+</ul>
+</div>
+
+<div id="study" class="subpage">
+<a class="back" onclick="goBack()">← Back</a>
+<h2>Study & Focus Systems</h2>
+<ul>
+<li>25–5 focus blocks</li>
+<li>Memory-based revision</li>
+<li>Exam stress control</li>
+</ul>
+</div>
+
+<!-- FLOATING AD -->
 <div class="floating">
-  <script src="https://pl27363246.effectivegatecpm.com/0b/b3/0b/0bb30b99557c786021391a5cb13150e5.js"></script>
+<script src="https://pl27363246.effectivegatecpm.com/0b/b3/0b/0bb30b99557c786021391a5cb13150e5.js"></script>
 </div>
 
 <script>
-let total=20000,start=null;const span=document.getElementById('time');const circle=document.getElementById('circle');const prepText=document.getElementById('prep-text');function easeOutCubic(x){return 1-Math.pow(1-x,3)}function animate(ts){if(!start)start=ts;const elapsed=ts-start;const raw=Math.min(elapsed/total,1);const progress=easeOutCubic(raw);span.textContent=Math.ceil((total-elapsed)/1000);circle.style.setProperty('--deg',`${progress*360}deg`);prepText.textContent='Preparing offers'+'.'.repeat(Math.floor(elapsed/500%4));if(raw<1){requestAnimationFrame(animate)}else{document.getElementById('loader').style.display='none';document.getElementById('ad-wrapper').style.display='block'}}requestAnimationFrame(animate);
-let i=0;const slides=document.querySelectorAll('.slide');setInterval(()=>{slides[i].classList.remove('active');i=(i+1)%slides.length;slides[i].classList.add('active')},6000);
-let glow=0,dir=1;setInterval(()=>{glow+=dir*.5;if(glow>20||glow<10)dir*=-1;circle.style.boxShadow=`0 0 ${glow}px #b56cff`},80);
-const indiaLinks=['https://www.effectivegatecpm.com/eszwggg0?key=784e73c7dc4b992d827cc02a85d064b7','https://www.effectivegatecpm.com/i63pbecy1?key=6ca31a0952a0956430a016a37ca0fd57'];const globalLinks=['https://www.effectivegatecpm.com/hte0hzu0v?key=fb45638729e3933cb3d3e10867a09592'];fetch('https://ipapi.co/json').then(r=>r.json()).then(d=>{const pool=d.country_code==='IN'?indiaLinks:globalLinks;const link=pool[Math.floor(Math.random()*pool.length)];document.querySelectorAll('.btn').forEach(b=>b.href=link)});
-if(navigator.vibrate)document.querySelectorAll('.btn').forEach(b=>{b.addEventListener('click',()=>navigator.vibrate(15))});
-const shareBtns={whatsapp:document.getElementById('share-whatsapp'),telegram:document.getElementById('share-telegram'),instagram:document.getElementById('share-instagram')};shareBtns.whatsapp.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for WhatsApp!'))};shareBtns.telegram.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for Telegram!'))};shareBtns.instagram.onclick=()=>{navigator.clipboard.writeText(window.location.href).then(()=>alert('Link copied for Instagram!'))};
+/* ===== ELEMENT REFERENCES ===== */
+const loader = document.getElementById('loader');
+const adWrapper = document.getElementById('ad-wrapper');
+const prep = document.getElementById('prep');
+const span = document.getElementById('time');
+const circle = document.getElementById('circle');
+
+/* ===== LOADER TIMER ===== */
+let total = 20000;
+let start = null;
+
+function ease(x){return 1-Math.pow(1-x,3)}
+
+function anim(t){
+  if(!start) start = t;
+  const elapsed = t - start;
+  const ratio = Math.min(elapsed / total, 1);
+  const progress = ease(ratio);
+
+  span.textContent = Math.max(0, Math.ceil((total - elapsed) / 1000));
+  circle.style.setProperty('--deg', (progress * 360) + 'deg');
+
+  if(ratio < 1){
+    requestAnimationFrame(anim);
+  } else {
+    loader.style.display = 'none';
+    adWrapper.style.display = 'block';
+  }
+}
+requestAnimationFrame(anim);
+
+/* TEXT DOTS */
+let d = 0;
+setInterval(()=>{
+  d = (d + 1) % 4;
+  prep.textContent = 'Preparing offers' + '.'.repeat(d);
+}, 500);
+
+/* SLIDESHOW */
+let i = 0;
+const slides = document.querySelectorAll('.slide');
+setInterval(()=>{
+  slides[i].classList.remove('active');
+  i = (i + 1) % slides.length;
+  slides[i].classList.add('active');
+}, 6000);
+
+/* SUBPAGE LOGIC */
+function openPage(id){
+  adWrapper.style.display = 'none';
+  document.getElementById(id).style.display = 'block';
+}
+function goBack(){
+  document.querySelectorAll('.subpage').forEach(p=>p.style.display='none');
+  adWrapper.style.display = 'block';
+}
+
+/* MOBILE FEEDBACK */
+if(navigator.vibrate){
+  document.body.addEventListener('click',()=>navigator.vibrate(10));
+}
 </script>
-
-
 </body>
 </html>
