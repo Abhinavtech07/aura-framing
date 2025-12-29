@@ -1,198 +1,647 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AuraFramer • Real Life Systems</title>
-<style>
-/* ===== BASE THEME ===== */
-body{margin:0;background:#050008;color:#fff;font-family:Arial,Helvetica,sans-serif}
-.neon{color:#b56cff;text-shadow:0 0 10px #b56cff}
-a{text-decoration:none}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Real-life systems that actually work - daily routines, lifestyle fixes & study systems">
+    <title>AuraFramer - Real Systems That Work</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* ===== LOADER ===== */
-#loader{position:fixed;inset:0;background:#050008;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999}
-.circle{width:220px;height:220px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;background:#1a0026}
-.circle::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(#c77dff var(--deg,0deg),#1a0026 0deg);mask:radial-gradient(circle,transparent 62%,black 63%);-webkit-mask:radial-gradient(circle,transparent 62%,black 63%)}
-.circle span{position:relative;font-size:28px;font-weight:bold}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #050008 0%, #0e0018 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-/* ===== MAIN WRAPPER ===== */
-#ad-wrapper{display:none;padding-bottom:80px}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-/* ===== SECTIONS ===== */
-.section{margin:20px;border-radius:14px;padding:20px;background:#0e0018;border:1px solid #b56cff;box-shadow:0 0 18px #7f3cff}
-.section h2{margin-top:0}
+        /* PAGE TRANSITIONS */
+        .page {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
 
-.btn{display:block;margin-top:14px;padding:14px;border-radius:12px;text-align:center;background:#7f3cff;color:#fff;font-weight:bold}
+        .page.active {
+            display: block;
+        }
 
-/* ===== SLIDESHOW ===== */
-.slideshow{max-width:320px;margin:20px auto}
-.slide{display:none}
-.slide.active{display:block}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* ===== FLOATING AD ===== */
-.floating{position:fixed;bottom:20px;right:10px;z-index:9999}
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
 
-/* ===== SUBPAGE ===== */
-.subpage{display:none;padding:20px}
-.back{margin-bottom:20px;display:inline-block;color:#c77dff}
-</style>
+        h1 {
+            font-size: clamp(24px, 6vw, 42px);
+            color: #b56cff;
+            text-shadow: 0 0 30px rgba(181, 108, 255, 0.5);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(22px, 5vw, 36px);
+            color: #b56cff;
+            text-shadow: 0 0 25px rgba(181, 108, 255, 0.4);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            font-size: clamp(14px, 4vw, 18px);
+            color: #9d4edd;
+            opacity: 0.9;
+        }
+
+        /* BACK BUTTON */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(181, 108, 255, 0.1);
+            border: 1px solid rgba(181, 108, 255, 0.3);
+            color: #b56cff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .back-button:hover {
+            background: rgba(181, 108, 255, 0.2);
+            border-color: rgba(181, 108, 255, 0.5);
+            transform: translateX(-5px);
+        }
+
+        /* AD SHOWCASE */
+        .ad-showcase {
+            background: rgba(181, 108, 255, 0.05);
+            border: 1px solid rgba(181, 108, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 360px;
+            box-shadow: 0 0 20px rgba(181, 108, 255, 0.1);
+        }
+
+        .ad-slideshow {
+            position: relative;
+            min-height: 100px; /* Adjusted for single small banner */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ad-slide {
+            width: 100%;
+        }
+
+        /* CONTENT SECTIONS */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .content-card {
+            background: rgba(181, 108, 255, 0.05);
+            border: 1px solid rgba(181, 108, 255, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(181, 108, 255, 0.1);
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(181, 108, 255, 0.2);
+            border-color: rgba(181, 108, 255, 0.4);
+        }
+
+        .content-card h3 {
+            color: #c77dff;
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+
+        .content-card p {
+            color: #b8b8b8;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #9d4edd, #b56cff);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            min-height: 44px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(181, 108, 255, 0.4);
+        }
+
+        /* DETAIL PAGE CONTENT */
+        .detail-content {
+            background: rgba(181, 108, 255, 0.05);
+            border: 1px solid rgba(181, 108, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(181, 108, 255, 0.1);
+        }
+
+        .detail-content h3 {
+            color: #c77dff;
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .detail-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .detail-content p {
+            color: #b8b8b8;
+            font-size: 15px;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .detail-content ul {
+            margin: 15px 0 15px 20px;
+            color: #b8b8b8;
+        }
+
+        .detail-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .highlight-box {
+            background: rgba(157, 78, 221, 0.1);
+            border-left: 3px solid #b56cff;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: #c77dff;
+            font-weight: 500;
+        }
+
+        /* NATIVE AD SECTION */
+        .native-ad-section {
+            margin: 50px 0;
+            padding: 30px 20px;
+            background: rgba(181, 108, 255, 0.03);
+            border-radius: 16px;
+        }
+
+        .native-ad-label {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            header {
+                padding: 30px 15px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .ad-showcase {
+                padding: 15px;
+            }
+
+            .detail-content {
+                padding: 20px;
+            }
+        }
+
+        /* AD CONTAINER CENTERING */
+        .ad-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 60px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- ============================================ -->
+        <!-- HOME PAGE -->
+        <!-- ============================================ -->
+        <div id="home-page" class="page active">
+            <header>
+                <h1>Real-Life Systems That Actually Work</h1>
+                <p class="subtitle">Daily routines, lifestyle fixes & study systems.</p>
+            </header>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="circle" id="circle"><span id="time">20</span></div>
-  <div id="prep" style="margin-top:12px;font-size:14px;opacity:.8">Preparing offers</div>
-</div>
+            <!-- AD SHOWCASE -->
+            <div class="ad-showcase">
+                <div class="ad-slideshow">
+                    <div class="ad-slide">
+                        <div class="ad-container">
+                            <div id="banner-50x320"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<!-- MAIN PAGE -->
-<div id="ad-wrapper">
-<h1 class="neon" style="text-align:center">Real-Life Systems That Actually Work</h1>
-<p style="text-align:center;opacity:.85">Daily routines, lifestyle fixes & study systems for real students and real life.</p>
+            <!-- CONTENT SECTIONS -->
+            <div class="content-grid">
+                <div class="content-card">
+                    <h3>📅 Daily Routines & Habits</h3>
+                    <p>Simple, proven systems that fit into real student life. No perfectionism required.</p>
+                    <button class="cta-button" onclick="navigateTo('routines')">Explore Routines</button>
+                </div>
 
-<!-- SLIDESHOW ADS -->
-<div class="slideshow">
-  <div class="slide active">
-    <script>atOptions={key:'1f337db27a0d5b62ae02902a6ad75bd1',format:'iframe',height:50,width:320,params:{}};</script>
-    <script src="https://www.highperformanceformat.com/1f337db27a0d5b62ae02902a6ad75bd1/invoke.js"></script>
-  </div>
-  <div class="slide">
-    <script>atOptions={key:'13e99a8cec718bb998fd929e5d986f1e',format:'iframe',height:250,width:300,params:{}};</script>
-    <script src="https://www.highperformanceformat.com/13e99a8cec718bb998fd929e5d986f1e/invoke.js"></script>
-  </div>
-</div>
+                <div class="content-card">
+                    <h3>⚡ Lifestyle Fixes</h3>
+                    <p>Better sleep, sustained energy, sharper focus. Small changes with measurable impact.</p>
+                    <button class="cta-button" onclick="navigateTo('lifestyle')">Get Started</button>
+                </div>
 
-<!-- CONTENT SECTIONS -->
-<div class="section">
-<h2>Daily Routines / Habits</h2>
-<p>Simple habits that improve energy, confidence and clarity — no extreme discipline.</p>
-<a class="btn" onclick="openPage('routines')">Explore Routines →</a>
-<a class="btn" href="https://www.effectivegatecpm.com/eszwggg0?key=784e73c7dc4b992d827cc02a85d064b7" target="_blank" style="background:#9d4edd">Unlock Routine Guide →</a>
-</div>
+                <div class="content-card">
+                    <h3>🎯 Study & Focus Systems</h3>
+                    <p>Evidence-based techniques for deeper learning and better retention. No fluff.</p>
+                    <button class="cta-button" onclick="navigateTo('study')">Learn More</button>
+                </div>
+            </div>
 
-<div class="section">
-<h2>Lifestyle Fixes</h2>
-<p>Fix tiredness, poor sleep and brain fog using safe lifestyle changes.</p>
-<a class="btn" onclick="openPage('lifestyle')">Fix Your Lifestyle →</a>
-<a class="btn" href="https://www.effectivegatecpm.com/i63pbecy1?key=6ca31a0952a0956430a016a37ca0fd57" target="_blank" style="background:#9d4edd">View Lifestyle Plan →</a>
-</div>
+            <!-- NATIVE AD SECTION -->
+            <div class="native-ad-section">
+                <div class="native-ad-label">Recommended</div>
+                <div id="container-321b2d611b0c8db166ec76303f1333a3"></div>
+            </div>
+        </div>
 
-<div class="section">
-<h2>Study & Focus Systems</h2>
-<p>Smart study methods for better results in less time.</p>
-<a class="btn" onclick="openPage('study')">Improve Focus →</a>
-<a class="btn" href="https://www.effectivegatecpm.com/hte0hzu0v?key=fb45638729e3933cb3d3e10867a09592" target="_blank" style="background:#9d4edd">Access Focus System →</a>
-</div>
+        <!-- ============================================ -->
+        <!-- ROUTINES PAGE -->
+        <!-- ============================================ -->
+        <div id="routines-page" class="page">
+            <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
+            
+            <header>
+                <h2>📅 Daily Routines & Habits</h2>
+                <p class="subtitle">Build systems that stick without burning out</p>
+            </header>
 
-<!-- NATIVE AD -->
-<div class="section">
-<div id="container-321b2d611b0c8db166ec76303f1333a3"></div>
-<script async data-cfasync="false" src="https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js"></script>
-</div>
-</div>
+            <div class="detail-content">
+                <h3>🌅 The 5-Minute Morning Reset</h3>
+                <p>Most morning routines fail because they're too ambitious. Start with just 5 minutes:</p>
+                <ul>
+                    <li><strong>Hydrate:</strong> Drink 500ml water immediately after waking</li>
+                    <li><strong>Breathe:</strong> 10 deep breaths by an open window</li>
+                    <li><strong>Prioritize:</strong> Write down your #1 goal for the day</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>💡 Success Rate: 87% stick with this for 30+ days vs 23% with hour-long routines</p>
+                </div>
 
-<!-- SUBPAGES -->
-<div id="routines" class="subpage">
-<a class="back" onclick="goBack()">← Back</a>
-<h2>Daily Routines That Work</h2>
-<ul>
-<li>Morning Energy Reset (10 min)</li>
-<li>Night Calm Routine</li>
-<li>Consistency without burnout</li>
-</ul>
-</div>
+                <h3>🎯 The 2-Minute Rule</h3>
+                <p>Any habit can be started in 2 minutes or less. Want to read more? Don't commit to "30 pages daily" — commit to "opening the book." Momentum builds naturally from there.</p>
+                
+                <h3>⏰ Habit Stacking Formula</h3>
+                <p>Attach new habits to existing ones: "After I [current habit], I will [new habit]"</p>
+                <ul>
+                    <li>After I brush my teeth, I'll do 10 pushups</li>
+                    <li>After I pour my coffee, I'll review my calendar</li>
+                    <li>After I close my laptop, I'll write 3 things I'm grateful for</li>
+                </ul>
 
-<div id="lifestyle" class="subpage">
-<a class="back" onclick="goBack()">← Back</a>
-<h2>Lifestyle Fixes</h2>
-<ul>
-<li>Sleep timing reset</li>
-<li>Energy through movement</li>
-<li>Focus without caffeine</li>
-</ul>
-</div>
+                <h3>📊 Track Without Obsessing</h3>
+                <p>Use a simple streak tracker on your phone. The goal isn't perfection — it's consistency. Missing one day is fine. Missing two days in a row? Reset and start again.</p>
+            </div>
 
-<div id="study" class="subpage">
-<a class="back" onclick="goBack()">← Back</a>
-<h2>Study & Focus Systems</h2>
-<ul>
-<li>25–5 focus blocks</li>
-<li>Memory-based revision</li>
-<li>Exam stress control</li>
-</ul>
-</div>
+            <!-- AD SHOWCASE -->
+            <div class="ad-showcase">
+                <div class="ad-container">
+                    <div id="routines-ad-50x320"></div>
+                </div>
+            </div>
 
-<!-- FLOATING AD -->
-<div class="floating">
-<script src="https://pl27363246.effectivegatecpm.com/0b/b3/0b/0bb30b99557c786021391a5cb13150e5.js"></script>
-</div>
+            <!-- NATIVE AD -->
+            <div class="native-ad-section">
+                <div class="native-ad-label">Related Resources</div>
+                <div id="routines-native-ad"></div>
+            </div>
+        </div>
 
-<script>
-/* ===== SAFETY FLAG (NO AUTO REDIRECT) ===== */
-const AUTO_REDIRECT = false; // ensures no forced redirects happen
+        <!-- ============================================ -->
+        <!-- LIFESTYLE PAGE -->
+        <!-- ============================================ -->
+        <div id="lifestyle-page" class="page">
+            <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
+            
+            <header>
+                <h2>⚡ Lifestyle Fixes</h2>
+                <p class="subtitle">Evidence-based tweaks for energy, sleep, and focus</p>
+            </header>
 
-/* ===== ELEMENT REFERENCES ===== */
-const loader = document.getElementById('loader');
-const adWrapper = document.getElementById('ad-wrapper');
-const prep = document.getElementById('prep');
-const span = document.getElementById('time');
-const circle = document.getElementById('circle');
+            <div class="detail-content">
+                <h3>😴 Sleep Architecture Reset</h3>
+                <p>Poor sleep isn't just about quantity — it's about timing and quality. Here's what actually works:</p>
+                <ul>
+                    <li><strong>Consistent wake time:</strong> More important than bedtime. Wake at 7 AM every day, even weekends</li>
+                    <li><strong>Sunlight exposure:</strong> Get 10 minutes of outdoor light within 30 minutes of waking</li>
+                    <li><strong>Caffeine cutoff:</strong> No caffeine after 2 PM (caffeine half-life is 5-6 hours)</li>
+                    <li><strong>Temperature drop:</strong> Keep bedroom at 18-19°C (65-67°F)</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>💡 Studies show: Consistent wake times improve sleep quality more than sleep duration alone</p>
+                </div>
 
-/* ===== LOADER TIMER ===== */
-let total = 20000;
-let start = null;
+                <h3>⚡ Energy Management (Not Time Management)</h3>
+                <p>Your brain has ~4 hours of peak cognitive performance per day. Use them wisely:</p>
+                <ul>
+                    <li><strong>Peak hours:</strong> First 2-4 hours after waking (for most people)</li>
+                    <li><strong>Protection strategy:</strong> No meetings, social media, or email during peak hours</li>
+                    <li><strong>Deep work blocks:</strong> 90-minute focused sessions with 15-minute breaks</li>
+                </ul>
 
-function ease(x){return 1-Math.pow(1-x,3)}
+                <h3>🧠 Focus Nutrition</h3>
+                <p>What you eat affects mental clarity within 30-60 minutes:</p>
+                <ul>
+                    <li>High-protein breakfast = sustained energy (eggs, Greek yogurt, nuts)</li>
+                    <li>Avoid sugar crashes = skip refined carbs before important work</li>
+                    <li>Hydration matters = even 2% dehydration reduces cognitive performance</li>
+                </ul>
 
-function anim(t){
-  if(!start) start = t;
-  const elapsed = t - start;
-  const ratio = Math.min(elapsed / total, 1);
-  const progress = ease(ratio);
+                <h3>🏃 Movement Micro-Habits</h3>
+                <p>You don't need a gym membership. You need 10 minutes of movement every 2 hours:</p>
+                <ul>
+                    <li>Walk while taking calls</li>
+                    <li>5-minute stretch between study sessions</li>
+                    <li>Take stairs instead of elevator</li>
+                </ul>
+            </div>
 
-  span.textContent = Math.max(0, Math.ceil((total - elapsed) / 1000));
-  circle.style.setProperty('--deg', (progress * 360) + 'deg');
+            <!-- AD SHOWCASE -->
+            <div class="ad-showcase">
+                <div class="ad-container">
+                    <div id="lifestyle-ad-50x320"></div>
+                </div>
+            </div>
 
-  if(ratio < 1){
-    requestAnimationFrame(anim);
-  } else {
-    loader.style.display = 'none';
-    adWrapper.style.display = 'block';
-  }
-}
-requestAnimationFrame(anim);
+            <!-- NATIVE AD -->
+            <div class="native-ad-section">
+                <div class="native-ad-label">Recommended Products</div>
+                <div id="lifestyle-native-ad"></div>
+            </div>
+        </div>
 
-/* TEXT DOTS */
-let d = 0;
-setInterval(()=>{
-  d = (d + 1) % 4;
-  prep.textContent = 'Preparing offers' + '.'.repeat(d);
-}, 500);
+        <!-- ============================================ -->
+        <!-- STUDY PAGE -->
+        <!-- ============================================ -->
+        <div id="study-page" class="page">
+            <button class="back-button" onclick="navigateTo('home')">← Back to Home</button>
+            
+            <header>
+                <h2>🎯 Study & Focus Systems</h2>
+                <p class="subtitle">Learn smarter, not harder</p>
+            </header>
 
-/* SLIDESHOW */
-let i = 0;
-const slides = document.querySelectorAll('.slide');
-setInterval(()=>{
-  slides[i].classList.remove('active');
-  i = (i + 1) % slides.length;
-  slides[i].classList.add('active');
-}, 6000);
+            <div class="detail-content">
+                <h3>🧠 Active Recall > Passive Reading</h3>
+                <p>Reading notes repeatedly is one of the least effective study methods. Instead:</p>
+                <ul>
+                    <li><strong>Close the book</strong> and write everything you remember</li>
+                    <li><strong>Quiz yourself</strong> before looking at answers</li>
+                    <li><strong>Teach concepts</strong> out loud as if explaining to someone else</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>💡 Research shows: Active recall improves retention by 150-200% vs re-reading</p>
+                </div>
 
-/* SUBPAGE LOGIC */
-function openPage(id){
-  adWrapper.style.display = 'none';
-  document.getElementById(id).style.display = 'block';
-}
-function goBack(){
-  document.querySelectorAll('.subpage').forEach(p=>p.style.display='none');
-  adWrapper.style.display = 'block';
-}
+                <h3>📆 Spaced Repetition Schedule</h3>
+                <p>The forgetting curve is real. Review material at these intervals:</p>
+                <ul>
+                    <li>First review: 1 day after learning</li>
+                    <li>Second review: 3 days later</li>
+                    <li>Third review: 7 days later</li>
+                    <li>Fourth review: 14 days later</li>
+                    <li>Fifth review: 30 days later</li>
+                </ul>
 
-/* MOBILE FEEDBACK */
-if(navigator.vibrate){
-  document.body.addEventListener('click',()=>navigator.vibrate(10));
-}
-</script>
+                <h3>🎯 The Pomodoro System (Modified)</h3>
+                <p>Traditional Pomodoro (25 min work, 5 min break) is good, but this works better for deep study:</p>
+                <ul>
+                    <li><strong>50 minutes:</strong> Focused study (phone in another room)</li>
+                    <li><strong>10 minutes:</strong> Active break (walk, stretch, hydrate)</li>
+                    <li><strong>After 3 sessions:</strong> Take a 30-minute break</li>
+                </ul>
+
+                <h3>📝 The Feynman Technique</h3>
+                <p>Named after physicist Richard Feynman. Here's how it works:</p>
+                <ul>
+                    <li><strong>Step 1:</strong> Write the concept at the top of a blank page</li>
+                    <li><strong>Step 2:</strong> Explain it in simple language (as if teaching a 12-year-old)</li>
+                    <li><strong>Step 3:</strong> Identify gaps in your understanding</li>
+                    <li><strong>Step 4:</strong> Review source material for those gaps</li>
+                    <li><strong>Step 5:</strong> Simplify your explanation even further</li>
+                </ul>
+
+                <h3>🔇 Environment Design</h3>
+                <p>Your study environment affects focus more than willpower:</p>
+                <ul>
+                    <li>Remove ALL distractions before starting (not during)</li>
+                    <li>Use website blockers (Freedom, Cold Turkey, Forest app)</li>
+                    <li>Study in the same place consistently (location-based memory)</li>
+                    <li>White noise or study music (avoid lyrical songs)</li>
+                </ul>
+            </div>
+
+            <!-- AD SHOWCASE -->
+            <div class="ad-showcase">
+                <div class="ad-container">
+                    <div id="study-ad-50x320"></div>
+                </div>
+            </div>
+
+            <!-- NATIVE AD -->
+            <div class="native-ad-section">
+                <div class="native-ad-label">Study Tools</div>
+                <div id="study-native-ad"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // PAGE NAVIGATION SYSTEM
+        // ============================================
+        const pages = {
+            home: document.getElementById('home-page'),
+            routines: document.getElementById('routines-page'),
+            lifestyle: document.getElementById('lifestyle-page'),
+            study: document.getElementById('study-page')
+        };
+
+        let currentPage = 'home';
+
+        function navigateTo(pageName) {
+            if (pages[currentPage]) {
+                pages[currentPage].classList.remove('active');
+            }
+            
+            setTimeout(() => {
+                if (pages[pageName]) {
+                    pages[pageName].classList.add('active');
+                    currentPage = pageName;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    if (pageName !== 'home') {
+                        loadPageAds(pageName);
+                    }
+                }
+            }, 100);
+        }
+
+        // ============================================
+        // AD LOADING SYSTEM
+        // ============================================
+        let adsLoaded = {
+            home: false,
+            routines: false,
+            lifestyle: false,
+            study: false
+        };
+
+        function loadHomeAds() {
+            if (adsLoaded.home) return;
+            
+            // Banner 50x320
+            const script1 = document.createElement('script');
+            script1.text = `
+                atOptions = {
+                    'key' : '1f337db27a0d5b62ae02902a6ad75bd1',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            `;
+            document.getElementById('banner-50x320').appendChild(script1);
+            
+            const script1Invoke = document.createElement('script');
+            script1Invoke.src = 'https://www.highperformanceformat.com/1f337db27a0d5b62ae02902a6ad75bd1/invoke.js';
+            document.getElementById('banner-50x320').appendChild(script1Invoke);
+
+            // Native Ad
+            const nativeScript = document.createElement('script');
+            nativeScript.src = 'https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js';
+            nativeScript.async = true;
+            nativeScript.setAttribute('data-cfasync', 'false');
+            document.body.appendChild(nativeScript);
+
+            // Social Bar
+            const socialScript = document.createElement('script');
+            socialScript.src = 'https://pl27363246.effectivegatecpm.com/0b/b3/0b/0bb30b99557c786021391a5cb13150e5.js';
+            document.body.appendChild(socialScript);
+
+            adsLoaded.home = true;
+        }
+
+        function loadPageAds(pageName) {
+            if (adsLoaded[pageName]) return;
+
+            // Load 50x320 banner for sub-pages
+            if (pageName === 'routines' || pageName === 'lifestyle' || pageName === 'study') {
+                const containerId = pageName + '-ad-50x320';
+                const adContainer = document.getElementById(containerId);
+
+                if (adContainer) {
+                    const script = document.createElement('script');
+                    script.text = `
+                        atOptions = {
+                            'key' : '1f337db27a0d5b62ae02902a6ad75bd1',
+                            'format' : 'iframe',
+                            'height' : 50,
+                            'width' : 320,
+                            'params' : {}
+                        };
+                    `;
+                    adContainer.appendChild(script);
+                    
+                    const scriptInvoke = document.createElement('script');
+                    scriptInvoke.src = 'https://www.highperformanceformat.com/1f337db27a0d5b62ae02902a6ad75bd1/invoke.js';
+                    adContainer.appendChild(scriptInvoke);
+                }
+            }
+
+            // Load native ad for each page
+            const nativeAdContainer = document.getElementById(pageName + '-native-ad');
+            if (nativeAdContainer) {
+                const nativeScript = document.createElement('script');
+                nativeScript.src = 'https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js';
+                nativeScript.async = true;
+                nativeScript.setAttribute('data-cfasync', 'false');
+                nativeAdContainer.appendChild(nativeScript);
+            }
+
+            adsLoaded[pageName] = true;
+        }
+
+        // ============================================
+        // INITIALIZE ON PAGE LOAD
+        // ============================================
+        window.addEventListener('DOMContentLoaded', function() {
+            loadHomeAds();
+        });
+
+        // Make navigateTo globally accessible
+        window.navigateTo = navigateTo;
+    </script>
 </body>
 </html>
