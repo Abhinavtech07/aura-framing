@@ -51,7 +51,7 @@
             background: linear-gradient(135deg, #050008 0%, #0e0018 100%);
             color: #e0e0e0;
             line-height: 1.6;
-            min-height: 100vh;
+            min-height: 100svh;
             overflow-x: hidden;
         }
 
@@ -882,11 +882,33 @@
                     <div class="stat-label">Optimal focus session length</div>
                 </div>
             </section>
+            <!-- Inline Banner Ads Section -->
+<div class="inline-ad-section">
 
+    <div class="inline-ad-box">
+      <a href="https://pl27363246.effectivegatecpm.com" target="_blank" rel="noopener">
+                       🔥 Unlock Advanced Focus System
+      </a>
+    </div>
+  
+    <div class="inline-ad-box">
+      <a href="https://pl27363246.effectivegatecpm.com" target="_blank" rel="noopener">
+                        📘 Get the Complete Study Framework
+      </a>
+    </div>
+  
+  </div>
             <!-- INLINE AD BETWEEN CONTENT -->
             <aside class="ad-showcase" style="margin: 50px auto;" aria-label="Advertisement">
                 <div class="ad-container">
                     <div id="home-inline-ad-1"></div>
+                </div>
+            </aside>
+
+            <!-- SECOND INLINE AD (for Instagram) -->
+            <aside class="ad-showcase" style="margin: 40px auto;" aria-label="Advertisement">
+                <div class="ad-container">
+                    <div id="home-inline-ad-2"></div>
                 </div>
             </aside>
 
@@ -1439,7 +1461,7 @@
             
             // Delay ad loading to prevent instant redirects
             setTimeout(function() {
-                // Only load banner ads (safer)
+                // Load top banner
                 const script1 = document.createElement('script');
                 script1.text = `
                     atOptions = {
@@ -1456,28 +1478,38 @@
                 script1Invoke.src = 'https://www.highperformanceformat.com/1f337db27a0d5b62ae02902a6ad75bd1/invoke.js';
                 document.getElementById('banner-50x320').appendChild(script1Invoke);
 
-                // Load home inline ad immediately (not waiting for interaction)
+                // Load home inline ad
                 setTimeout(function() {
                     loadInlineAd('home-inline-ad-1');
                 }, 2000);
 
-                // Load native ad after delay
-                setTimeout(function() {
-                    const nativeScript = document.createElement('script');
-                    nativeScript.src = 'https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js';
-                    nativeScript.async = true;
-                    nativeScript.setAttribute('data-cfasync', 'false');
-                    document.body.appendChild(nativeScript);
-                }, 3000);
+                // If Instagram browser, load MORE banner ads (safer)
+                if (isInstagramBrowser()) {
+                    console.log('Instagram browser detected - loading extra banner ads');
+                    
+                    // Load additional inline ad after stats
+                    setTimeout(function() {
+                        loadInlineAd('home-inline-ad-2');
+                    }, 3000);
+                    
+                    // Skip native ads and social bar on Instagram
+                } else {
+                    // Regular browser - load native ad
+                    setTimeout(function() {
+                        const nativeScript = document.createElement('script');
+                        nativeScript.src = 'https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js';
+                        nativeScript.async = true;
+                        nativeScript.setAttribute('data-cfasync', 'false');
+                        document.body.appendChild(nativeScript);
+                    }, 3000);
 
-                // Load social bar ONLY after 5 seconds (not on Instagram)
-                setTimeout(function() {
-                    if (!isInstagramBrowser()) {
+                    // Load social bar (regular browser only)
+                    setTimeout(function() {
                         const socialScript = document.createElement('script');
                         socialScript.src = 'https://pl27363246.effectivegatecpm.com/0b/b3/0b/0bb30b99557c786021391a5cb13150e5.js';
                         document.body.appendChild(socialScript);
-                    }
-                }, 5000);
+                    }, 5000);
+                }
 
                 adsLoaded.home = true;
             }, adLoadDelay);
@@ -1615,5 +1647,81 @@
     </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3201100934909470"
     crossorigin="anonymous"></script>
-</body>
+<!-- Floating Small Banner Ad -->
+<div class="floating-ad" id="floatingAd">
+    <button class="ad-close" onclick="closeAd()">×</button>
+    <a href="https://pl27363246.effectivegatecpm.com" target="_blank" rel="noopener">
+      🚀 Unlock the Full Focus System
+    </a>
+  </div>
+  <script>
+    // Show ad after delay (better UX)
+    setTimeout(() => {
+      const ad = document.getElementById('floatingAd');
+      if (ad) ad.style.display = 'block';
+    }, 4000);
+  
+    function closeAd() {
+      document.getElementById('floatingAd').style.display = 'none';
+    }
+  </script>
+  <script>
+    function loadInlineAd() {
+      // Show the floating ad safely
+      const ad = document.getElementById('floatingAd');
+      if (ad) {
+        ad.style.display = 'block';
+      }
+    }
+  
+    // Delay ad load for better UX (Instagram safe)
+    setTimeout(loadInlineAd, 4000);
+  
+    function closeAd() {
+      const ad = document.getElementById('floatingAd');
+      if (ad) {
+        ad.style.display = 'none';
+      }
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Force-load study page inline ads
+      if (
+        document.getElementById('study-inline-ad-1') ||
+        document.getElementById('study-inline-ad-2')
+      ) {
+        loadStudyInlineAds();
+      }
+    });
+  
+    function loadStudyInlineAds() {
+      // Prevent duplicate loading
+      if (window.studyAdsLoaded) return;
+      window.studyAdsLoaded = true;
+  
+      // Inline Ad 1
+      const ad1 = document.getElementById('study-inline-ad-1');
+      if (ad1) {
+        const s1 = document.createElement('script');
+        s1.src =
+          'https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js';
+        s1.async = true;
+        s1.setAttribute('data-cfasync', 'false');
+        ad1.appendChild(s1);
+      }
+  
+      // Inline Ad 2
+      const ad2 = document.getElementById('study-inline-ad-2');
+      if (ad2) {
+        const s2 = document.createElement('script');
+        s2.src =
+          'https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js';
+        s2.async = true;
+        s2.setAttribute('data-cfasync', 'false');
+        ad2.appendChild(s2);
+      }
+    }
+  </script> 
+  </body>
 </html>

@@ -1,1 +1,109 @@
-
+/* Floating Banner Ad */
+.floating-ad {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+  
+    background: linear-gradient(135deg, #1e3cff, #00c6ff);
+    border-radius: 14px;
+    padding: 12px 16px;
+  
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    display: none;
+    animation: slideUp 0.6s ease;
+  }
+  
+  .floating-ad a {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
+  /* Close button */
+  .ad-close {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #000;
+    color: #fff;
+    border: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 22px;
+  }
+  
+  /* Mobile optimization */
+  @media (max-width: 480px) {
+    .floating-ad {
+      bottom: 12px;
+      right: 12px;
+      padding: 10px 14px;
+    }
+  
+    .floating-ad a {
+      font-size: 13px;
+    }
+  }
+  
+  /* Animation */
+  @keyframes slideUp {
+    from {
+      transform: translateY(25px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  /* Inline Banner Section */
+.inline-ad-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  
+    margin: 32px 0;
+    padding: 0 8px;
+  }
+  
+  /* Individual Banner Box */
+  .inline-ad-box {
+    min-height: 80px; /* 🔴 THIS FIXES THE INVISIBLE ISSUE */
+    background: linear-gradient(135deg, #1e3cff, #00c6ff);
+    border-radius: 14px;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+  
+  /* Banner text */
+  .inline-ad-box a {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px;
+  }
+  
+  /* Mobile Fix */
+  @media (max-width: 600px) {
+    .inline-ad-section {
+      grid-template-columns: 1fr;
+    }
+  }
+  .ad-container {
+    min-height: 90px;
+    width: 100%;
+    display: block;
+  }
+  
