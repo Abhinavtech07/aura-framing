@@ -1456,25 +1456,23 @@
                 script1Invoke.src = 'https://www.highperformanceformat.com/1f337db27a0d5b62ae02902a6ad75bd1/invoke.js';
                 document.getElementById('banner-50x320').appendChild(script1Invoke);
 
-                // Load home inline ad after interaction
+                // Load home inline ad immediately (not waiting for interaction)
                 setTimeout(function() {
-                    if (userInteracted) {
-                        loadInlineAd('home-inline-ad-1');
-                    }
-                }, 3000);
+                    loadInlineAd('home-inline-ad-1');
+                }, 2000);
 
-                // Load native ad only after user interaction
-                if (userInteracted) {
+                // Load native ad after delay
+                setTimeout(function() {
                     const nativeScript = document.createElement('script');
                     nativeScript.src = 'https://pl27363242.effectivegatecpm.com/321b2d611b0c8db166ec76303f1333a3/invoke.js';
                     nativeScript.async = true;
                     nativeScript.setAttribute('data-cfasync', 'false');
                     document.body.appendChild(nativeScript);
-                }
+                }, 3000);
 
-                // Load social bar ONLY after 5 seconds AND user interaction
+                // Load social bar ONLY after 5 seconds (not on Instagram)
                 setTimeout(function() {
-                    if (userInteracted && !isInstagramBrowser()) {
+                    if (!isInstagramBrowser()) {
                         const socialScript = document.createElement('script');
                         socialScript.src = 'https://pl27363246.effectivegatecpm.com/0b/b3/0b/0bb30b99557c786021391a5cb13150e5.js';
                         document.body.appendChild(socialScript);

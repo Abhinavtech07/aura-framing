@@ -15,6 +15,7 @@
     extensions = [
       # "vscodevim.vim"
       "google.gemini-cli-vscode-ide-companion"
+      "audits.lighthouse"
     ];
     # Enable previews and customize configuration
     previews = {
