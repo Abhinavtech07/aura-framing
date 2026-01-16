@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Download CARx Rider Pro and Demon Slayer  MOD APK - Unlimited resources, all features unlocked">
-    <title>Game MOD Hub - Download CARx Rider Pro & Demon Slayer </title>
+    <meta name="description" content="Download CARx Rider Pro and Demon Slayer MOD APK - Unlimited resources, all features unlocked">
+    <title>Game MOD Hub - Download CARx Rider Pro & Demon Slayer</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="theme-color" content="#ff0080">
@@ -48,7 +48,6 @@
         .back-to-top{position:fixed;bottom:25px;right:25px;width:50px;height:50px;background:linear-gradient(135deg,#ff0080,#7928ca);color:#fff;border:none;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:22px;z-index:1000}
         .back-to-top.visible{display:flex}
         .scroll-indicator{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#ff0080,#7928ca,#00d4ff);z-index:9999;transition:width .1s ease}
-        .ad-inline{margin:25px auto;padding:15px;background:rgba(255,0,128,.05);border:1px solid rgba(255,0,128,.2);border-radius:12px;min-height:90px;display:flex;align-items:center;justify-content:center}
         .detail-section{background:linear-gradient(135deg,rgba(255,0,128,.06) 0%,rgba(121,40,202,.04) 100%);border:2px solid rgba(255,0,128,.25);border-radius:20px;padding:30px;margin:25px 0}
         .detail-section h3{color:#00d4ff;font-size:24px;margin-bottom:15px;font-weight:700}
         .detail-section p{color:#c0c0c0;font-size:16px;line-height:1.8;margin-bottom:15px}
@@ -56,12 +55,28 @@
         .spec-item{background:rgba(121,40,202,.1);border:1px solid rgba(121,40,202,.3);border-radius:10px;padding:15px;text-align:center}
         .spec-item strong{color:#00d4ff;display:block;margin-bottom:5px;font-size:14px}
         .spec-item span{color:#b8b8b8;font-size:13px}
+        .countdown-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column}
+        .countdown-overlay.active{display:flex}
+        .countdown-box{background:linear-gradient(135deg,rgba(255,0,128,.2),rgba(121,40,202,.2));border:3px solid #ff0080;border-radius:20px;padding:40px;text-align:center;max-width:500px}
+        .countdown-number{font-size:80px;font-weight:900;background:linear-gradient(135deg,#ff0080,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:20px 0;animation:countPulse 1s infinite}
+        @keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+        .countdown-text{color:#00d4ff;font-size:20px;margin-bottom:15px}
+        .countdown-subtext{color:#b8b8b8;font-size:14px}
         @media (max-width:768px){.container{padding:12px}header{padding:30px 12px 20px}main{grid-template-columns:1fr;gap:20px}}
     </style>
 </head>
 <body>
     <div class="scroll-indicator" id="scrollIndicator"></div>
     <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+    
+    <!-- Countdown Overlay -->
+    <div class="countdown-overlay" id="countdownOverlay">
+        <div class="countdown-box">
+            <div class="countdown-text">⏳ Preparing Your Download...</div>
+            <div class="countdown-number" id="countdownNumber">5</div>
+            <div class="countdown-subtext">Please wait while we verify the download link</div>
+        </div>
+    </div>
     
     <div class="container">
         <!-- HOME PAGE -->
@@ -76,6 +91,7 @@
                 </div>
             </header>
 
+            <!-- ONLY 1 AD on homepage -->
             <aside class="ad-showcase" id="ad1">
                 <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
             </aside>
@@ -85,35 +101,35 @@
                 <article class="game-card">
                     <img src="https://th.bing.com/th/id/OIP.n6uVSOcIvZiVOpZU2PdPuQHaEK?w=225&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="CARx Rider Pro" class="game-image">
                     <div class="game-content">
-                        <h3>🔥 CARx Rider Pro </h3>
+                        <h3>🏍️ CARx Rider Pro</h3>
                         <p><strong>Latest Version:</strong> v2.98.2</p>
                         <p><strong>Size:</strong> 1.2GB</p>
                         <ul class="game-features">
-                            <li>Unlimited Cars</li>
-                            <li>Auto smooth</li>
-                            <li>High grapics Enabled</li>
+                            <li>Unlimited Money</li>
+                            <li>All Bikes Unlocked</li>
+                            <li>High Graphics Enabled</li>
                             <li>Anti-Ban Protection</li>
-                            <li>All Cars Unlocked</li>
+                            <li>Premium Features Free</li>
                         </ul>
-                        <button class="download-btn" onclick="initiateDownload('freefire')">⚡ DOWNLOAD NOW</button>
+                        <button class="download-btn" onclick="initiateDownload('carx')">⚡ DOWNLOAD NOW</button>
                     </div>
                 </article>
 
-                <!-- Demon Slayer  Card -->
+                <!-- Demon Slayer Card -->
                 <article class="game-card">
-                    <img src="https://th.bing.com/th/id/OIP._t_Ei8LEhcqrghl1MZh1swHaEK?w=227&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="Demon Slayer " class="game-image">
+                    <img src="https://th.bing.com/th/id/OIP._t_Ei8LEhcqrghl1MZh1swHaEK?w=227&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="Demon Slayer" class="game-image">
                     <div class="game-content">
-                        <h3>🎉 Demon Slayer mod </h3>
+                        <h3>⚔️ Demon Slayer MOD</h3>
                         <p><strong>Latest Version:</strong> v0.72.1</p>
                         <p><strong>Size:</strong> 185MB</p>
                         <ul class="game-features">
                             <li>Unlimited Gems</li>
-                            <li>All Skins Unlocked</li>
+                            <li>All Characters Unlocked</li>
                             <li>Premium Features Free</li>
                             <li>No Ads</li>
                             <li>God Mode</li>
                         </ul>
-                        <button class="download-btn" onclick="initiateDownload('stumble')">⚡ DOWNLOAD NOW</button>
+                        <button class="download-btn" onclick="initiateDownload('demon')">⚡ DOWNLOAD NOW</button>
                     </div>
                 </article>
             </main>
@@ -132,14 +148,10 @@
                     <div class="stat-label">Support Available</div>
                 </div>
             </section>
-
-            <aside class="ad-inline" id="ad2">
-                <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
-            </aside>
         </div>
 
-        <!-- FREE FIRE DETAIL PAGE -->
-        <div id="freefire-page" class="page">
+        <!-- CARX RIDER PRO DETAIL PAGE -->
+        <div id="carx-page" class="page">
             <nav class="breadcrumb">
                 <a href="#" onclick="navigateTo('home'); return false;">Home</a>
                 <span>›</span>
@@ -148,11 +160,12 @@
             
             <header>
                 <button class="back-button" onclick="navigateTo('home')">← Back</button>
-                <h2>🔥 CARx Rider Pro MOD APK</h2>
-                <p class="subtitle">Dominate the battlefield with unlimited resources</p>
+                <h2>🏍️ CARx Rider Pro MOD APK</h2>
+                <p class="subtitle">Experience realistic bike physics with unlimited resources</p>
             </header>
 
-            <aside class="ad-showcase" id="ad3">
+            <!-- Ad BEFORE content -->
+            <aside class="ad-showcase" id="ad2">
                 <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
             </aside>
 
@@ -160,17 +173,17 @@
                 <img src="https://th.bing.com/th/id/OIP.n6uVSOcIvZiVOpZU2PdPuQHaEK?w=225&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="CARx Rider Pro" style="width:100%;max-height:300px;object-fit:cover;border-radius:15px;margin-bottom:20px">
                 
                 <h3>📝 About CARx Rider Pro MOD</h3>
-                <p>CARx Rider Pro is the enhanced version of Garena Free Fire with improved graphics, animations, and gameplay. This MOD version gives you unlimited diamonds, auto-aim, and all premium features unlocked from day one!</p>
+                <p>CARx Rider Pro is a realistic motorcycle racing game featuring stunning graphics, authentic physics, and intense gameplay. This MOD version unlocks all bikes, gives unlimited money, and removes all restrictions!</p>
                 
                 <h3 style="margin-top:25px">✨ MOD Features</h3>
                 <ul class="game-features" style="margin-left:20px">
-                    <li>Unlimited Diamonds & Gold</li>
-                    <li>Auto Headshot - Never miss a shot</li>
-                    <li>Aimbot with adjustable settings</li>
-                    <li>ESP/Wallhack - See enemies through walls</li>
-                    <li>All Characters & Pets Unlocked</li>
-                    <li>Premium Bundles Free</li>
-                    <li>Anti-Ban System Protection</li>
+                    <li>Unlimited Money & Gold</li>
+                    <li>All Motorcycles Unlocked</li>
+                    <li>Premium Customization Free</li>
+                    <li>Ultra HD Graphics</li>
+                    <li>All Tracks Unlocked</li>
+                    <li>No Ads Experience</li>
+                    <li>Anti-Ban System</li>
                     <li>No Root Required</li>
                 </ul>
 
@@ -193,14 +206,10 @@
                     </div>
                 </div>
 
-                <button class="download-btn" onclick="triggerAd()" style="max-width:400px;margin:30px auto;display:block">
-                    ⚡ DOWNLOAD CARx Rider Pro MOD
+                <button class="download-btn" onclick="startDownload()" style="max-width:400px;margin:30px auto;display:block">
+                    ⚡ DOWNLOAD CARx RIDER PRO MOD
                 </button>
             </div>
-
-            <aside class="ad-inline" id="ad4">
-                <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
-            </aside>
 
             <div class="detail-section">
                 <h3>📥 How to Install</h3>
@@ -210,44 +219,46 @@
                 <p><strong>Step 4:</strong> Open the game and enjoy unlimited features!</p>
             </div>
 
-            <aside class="ad-showcase" id="ad5">
+            <!-- Ad AFTER content -->
+            <aside class="ad-showcase" id="ad3">
                 <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
             </aside>
         </div>
 
-        <!-- Demon Slayer  DETAIL PAGE -->
-        <div id="stumble-page" class="page">
+        <!-- DEMON SLAYER DETAIL PAGE -->
+        <div id="demon-page" class="page">
             <nav class="breadcrumb">
                 <a href="#" onclick="navigateTo('home'); return false;">Home</a>
                 <span>›</span>
-                <span>Demon Slayer  MOD</span>
+                <span>Demon Slayer MOD</span>
             </nav>
             
             <header>
                 <button class="back-button" onclick="navigateTo('home')">← Back</button>
-                <h2>🎉 Demon Slayer  MOD APK</h2>
-                <p class="subtitle">Win every race with unlimited gems & skins</p>
+                <h2>⚔️ Demon Slayer MOD APK</h2>
+                <p class="subtitle">Unleash demon-slaying powers with unlimited resources</p>
             </header>
 
-            <aside class="ad-showcase" id="ad6">
+            <!-- Ad BEFORE content -->
+            <aside class="ad-showcase" id="ad4">
                 <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
             </aside>
 
             <div class="detail-section">
-                <img src="https://th.bing.com/th/id/OIP._t_Ei8LEhcqrghl1MZh1swHaEK?w=227&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="Demon Slayer " style="width:100%;max-height:300px;object-fit:cover;border-radius:15px;margin-bottom:20px">
+                <img src="https://th.bing.com/th/id/OIP._t_Ei8LEhcqrghl1MZh1swHaEK?w=227&h=180&c=7&r=0&o=7&pid=1.7&rm=3" alt="Demon Slayer" style="width:100%;max-height:300px;object-fit:cover;border-radius:15px;margin-bottom:20px">
                 
-                <h3>📝 About Demon Slayer  MOD</h3>
-                <p>Demon Slayer  is the ultimate knockout game where you compete against 32 players in crazy obstacle courses. This MOD version unlocks all premium skins, gives unlimited gems, and removes all ads for the best gaming experience!</p>
+                <h3>📝 About Demon Slayer MOD</h3>
+                <p>Demon Slayer is an action-packed RPG based on the popular anime series. Fight demons, master breathing techniques, and experience epic battles. This MOD version gives you unlimited gems, all characters unlocked, and premium features!</p>
                 
                 <h3 style="margin-top:25px">✨ MOD Features</h3>
                 <ul class="game-features" style="margin-left:20px">
-                    <li>Unlimited Gems & Tokens</li>
-                    <li>All Skins & Emotes Unlocked</li>
-                    <li>Premium Pass Features Free</li>
-                    <li>God Mode - Never Fall</li>
-                    <li>Speed Boost Available</li>
+                    <li>Unlimited Gems & Coins</li>
+                    <li>All Characters Unlocked</li>
+                    <li>Premium Skins Free</li>
+                    <li>God Mode - Invincible</li>
+                    <li>One-Hit Kill</li>
                     <li>No Advertisements</li>
-                    <li>Unlock All Maps</li>
+                    <li>Max Level Unlocked</li>
                     <li>Anti-Ban Protection</li>
                 </ul>
 
@@ -270,24 +281,21 @@
                     </div>
                 </div>
 
-                <button class="download-btn" onclick="triggerAd()" style="max-width:400px;margin:30px auto;display:block">
-                    ⚡ DOWNLOAD Demon Slayer  MOD
+                <button class="download-btn" onclick="startDownload()" style="max-width:400px;margin:30px auto;display:block">
+                    ⚡ DOWNLOAD DEMON SLAYER MOD
                 </button>
             </div>
-
-            <aside class="ad-inline" id="ad7">
-                <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
-            </aside>
 
             <div class="detail-section">
                 <h3>📥 How to Install</h3>
                 <p><strong>Step 1:</strong> Click the download button above</p>
                 <p><strong>Step 2:</strong> Go to Settings > Security > Enable "Unknown Sources"</p>
                 <p><strong>Step 3:</strong> Locate the downloaded file and install it</p>
-                <p><strong>Step 4:</strong> Launch the game and start winning!</p>
+                <p><strong>Step 4:</strong> Launch the game and start playing!</p>
             </div>
 
-            <aside class="ad-showcase" id="ad8">
+            <!-- Ad AFTER content -->
+            <aside class="ad-showcase" id="ad5">
                 <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
             </aside>
         </div>
@@ -299,11 +307,7 @@
     </div>
 
     <script>
-        // Enhanced Ad Impression System
         let userInteracted = false;
-        let adClickCount = 0;
-        const MAX_AD_IMPRESSIONS = 3;
-
         document.addEventListener('click', () => userInteracted = true, {passive: true});
         document.addEventListener('scroll', () => userInteracted = true, {passive: true});
 
@@ -318,8 +322,8 @@
         // Page navigation
         const pages = {
             home: document.getElementById('home-page'),
-            freefire: document.getElementById('freefire-page'),
-            stumble: document.getElementById('stumble-page')
+            carx: document.getElementById('carx-page'),
+            demon: document.getElementById('demon-page')
         };
 
         let currentPage = 'home';
@@ -340,42 +344,43 @@
 
         window.navigateTo = navigateTo;
 
-        // Multi-impression download system
+        // Navigate to detail page
         function initiateDownload(game) {
-            // First click - navigate to detail page
             navigateTo(game);
-            
-            // Track that user wants to download
-            sessionStorage.setItem('downloadIntent', game);
         }
 
-        function triggerAd() {
-            adClickCount++;
+        // OPTIMIZED: Single download with countdown (Maximum Revenue Strategy)
+        function startDownload() {
+            const overlay = document.getElementById('countdownOverlay');
+            const numberEl = document.getElementById('countdownNumber');
             
-            // Open ad link multiple times for more impressions
-            if (adClickCount <= MAX_AD_IMPRESSIONS) {
-                // Open the ad link
-                window.open('https://otieu.com/4/10446433', '_blank');
+            overlay.classList.add('active');
+            
+            let count = 5;
+            numberEl.textContent = count;
+            
+            const interval = setInterval(() => {
+                count--;
+                numberEl.textContent = count;
                 
-                // Show message based on impression count
-                if (adClickCount < MAX_AD_IMPRESSIONS) {
+                if (count <= 0) {
+                    clearInterval(interval);
+                    
+                    // Open ad link ONCE - but with better engagement = higher revenue
+                    window.open('https://otieu.com/4/10446433', '_blank');
+                    
+                    // Hide overlay
                     setTimeout(() => {
-                        alert(`Step ${adClickCount}/${MAX_AD_IMPRESSIONS}: Please close the ad tab and click download again to continue.`);
-                    }, 500);
-                } else {
-                    setTimeout(() => {
-                        alert('✅ Download starting! Your MOD APK will begin downloading shortly.');
-                        // Reset counter for next download
-                        adClickCount = 0;
+                        overlay.classList.remove('active');
                     }, 500);
                 }
-            }
+            }, 1000);
         }
 
         window.initiateDownload = initiateDownload;
-        window.triggerAd = triggerAd;
+        window.startDownload = startDownload;
 
-        // Back to top button
+        // Back to top
         const backToTopBtn = document.getElementById('backToTop');
 
         window.addEventListener('scroll', function() {
@@ -388,11 +393,6 @@
 
         backToTopBtn.addEventListener('click', function() {
             window.scrollTo({top: 0, behavior: 'smooth'});
-        });
-
-        // Force ad script execution on load
-        window.addEventListener('load', function() {
-            console.log('Page loaded - Ads initialized');
         });
     </script>
 </body>
