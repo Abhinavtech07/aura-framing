@@ -67,11 +67,15 @@
         .countdown-text{color:#00d4ff;font-size:18px;margin-bottom:12px}
         .countdown-subtext{color:#b8b8b8;font-size:13px}
         .ad-showcase{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:18px;margin:25px auto;max-width:728px;min-height:90px;display:flex;align-items:center;justify-content:center}
+        .native-ad-box{background:rgba(255,0,128,.05);border:1px solid rgba(255,0,128,.2);border-radius:12px;padding:20px;margin:30px auto;max-width:728px;min-height:120px;display:flex;align-items:center;justify-content:center}
         .no-results{text-align:center;padding:40px 20px;color:#888;font-size:16px}
         @media (max-width:768px){.container{padding:12px}header{padding:25px 12px 15px}main{grid-template-columns:1fr;gap:18px}}
     </style>
 </head>
 <body>
+    <!-- POPUNDER AD SCRIPT (Zone 10481702) - Loads first for max revenue -->
+    <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    
     <div class="scroll-indicator" id="scrollIndicator"></div>
     <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
     
@@ -124,6 +128,11 @@
                     <div class="stat-label">Support</div>
                 </div>
             </section>
+
+            <!-- NATIVE AD BOX (Zone 10481702) -->
+            <aside class="native-ad-box" aria-label="Sponsored Content">
+                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </aside>
         </div>
 
         <!-- DETAIL PAGE TEMPLATE -->
@@ -140,8 +149,32 @@
                 <p class="subtitle" id="detailSubtitle">Game Description</p>
             </header>
 
+            <!-- AD ZONE 10481719 - Top Banner -->
             <aside class="ad-showcase">
-                <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
+                <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </aside>
+
+            <div class="detail-section">
+                <img id="detailImage" src="" alt="Game" style="width:100%;max-height:300px;object-fit:contain;border-radius:15px;margin-bottom:20px;background:linear-gradient(135deg,#1a0033,#0a0015);padding:20px">
+                
+                <h3>📝 About This Game</h3>
+                <p id="detailDescription"></p>
+                
+                <h3 style="margin-top:20px">✨ MOD Features</h3>
+                <ul class="game-features" id="detailFeatures" style="margin-left:20px">
+                </ul>
+
+                <div class="specs-grid" id="detailSpecs">
+                </div>
+
+                <button class="download-btn" onclick="startDownload()" style="max-width:400px;margin:25px auto;display:block" id="detailDownloadBtn">
+                    ⚡ DOWNLOAD NOW
+                </button>
+            </div>
+
+            <!-- AD ZONE 10481725 - Middle Native Ad -->
+            <aside class="native-ad-box" aria-label="Recommended">
+                <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
             </aside>
 
             <div class="detail-section">
@@ -169,10 +202,6 @@
                 <p><strong>Step 3:</strong> Install the downloaded APK file</p>
                 <p><strong>Step 4:</strong> Open the game and enjoy unlimited features!</p>
             </div>
-
-            <aside class="ad-showcase">
-                <script src="https://quge5.com/88/tag.min.js" data-zone="200877" async data-cfasync="false"></script>
-            </aside>
         </div>
 
         <footer>
@@ -367,7 +396,7 @@
                 
                 if (count <= 0) {
                     clearInterval(interval);
-                    window.open('https://otieu.com/4/10446433', '_blank');
+                    window.open('https://otieu.com/4/10481743', '_blank');
                     setTimeout(() => overlay.classList.remove('active'), 500);
                 }
             }, 1000);
