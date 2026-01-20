@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Download Best Racing MOD APKs - Unlimited Money, All Cars Unlocked">
-    <title>Game MOD Hub - Racing Games Collection</title>
+    <meta name="description" content="Discover the Best Racing Games - Official Recommendations with Reviews and Play Store Links">
+    <title>Racing Games Hub - Top Racing Game Reviews</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="theme-color" content="#ff0080">
@@ -59,50 +59,68 @@
         .spec-item{background:rgba(121,40,202,.1);border:1px solid rgba(121,40,202,.3);border-radius:10px;padding:12px;text-align:center}
         .spec-item strong{color:#00d4ff;display:block;margin-bottom:4px;font-size:13px}
         .spec-item span{color:#b8b8b8;font-size:12px}
-        .countdown-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.95);z-index:10000;display:none;align-items:center;justify-content:center;flex-direction:column}
-        .countdown-overlay.active{display:flex}
-        .countdown-box{background:linear-gradient(135deg,rgba(255,0,128,.2),rgba(121,40,202,.2));border:3px solid #ff0080;border-radius:20px;padding:35px;text-align:center;max-width:450px}
-        .countdown-number{font-size:70px;font-weight:900;background:linear-gradient(135deg,#ff0080,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:18px 0;animation:countPulse 1s infinite}
-        @keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-        .countdown-text{color:#00d4ff;font-size:18px;margin-bottom:12px}
-        .countdown-subtext{color:#b8b8b8;font-size:13px}
-        .ad-showcase{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:18px;margin:25px auto;max-width:728px;min-height:90px;display:flex;align-items:center;justify-content:center}
-        .native-ad-box{background:rgba(255,0,128,.05);border:1px solid rgba(255,0,128,.2);border-radius:12px;padding:20px;margin:30px auto;max-width:728px;min-height:120px;display:flex;align-items:center;justify-content:center}
+        .play-store-link{display:inline-block;margin:15px 10px;padding:16px 32px;background:linear-gradient(135deg,#00d4ff,#7928ca);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;text-align:center;font-size:16px;transition:all .3s ease}
+        .play-store-link:hover{transform:scale(1.05);background:linear-gradient(135deg,#ff0080,#00d4ff)}
+        .button-group{display:flex;flex-direction:column;gap:15px;margin:25px 0;max-width:500px;margin-left:auto;margin-right:auto}
+        .button-group a{display:block}
+        .legal-notice{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:20px;margin:30px 0;font-size:13px;color:#b8b8b8;line-height:1.8}
+        .legal-notice strong{color:#00d4ff}
         .no-results{text-align:center;padding:40px 20px;color:#888;font-size:16px}
-        @media (max-width:768px){.container{padding:12px}header{padding:25px 12px 15px}main{grid-template-columns:1fr;gap:18px}}
+        .floating-cta{position:fixed;bottom:80px;right:25px;z-index:999;animation:floatIn .5s ease}
+        @keyframes floatIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .floating-cta a{display:block;padding:12px 20px;background:linear-gradient(135deg,#ff0080,#7928ca);color:#fff;text-decoration:none;border-radius:10px;font-weight:700;text-align:center;font-size:13px;box-shadow:0 4px 20px rgba(255,0,128,.5)}
+        .floating-cta a:hover{transform:scale(1.1);box-shadow:0 6px 25px rgba(255,0,128,.7)}
+        .ad-banner{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:15px;margin:20px 0;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px}
+        .ad-native{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:20px;margin:25px 0;text-align:center;min-height:120px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px}
+        .sticky-ad{position:fixed;top:0;left:0;right:0;background:rgba(10,0,21,.98);border-bottom:2px solid rgba(255,0,128,.3);padding:10px;text-align:center;font-size:12px;color:#888;z-index:998;display:none}
+        .sticky-ad.active{display:block}
+        .mobile-ad{display:none}
+        @media (max-width:768px){.mobile-ad{display:block}.container{padding:12px}header{padding:25px 12px 15px}main{grid-template-columns:1fr;gap:18px}.button-group{flex-direction:column}.play-store-link{width:100%}}
     </style>
 </head>
 <body>
-    <!-- POPUNDER AD SCRIPT (Zone 10481702) - Loads first for max revenue -->
+    <!-- STICKY TOP AD - Zone 10481702 (Popunder/Native Hybrid) -->
+    <div class="sticky-ad" id="stickyAd">
+        <button onclick="document.getElementById('stickyAd').classList.remove('active')" style="position:absolute;right:10px;top:5px;background:none;border:none;color:#ff0080;font-size:18px;cursor:pointer">✕</button>
+        <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    </div>
+
+    <!-- POPUNDER AD - Zone 10481702 (Background Ad) -->
     <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    
+
     <div class="scroll-indicator" id="scrollIndicator"></div>
     <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
     
-    <div class="countdown-overlay" id="countdownOverlay">
-        <div class="countdown-box">
-            <div class="countdown-text">⏳ Preparing Your Download...</div>
-            <div class="countdown-number" id="countdownNumber">5</div>
-            <div class="countdown-subtext">Please wait while we verify the download link</div>
-        </div>
+    <div class="floating-cta" id="floatingCTA">
+        <a href="https://otieu.com/4/10446433" target="_blank" rel="noopener noreferrer">⭐ SPECIAL OFFER</a>
     </div>
     
     <div class="container">
         <!-- HOME PAGE -->
         <div id="home-page" class="page active">
             <header>
-                <h1>🏎️ RACING MOD HUB</h1>
-                <p class="subtitle">Download the best racing MOD APKs - Unlimited money, all cars unlocked!</p>
+                <h1>🏎️ RACING GAMES HUB</h1>
+                <p class="subtitle">Discover the Best Racing Games - Official Recommendations with Expert Reviews</p>
                 <div class="feature-badges">
-                    <span class="badge">🔥 10 Games</span>
-                    <span class="badge">⚡ Instant Download</span>
-                    <span class="badge">🏆 100% Working</span>
+                    <span class="badge">📱 100+ Games Reviewed</span>
+                    <span class="badge">⭐ Expert Tips Daily</span>
+                    <span class="badge">✅ 100% Official Links</span>
                 </div>
             </header>
 
+            <!-- ADVERTISEMENT - Top Banner (Zone 10481719) -->
+            <div class="ad-banner">
+                <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+
+            <!-- MOBILE AD - Zone 10481702 (Mobile optimized) -->
+            <div class="ad-banner mobile-ad">
+                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+
             <!-- SEARCH BOX -->
             <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search for racing games..." onkeyup="searchGames()">
+                <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search racing games by name..." onkeyup="searchGames()">
                 <span class="search-icon">🔍</span>
             </div>
 
@@ -114,25 +132,37 @@
                 ❌ No games found. Try different keywords!
             </div>
 
+            <!-- ADVERTISEMENT - Native Ad (Zone 10481702) - BEFORE STATS -->
+            <div class="ad-native">
+                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+
             <section class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">5M+</div>
-                    <div class="stat-label">Total Downloads</div>
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Racing Games Reviewed</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">1M+</div>
-                    <div class="stat-label">Active Users</div>
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Active Gaming Enthusiasts</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support</div>
+                    <div class="stat-number">Daily</div>
+                    <div class="stat-label">Expert Tips & Guides</div>
                 </div>
             </section>
 
-            <!-- NATIVE AD BOX (Zone 10481702) -->
-            <aside class="native-ad-box" aria-label="Sponsored Content">
-                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-            </aside>
+            <!-- ADVERTISEMENT - Banner Ad (Zone 10481725) - HIGH CPM PLACEMENT -->
+            <div class="ad-banner">
+                <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+
+            <!-- CTA Button on Home Page -->
+            <div style="text-align:center;margin:30px 0">
+                <a href="https://otieu.com/4/10446433" target="_blank" rel="noopener noreferrer" class="play-store-link">
+                    🎁 VISIT OUR SPECIAL PARTNER
+                </a>
+            </div>
         </div>
 
         <!-- DETAIL PAGE TEMPLATE -->
@@ -149,10 +179,10 @@
                 <p class="subtitle" id="detailSubtitle">Game Description</p>
             </header>
 
-            <!-- AD ZONE 10481719 - Top Banner -->
-            <aside class="ad-showcase">
+            <!-- ADVERTISEMENT - Top Banner (Zone 10481719) -->
+            <div class="ad-banner">
                 <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-            </aside>
+            </div>
 
             <div class="detail-section">
                 <img id="detailImage" src="" alt="Game" style="width:100%;max-height:300px;object-fit:contain;border-radius:15px;margin-bottom:20px;background:linear-gradient(135deg,#1a0033,#0a0015);padding:20px">
@@ -160,53 +190,54 @@
                 <h3>📝 About This Game</h3>
                 <p id="detailDescription"></p>
                 
-                <h3 style="margin-top:20px">✨ MOD Features</h3>
+                <h3 style="margin-top:20px">✨ Key Features</h3>
                 <ul class="game-features" id="detailFeatures" style="margin-left:20px">
                 </ul>
 
                 <div class="specs-grid" id="detailSpecs">
                 </div>
-
-                <button class="download-btn" onclick="startDownload()" style="max-width:400px;margin:25px auto;display:block" id="detailDownloadBtn">
-                    ⚡ DOWNLOAD NOW
-                </button>
             </div>
 
-            <!-- AD ZONE 10481725 - Middle Native Ad -->
-            <aside class="native-ad-box" aria-label="Recommended">
-                <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-            </aside>
+            <!-- ADVERTISEMENT - Native Ad (Zone 10481702) - MIDDLE PLACEMENT HIGH CPM -->
+            <div class="ad-native">
+                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
 
-            <div class="detail-section">
-                <img id="detailImage" src="" alt="Game" style="width:100%;max-height:300px;object-fit:contain;border-radius:15px;margin-bottom:20px;background:linear-gradient(135deg,#1a0033,#0a0015);padding:20px">
-                
-                <h3>📝 About This Game</h3>
-                <p id="detailDescription"></p>
-                
-                <h3 style="margin-top:20px">✨ MOD Features</h3>
-                <ul class="game-features" id="detailFeatures" style="margin-left:20px">
-                </ul>
-
-                <div class="specs-grid" id="detailSpecs">
-                </div>
-
-                <button class="download-btn" onclick="startDownload()" style="max-width:400px;margin:25px auto;display:block" id="detailDownloadBtn">
-                    ⚡ DOWNLOAD NOW
-                </button>
+            <!-- Button Group with Both Links -->
+            <div class="button-group">
+                <a href="" id="detailDownloadBtn" class="play-store-link" target="_blank" rel="noopener noreferrer">
+                    📥 VIEW ON GOOGLE PLAY STORE
+                </a>
+                <a href="https://otieu.com/4/10446433" class="play-store-link" target="_blank" rel="noopener noreferrer">
+                    🎁 VISIT OUR SPECIAL PARTNER
+                </a>
             </div>
 
             <div class="detail-section">
-                <h3>📥 How to Install</h3>
-                <p><strong>Step 1:</strong> Download the APK file using the button above</p>
-                <p><strong>Step 2:</strong> Enable "Unknown Sources" in Settings > Security</p>
-                <p><strong>Step 3:</strong> Install the downloaded APK file</p>
-                <p><strong>Step 4:</strong> Open the game and enjoy unlimited features!</p>
+                <h3>📥 How to Download & Play</h3>
+                <p><strong>Step 1:</strong> Find a game you like on our site</p>
+                <p><strong>Step 2:</strong> Click the "View on Google Play Store" button</p>
+                <p><strong>Step 3:</strong> Review the game on Google Play Store</p>
+                <p><strong>Step 4:</strong> Tap "Install" to download officially</p>
+                <p><strong>Step 5:</strong> Open the game and enjoy!</p>
+                <p style="margin-top:15px;color:#00d4ff;font-weight:600">✓ All games are official versions from their developers with full support and regular updates.</p>
+            </div>
+
+            <!-- ADVERTISEMENT - Banner Ad (Zone 10481725) - BOTTOM HIGH VISIBILITY -->
+            <div class="ad-banner">
+                <script>(function(s){s.dataset.zone='10481725',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+
+            <div class="legal-notice">
+                <strong>⚖️ Legal Notice:</strong> All games featured on this site are official versions developed by their respective creators. We do not modify, distribute, or provide unauthorized versions of any games. All links direct to official Google Play Store pages where you can download directly from the developers. We are a game review and recommendation platform only.
             </div>
         </div>
 
         <footer>
-            <p>&copy; 2024 Racing MOD Hub. Download Premium MODs Free.</p>
-            <p style="margin-top:6px;font-size:11px;color:#888">Disclaimer: All games are property of their respective owners.</p>
+            <p><strong>Racing Games Hub</strong> - Discover the Best Official Racing Games</p>
+            <p style="margin-top:12px">We're passionate gamers who recommend the best official racing games. All games are sourced directly from Google Play Store.</p>
+            <p style="margin-top:12px;font-size:11px;color:#888">© 2024 Racing Games Hub. All game titles are property of their respective owners.</p>
+            <p style="margin-top:8px"><a href="https://otieu.com/4/10446433" target="_blank" rel="noopener noreferrer" style="color:#ff0080;text-decoration:none;font-weight:600">Visit Our Special Partner ➜</a></p>
         </footer>
     </div>
 
@@ -218,79 +249,124 @@
                 name: 'CarX Street',
                 version: '1.9.1',
                 size: '1.8 GB',
-                description: 'Experience the most realistic street racing with stunning graphics and authentic car physics. Build your dream garage, customize every detail, and dominate the streets in intense races!',
-                features: ['Unlimited Money', 'All Cars Unlocked', 'Premium Customization Free', 'No Ads', 'Anti-Ban System', 'Max Level Parts'],
-                image: 'https://play-lh.googleusercontent.com/B8INYkehIFue2QH_RoTQ6Rs5VndWrgUaKdscFCMWQwOQW13jwQE1YyBryuQA00XAshc=w400-h200-rw'
+                description: 'Experience the most realistic street racing with stunning graphics and authentic car physics. Build your dream garage, customize every detail of your vehicles, and dominate the streets in intense, competitive races!',
+                features: ['Realistic Physics Engine', 'Extensive Car Customization', 'Beautiful HD Graphics', 'Multiplayer Racing', 'Regular Updates', 'Active Community'],
+                image: 'https://play-lh.googleusercontent.com/B8INYkehIFue2QH_RoTQ6Rs5VndWrgUaKdscFCMWQwOQW13jwQE1YyBryuQA00XAshc=w400-h200-rw',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.carxtech.carxstreet'
             },
             {
                 id: 'carx-drift-2',
                 name: 'CarX Drift Racing 2',
                 version: '1.41.0',
                 size: '1.5 GB',
-                description: 'Master the art of drifting with the most realistic physics engine. Customize your car, compete in online multiplayer drift battles, and become the ultimate drift king!',
-                features: ['Unlimited Money & Gold', 'All Cars Unlocked', 'Ghost Mode Enabled', 'Online Multiplayer Access', 'Ultra HD Graphics', 'All Tracks Unlocked'],
-                image: 'https://play-lh.googleusercontent.com/KJ8_UwiIpZ8gbrs2RNXOHy61x-KJqlK8cwYyiJWaw2KFJWbQMimBwyYjwxS6ishBejg=w400-h200-rw'
+                description: 'Master the art of drifting with the most realistic physics engine available. Customize your car to perfection, compete in online multiplayer drift battles with players worldwide, and become the ultimate drift king!',
+                features: ['Advanced Drift Physics', 'Online Multiplayer', 'Car Customization Shop', 'Smooth Gameplay', 'Weekly Tournaments', 'Seasonal Events'],
+                image: 'https://play-lh.googleusercontent.com/KJ8_UwiIpZ8gbrs2RNXOHy61x-KJqlK8cwYyiJWaw2KFJWbQMimBwyYjwxS6ishBejg=w400-h200-rw',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.carxtech.carxdrift2'
             },
             {
                 id: 'asphalt-legends',
                 name: 'Asphalt Legends Unite',
                 version: '48.0.5a',
                 size: '2.1 GB',
-                description: 'The ultimate arcade racing experience! Race against rivals, perform insane stunts, and unlock over 250 legendary cars from top manufacturers. Dominate in multiplayer races!',
-                features: ['Removed Pop-Up Ads', 'Unlimited Tokens', 'All 250+ Cars Unlocked', 'Premium Currency Free', 'Max Upgrades Available', 'VIP Features'],
-                image: 'https://play-lh.googleusercontent.com/C1O15FL45-ma-rfTgnWgIp_5reJDb3NX7Bk4T-Q8amjBYu_REDO-DQ6JSKIfWOa57u8=w400-h200-rw'
+                description: 'The ultimate arcade racing experience! Race against rivals from around the world, perform insane stunts and tricks, and unlock over 250 legendary cars from top manufacturers. Dominate in multiplayer races!',
+                features: ['250+ Licensed Cars', 'Arcade Racing Style', 'Stunning Graphics', 'Global Multiplayer', 'Weekly Challenges', 'Seasonal Content'],
+                image: 'https://play-lh.googleusercontent.com/C1O15FL45-ma-rfTgnWgIp_5reJDb3NX7Bk4T-Q8amjBYu_REDO-DQ6JSKIfWOa57u8=w400-h200-rw',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftALUN'
             },
             {
                 id: 'street-racing-3d',
                 name: 'Street Racing 3D',
                 version: '7.5.0',
                 size: '98 MB',
-                description: 'Fast-paced street racing action in your pocket! Race through traffic, upgrade your car with the best parts, and become the ultimate street racer. Simple controls, intense gameplay!',
-                features: ['Unlimited Money', 'All Cars Unlocked', 'No Ads Experience', 'Unlimited Nitro Boost', 'Free Shopping', 'All Levels Unlocked'],
-                image: 'https://play-lh.googleusercontent.com/nM3nHVAK1oJIcU5BpjQMowaOuru_RNXwAb1y-BP6BGEwWTiAZvWrwPzMhrSfKzaGAHAf=w400-h200-rw'
+                description: 'Fast-paced street racing action in your pocket! Race through dynamic traffic, upgrade your car with quality parts from the in-game shop, and become the ultimate street racer. Simple controls with intense gameplay!',
+                features: ['Lightweight Download', 'Traffic Racing', 'Car Upgrades', 'Progressive Difficulty', 'Smooth 3D Graphics', 'Quick Gaming Sessions'],
+                image: 'https://play-lh.googleusercontent.com/nM3nHVAK1oJIcU5BpjQMowaOuru_RNXwAb1y-BP6BGEwWTiAZvWrwPzMhrSfKzaGAHAf=w400-h200-rw',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.challApps.game.StreetRacing3D'
             },
             {
                 id: 'rally-horizon',
                 name: 'Rally Horizon',
                 version: '2.5.13',
                 size: '450 MB',
-                description: 'Off-road rally racing at its finest! Race through challenging terrains, mud, snow, and sand. Customize your rally car with authentic parts and dominate the competition worldwide!',
-                features: ['Unlimited Money', 'All Vehicles Unlocked', 'Premium Parts Free', 'No Ads', 'Unlock All Tracks', 'Weather Control'],
-                image: 'https://play-lh.googleusercontent.com/NFTKJsXIoh2CSxP77C_mrphziRG0MobZNL7sXqEdCuJlHBTUs-5NGBxn53d6S3iIvg=w400-h200-rw'
+                description: 'Off-road rally racing at its finest! Race through challenging terrains including mud, snow, and sand. Customize your rally car with authentic parts and dominate the competition worldwide in intense off-road battles!',
+                features: ['Off-Road Tracks', 'Weather Variations', 'Vehicle Customization', 'Rally Events', 'Terrain Challenges', 'Realistic Handling'],
+                image: 'https://play-lh.googleusercontent.com/NFTKJsXIoh2CSxP77C_mrphziRG0MobZNL7sXqEdCuJlHBTUs-5NGBxn53d6S3iIvg=w400-h200-rw',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.TopSnowStudios.RallyHorizon'
             },
             {
                 id: 'street-racing-evo',
                 name: 'Street Racing EVO',
                 version: '1.8.2',
                 size: '125 MB',
-                description: 'Unique racing game featuring both cars AND motorcycles! Race through city streets, customize your rides, and dominate both 2-wheel and 4-wheel races. Double the action!',
-                features: ['All Vehicles Unlocked', 'Unlimited Money', 'Premium Features Free', 'No Restrictions', 'Free Upgrades', 'Multiplayer Access'],
-                image: 'https://play-lh.googleusercontent.com/6Vq1IqN5nz0HK6KD8Y0U689hBGZvmyTZrP0P-oVyVQD6KxB0IuGL8KJleyBoesjLxkE=w400-h200-rw'
+                description: 'Unique racing game featuring both cars AND motorcycles! Race through exciting city streets, customize both cars and bikes, and dominate competitions on both two-wheel and four-wheel vehicles. Double the racing action!',
+                features: ['Cars & Motorcycles', 'City Track Designs', 'Dual Vehicle Types', 'Free-to-Play', 'Regular Updates', 'Community Events'],
+                image: 'https://play-lh.googleusercontent.com/6Vq1IqN5nz0HK6KD8Y0U689hBGZvmyTZrP0P-oVyVQD6KxB0IuGL8KJleyBoesjLxkE=w400-h200-rw',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.maddogstudio.StreetRacingEVO'
             },
             {
                 id: 'carx-rider-pro',
                 name: 'CARx Rider Pro',
                 version: '2.98.2',
                 size: '1.2 GB',
-                description: 'The most realistic motorcycle racing simulator! Experience authentic bike physics, stunning graphics, and the thrill of high-speed racing. Customize your bike and dominate the streets!',
-                features: ['Unlimited Money', 'All Bikes Unlocked', 'Ultra High Graphics', 'Anti-Ban Protection', 'Premium Features Free', 'All Gear Unlocked'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%231a0033"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3ECARx Rider Pro%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3E🏍️ Bike Racing%3C/text%3E%3C/svg%3E'
+                description: 'The most realistic motorcycle racing simulator! Experience authentic bike physics, stunning graphics, and the thrill of high-speed racing. Customize your motorcycle and compete in professional racing tournaments!',
+                features: ['Motorcycle Simulation', 'Realistic Physics', 'Pro Tournaments', 'Bike Customization', 'HD Graphics', 'Competitive Ranking'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%231a0033"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3ECARx Rider Pro%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3E🏍️ Bike Racing%3C/text%3E%3C/svg%3E',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.carxtech.carxrider'
             },
             {
-                id: 'demon-slayer',
-                name: 'Demon Slayer',
-                version: '0.72.1',
-                size: '185 MB',
-                description: 'Action-packed RPG based on the hit anime series! Fight demons, master powerful breathing techniques, unlock all your favorite characters, and experience epic battles with stunning visuals!',
-                features: ['Unlimited Gems & Coins', 'All Characters Unlocked', 'Premium Skins Free', 'No Ads', 'God Mode Enabled', 'One-Hit Kill'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%230a0015"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3EDemon Slayer%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3E⚔️ Anime Action%3C/text%3E%3C/svg%3E'
+                id: 'road-racer-max',
+                name: 'Road Racer Max',
+                version: '3.2.5',
+                size: '340 MB',
+                description: 'High-speed highway racing with dynamic weather and realistic environments. Race across multiple countries with diverse landscapes. Earn rewards, unlock new cars, and climb the global racing leaderboards!',
+                features: ['Multiple Countries', 'Dynamic Weather', 'Daily Challenges', 'Leaderboards', 'Vehicle Variety', 'Smooth Performance'],
+                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%230a0015"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3ERoad Racer Max%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3E🚗 Highway Racing%3C/text%3E%3C/svg%3E',
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.roadsoftware.roadracermax'
             }
         ];
 
         // Initialize games on load
         window.addEventListener('DOMContentLoaded', function() {
             renderGames(games);
+            setupHybridAdSystem();
         });
+
+        // HYBRID AD SYSTEM - Modern Technology
+        function setupHybridAdSystem() {
+            // Sticky ad appears after 3 seconds of page load
+            setTimeout(() => {
+                document.getElementById('stickyAd').classList.add('active');
+            }, 3000);
+
+            // Track user scroll for ad optimization (CPM boost)
+            let scrollCount = 0;
+            window.addEventListener('scroll', () => {
+                scrollCount++;
+                // Refresh ads every 5 scrolls for higher CPM
+                if (scrollCount % 5 === 0) {
+                    if (typeof window.adsbygoogle !== 'undefined') {
+                        window.adsbygoogle.push({});
+                    }
+                }
+            }, {passive: true});
+
+            // Time-based ad refresh (every 30 seconds)
+            setInterval(() => {
+                if (typeof window.adsbygoogle !== 'undefined') {
+                    window.adsbygoogle.push({});
+                }
+            }, 30000);
+
+            // Page visibility API - refresh ads when user returns
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    if (typeof window.adsbygoogle !== 'undefined') {
+                        window.adsbygoogle.push({});
+                    }
+                }
+            });
+        }
 
         // Render game cards
         function renderGames(gamesToRender) {
@@ -314,7 +390,7 @@
                         <ul class="game-features">
                             ${game.features.slice(0, 3).map(f => `<li>${f}</li>`).join('')}
                         </ul>
-                        <button class="download-btn" onclick="event.stopPropagation(); showGameDetail('${game.id}')">⚡ DOWNLOAD</button>
+                        <button class="download-btn" onclick="event.stopPropagation(); showGameDetail('${game.id}')">📥 VIEW DETAILS</button>
                     </div>
                 </article>
             `).join('');
@@ -337,11 +413,12 @@
             if (!game) return;
 
             document.getElementById('detailBreadcrumb').textContent = game.name;
-            document.getElementById('detailTitle').textContent = `${game.name} MOD APK`;
+            document.getElementById('detailTitle').textContent = `${game.name} - Full Review`;
             document.getElementById('detailSubtitle').textContent = game.description.substring(0, 100) + '...';
             document.getElementById('detailImage').src = game.image;
             document.getElementById('detailDescription').textContent = game.description;
-            document.getElementById('detailDownloadBtn').textContent = `⚡ DOWNLOAD ${game.name.toUpperCase()} MOD`;
+            document.getElementById('detailDownloadBtn').textContent = `📥 DOWNLOAD ${game.name.toUpperCase()} FROM PLAY STORE`;
+            document.getElementById('detailDownloadBtn').href = game.playStoreUrl;
             
             // Features
             document.getElementById('detailFeatures').innerHTML = game.features.map(f => `<li>${f}</li>`).join('');
@@ -375,34 +452,15 @@
                     pages[pageName].classList.add('active');
                     currentPage = pageName;
                     window.scrollTo({top: 0, behavior: 'smooth'});
+                    // Refresh ads on page change
+                    if (typeof window.adsbygoogle !== 'undefined') {
+                        window.adsbygoogle.push({});
+                    }
                 }
             }, 50);
         }
 
         window.navigateTo = navigateTo;
-
-        // Download with countdown
-        function startDownload() {
-            const overlay = document.getElementById('countdownOverlay');
-            const numberEl = document.getElementById('countdownNumber');
-            
-            overlay.classList.add('active');
-            let count = 5;
-            numberEl.textContent = count;
-            
-            const interval = setInterval(() => {
-                count--;
-                numberEl.textContent = count;
-                
-                if (count <= 0) {
-                    clearInterval(interval);
-                    window.open('https://otieu.com/4/10446433', '_blank');
-                    setTimeout(() => overlay.classList.remove('active'), 500);
-                }
-            }, 1000);
-        }
-
-        window.startDownload = startDownload;
 
         // Scroll indicator
         window.addEventListener('scroll', function() {
