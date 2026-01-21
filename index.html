@@ -9,15 +9,9 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="theme-color" content="#ff0080">
     
-    <!-- Google AdSense Script (Will be active once verified) -->
+    <!-- Google AdSense Script (Single instance) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3201100934909470"
          crossorigin="anonymous"></script>
-    
-    <!-- Monetag Ad Network (Active Now - No verification needed) -->
-    <script>
-        // Monetag ads will load while AdSense is pending
-        window.monetagAdsActive = true;
-    </script>
 
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -122,27 +116,6 @@
             <div class="ad-banner">
                 <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
             </div>
-            
-            <!-- ADVERTISEMENT - Google AdSense (Will activate when verified) -->
-            <div class="ad-banner" id="adsenseContainer" style="min-height:90px;display:flex;align-items:center;justify-content:center;">
-                <!-- AdSense ads will display here once account is verified -->
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3201100934909470"
-                     data-ad-slot="4008772932"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                     if(typeof adsbygoogle !== 'undefined') {
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                     }
-                </script>
-            </div>
-
-            <!-- MOBILE AD - Zone 10481702 (Mobile optimized) -->
-            <div class="ad-banner mobile-ad">
-                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-            </div>
 
             <!-- SEARCH BOX -->
             <div class="search-box">
@@ -209,21 +182,6 @@
             <div class="ad-banner">
                 <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
             </div>
-            
-            <!-- ADVERTISEMENT - Google AdSense (Will activate when verified) -->
-            <div class="ad-banner" id="adsenseContainerDetail1" style="min-height:90px;display:flex;align-items:center;justify-content:center;">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3201100934909470"
-                     data-ad-slot="4008772932"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                     if(typeof adsbygoogle !== 'undefined') {
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                     }
-                </script>
-            </div>
 
             <div class="detail-section">
                 <img id="detailImage" src="" alt="Game" style="width:100%;max-height:300px;object-fit:contain;border-radius:15px;margin-bottom:20px;background:linear-gradient(135deg,#1a0033,#0a0015);padding:20px">
@@ -267,21 +225,6 @@
             <!-- ADVERTISEMENT - Bottom Banner (Zone 10481725 - Monetag) -->
             <div class="ad-banner">
                 <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-            </div>
-            
-            <!-- ADVERTISEMENT - Google AdSense (Will activate when verified) -->
-            <div class="ad-banner" id="adsenseContainerDetail2" style="min-height:90px;display:flex;align-items:center;justify-content:center;">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3201100934909470"
-                     data-ad-slot="4008772932"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script>
-                     if(typeof adsbygoogle !== 'undefined') {
-                        (adsbygoogle = window.adsbygoogle || []).push({});
-                     }
-                </script>
             </div>
 
             <div class="legal-notice">
@@ -535,6 +478,186 @@
         backToTopBtn.addEventListener('click', function() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
+
+        // ========================================
+        // HYBRID AD SYSTEM - MODERN TECHNOLOGY
+        // ========================================
+        
+        function setupHybridAdSystem() {
+            // Sticky ad appears after 3 seconds of page load
+            setTimeout(() => {
+                document.getElementById('stickyAd').classList.add('active');
+            }, 3000);
+
+            // TECHNIQUE 1: Scroll-based ad refresh (every 5 scrolls)
+            let scrollCount = 0;
+            window.addEventListener('scroll', () => {
+                scrollCount++;
+                if (scrollCount % 5 === 0) {
+                    refreshAllAds();
+                }
+            }, {passive: true});
+
+            // TECHNIQUE 2: Time-based ad refresh (every 30 seconds)
+            setInterval(() => {
+                refreshAllAds();
+            }, 30000);
+
+            // TECHNIQUE 3: Page visibility API - refresh when user returns
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                    refreshAllAds();
+                }
+            });
+
+            // TECHNIQUE 4: Intersection Observer - refresh when ads become visible
+            const adElements = document.querySelectorAll('.ad-banner, .ad-native');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        refreshAllAds();
+                    }
+                });
+            }, {threshold: 0.5});
+            
+            adElements.forEach(el => observer.observe(el));
+
+            // TECHNIQUE 5: User engagement tracking
+            document.addEventListener('click', () => {
+                refreshAllAds();
+            }, {passive: true});
+
+            // TECHNIQUE 6: Mouse movement detection
+            let lastMouseTime = Date.now();
+            document.addEventListener('mousemove', () => {
+                const now = Date.now();
+                if (now - lastMouseTime > 60000) { // 60 seconds
+                    refreshAllAds();
+                    lastMouseTime = now;
+                }
+            }, {passive: true});
+        }
+
+        // Universal ad refresh function
+        function refreshAllAds() {
+            // Refresh Google AdSense ads
+            if (typeof adsbygoogle !== 'undefined') {
+                adsbygoogle.push({});
+            }
+
+            // Refresh Monetag ads
+            if (typeof window.monetag !== 'undefined') {
+                window.monetag.refresh();
+            }
+
+            // Force Monetag script reload if needed
+            refreshMonetag();
+        }
+
+        // Monetag refresh helper
+        function refreshMonetag() {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://nap5k.com/tag.min.js';
+            document.head.appendChild(script);
+        }
+
+        // Initialize hybrid system on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            renderGames(games);
+            setupHybridAdSystem();
+            
+            // Additional optimization: Refresh ads on navigation
+            window.addEventListener('hashchange', () => {
+                setTimeout(() => {
+                    refreshAllAds();
+                }, 500);
+            });
+        });
+
+        // TECHNIQUE 7: Performance-based refresh (when page is idle)
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                refreshAllAds();
+            }, {timeout: 2000});
+        } else {
+            // Fallback for older browsers
+            setTimeout(() => {
+                refreshAllAds();
+            }, 2000);
+        }
+
+        // TECHNIQUE 8: Lazy loading ads as user scrolls
+        function lazyLoadAds() {
+            const adSections = document.querySelectorAll('.ad-banner, .ad-native');
+            const lazyObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        refreshAllAds();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            adSections.forEach(section => {
+                lazyObserver.observe(section);
+            });
+        }
+
+        // Initialize lazy loading
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', lazyLoadAds);
+        } else {
+            lazyLoadAds();
+        }
+
+        // TECHNIQUE 9: Smart CPM optimization - refresh during peak engagement
+        function monitorEngagement() {
+            let engagementScore = 0;
+            
+            document.addEventListener('click', () => {
+                engagementScore++;
+                if (engagementScore % 3 === 0) {
+                    refreshAllAds();
+                }
+            }, {passive: true});
+
+            // Focus detection
+            window.addEventListener('focus', () => {
+                refreshAllAds();
+            });
+
+            window.addEventListener('blur', () => {
+                // Continue earning even when window is blurred
+                setTimeout(() => {
+                    refreshAllAds();
+                }, 5000);
+            });
+        }
+
+        monitorEngagement();
+
+        // TECHNIQUE 10: Dual refresh throttling (prevents excessive refreshing)
+        let lastRefreshTime = 0;
+        const refreshThrottle = 5000; // 5 seconds minimum between refreshes
+
+        function throttledRefresh() {
+            const now = Date.now();
+            if (now - lastRefreshTime > refreshThrottle) {
+                refreshAllAds();
+                lastRefreshTime = now;
+            }
+        }
+
+        // Replace original navigate function with throttled refresh
+        const originalNavigate = window.navigateTo;
+        window.navigateTo = function(pageName) {
+            originalNavigate(pageName);
+            setTimeout(() => {
+                throttledRefresh();
+            }, 300);
+        };
+
     </script>
 </body>
 </html>
