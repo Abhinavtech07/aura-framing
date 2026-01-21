@@ -9,13 +9,15 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="theme-color" content="#ff0080">
     
-    <!-- Google AdSense Script (Main) -->
+    <!-- Google AdSense Script (Will be active once verified) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3201100934909470"
          crossorigin="anonymous"></script>
     
-    <!-- Google AdSense Script (Additional) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3201100934909470"
-         crossorigin="anonymous"></script>
+    <!-- Monetag Ad Network (Active Now - No verification needed) -->
+    <script>
+        // Monetag ads will load while AdSense is pending
+        window.monetagAdsActive = true;
+    </script>
 
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -116,8 +118,14 @@
                 </div>
             </header>
 
-            <!-- ADVERTISEMENT - Top Banner (Google AdSense) -->
+            <!-- ADVERTISEMENT - Top Banner (Zone 10481719 - Monetag) -->
             <div class="ad-banner">
+                <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+            
+            <!-- ADVERTISEMENT - Google AdSense (Will activate when verified) -->
+            <div class="ad-banner" id="adsenseContainer" style="min-height:90px;display:flex;align-items:center;justify-content:center;">
+                <!-- AdSense ads will display here once account is verified -->
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-3201100934909470"
@@ -125,7 +133,9 @@
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
                 <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
+                     if(typeof adsbygoogle !== 'undefined') {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                     }
                 </script>
             </div>
 
@@ -148,7 +158,7 @@
                 ❌ No games found. Try different keywords!
             </div>
 
-            <!-- ADVERTISEMENT - Native Ad (Zone 10481702) - BEFORE STATS -->
+            <!-- ADVERTISEMENT - Native Ad (Zone 10481702 - Monetag BEFORE STATS) -->
             <div class="ad-native">
                 <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
             </div>
@@ -168,7 +178,7 @@
                 </div>
             </section>
 
-            <!-- ADVERTISEMENT - Banner Ad (Zone 10481725) - HIGH CPM PLACEMENT -->
+            <!-- ADVERTISEMENT - Banner Ad (Zone 10481725 - Monetag AFTER STATS) -->
             <div class="ad-banner">
                 <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
             </div>
@@ -195,8 +205,13 @@
                 <p class="subtitle" id="detailSubtitle">Game Description</p>
             </header>
 
-            <!-- ADVERTISEMENT - Top Banner (Google AdSense) -->
+            <!-- ADVERTISEMENT - Top Banner (Zone 10481719 - Monetag) -->
             <div class="ad-banner">
+                <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+            
+            <!-- ADVERTISEMENT - Google AdSense (Will activate when verified) -->
+            <div class="ad-banner" id="adsenseContainerDetail1" style="min-height:90px;display:flex;align-items:center;justify-content:center;">
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-3201100934909470"
@@ -204,7 +219,9 @@
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
                 <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
+                     if(typeof adsbygoogle !== 'undefined') {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                     }
                 </script>
             </div>
 
@@ -222,7 +239,7 @@
                 </div>
             </div>
 
-            <!-- ADVERTISEMENT - Native Ad (Zone 10481702) - MIDDLE PLACEMENT HIGH CPM -->
+            <!-- ADVERTISEMENT - Native Ad (Zone 10481702 - Monetag MIDDLE) -->
             <div class="ad-native">
                 <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
             </div>
@@ -247,8 +264,13 @@
                 <p style="margin-top:15px;color:#00d4ff;font-weight:600">✓ All games are official versions from their developers with full support and regular updates.</p>
             </div>
 
-            <!-- ADVERTISEMENT - Bottom Banner (Google AdSense) -->
+            <!-- ADVERTISEMENT - Bottom Banner (Zone 10481725 - Monetag) -->
             <div class="ad-banner">
+                <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            </div>
+            
+            <!-- ADVERTISEMENT - Google AdSense (Will activate when verified) -->
+            <div class="ad-banner" id="adsenseContainerDetail2" style="min-height:90px;display:flex;align-items:center;justify-content:center;">
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-3201100934909470"
@@ -256,7 +278,9 @@
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
                 <script>
-                     (adsbygoogle = window.adsbygoogle || []).push({});
+                     if(typeof adsbygoogle !== 'undefined') {
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                     }
                 </script>
             </div>
 
