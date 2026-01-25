@@ -6,7 +6,6 @@
     <meta name="description" content="Discover the Best Racing Games - Official Recommendations with Reviews and Play Store Links">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Racing Games Hub - Top Racing Game Reviews</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
@@ -162,6 +161,7 @@
             margin-bottom: 20px;
             font-weight: 600;
             transition: all 0.3s ease;
+            border: 2px solid rgba(255, 0, 128, 0.5);
         }
 
         .back-button:active {
@@ -554,11 +554,46 @@
     </style>
 </head>
 <body>
-    <!-- MONETAG POPUNDER -->
-    <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481702,document.createElement('script'))</script>
+    <!-- DELAYED MONETAG ADS - Instagram Friendly -->
+    <script>
+        // Detect if user engaged (scrolled or clicked)
+        let userEngaged = false;
+        let engagementTimer = null;
 
-    <!-- MONETAG VIGNETTE AD -->
-    <script>(function(s){s.dataset.zone='10512785',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+        function checkUserEngagement() {
+            if (!userEngaged) {
+                userEngaged = true;
+                clearTimeout(engagementTimer);
+                loadAggressiveAds();
+            }
+        }
+
+        // Wait for user interaction before loading aggressive ads
+        window.addEventListener('scroll', checkUserEngagement, {once: true, passive: true});
+        window.addEventListener('click', checkUserEngagement, {once: true});
+        window.addEventListener('touchstart', checkUserEngagement, {once: true, passive: true});
+
+        // Fallback: Load after 10 seconds if no interaction
+        engagementTimer = setTimeout(() => {
+            if (!userEngaged) {
+                loadAggressiveAds();
+            }
+        }, 10000);
+
+        function loadAggressiveAds() {
+            // Load Popunder ONLY after engagement
+            (function(d,z,s){
+                s.src='https://'+d+'/400/'+z;
+                try{(document.body||document.documentElement).appendChild(s)}catch(e){}
+            })('nap5k.com',10481702,document.createElement('script'));
+
+            // Load Vignette ONLY after engagement
+            (function(s){
+                s.dataset.zone='10512785';
+                s.src='https://gizokraijaw.net/vignette.min.js';
+            })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+        }
+    </script>
 
     <!-- STICKY TOP BANNER -->
     <div class="sticky-ad-top" id="stickyAdTop">
@@ -592,7 +627,7 @@
                 </div>
             </header>
 
-            <!-- AD 1 -->
+            <!-- AD 1 - Banner (Safe, loads immediately) -->
             <div class="ad-container ad-banner">
                 <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
             </div>
@@ -602,7 +637,7 @@
                 <span class="search-icon">🔍</span>
             </div>
 
-            <!-- AD 2 -->
+            <!-- AD 2 - Native -->
             <div class="ad-container ad-native">
                 <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
             </div>
@@ -702,7 +737,7 @@
 
             <!-- AD 9 -->
             <div class="ad-container ad-banner">
-                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481725,document.createElement('script'))</script>
             </div>
 
             <div class="detail-section">
@@ -748,7 +783,7 @@
                 description: 'Experience the most realistic street racing with stunning graphics and authentic car physics. Build your dream garage, customize every detail of your vehicles, and dominate the streets in intense, competitive races!',
                 features: ['Realistic Physics Engine', 'Extensive Car Customization', 'Beautiful HD Graphics', 'Multiplayer Racing', 'Regular Updates', 'Active Community'],
                 image: 'https://play-lh.googleusercontent.com/B8INYkehIFue2QH_RoTQ6Rs5VndWrgUaKdscFCMWQwOQW13jwQE1YyBryuQA00XAshc=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.carxtech.carxstreet'
             },
             {
                 id: 'carx-drift-2',
@@ -758,7 +793,7 @@
                 description: 'Master the art of drifting with the most realistic physics engine available. Customize your car to perfection, compete in online multiplayer drift battles with players worldwide, and become the ultimate drift king!',
                 features: ['Advanced Drift Physics', 'Online Multiplayer', 'Car Customization Shop', 'Smooth Gameplay', 'Weekly Tournaments', 'Seasonal Events'],
                 image: 'https://play-lh.googleusercontent.com/KJ8_UwiIpZ8gbrs2RNXOHy61x-KJqlK8cwYyiJWaw2KFJWbQMimBwyYjwxS6ishBejg=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.carxtech.carxdrift2'
             },
             {
                 id: 'asphalt-legends',
@@ -768,7 +803,7 @@
                 description: 'The ultimate arcade racing experience! Race against rivals from around the world, perform insane stunts and tricks, and unlock over 250 legendary cars from top manufacturers. Dominate in multiplayer races!',
                 features: ['250+ Licensed Cars', 'Arcade Racing Style', 'Stunning Graphics', 'Global Multiplayer', 'Weekly Challenges', 'Seasonal Content'],
                 image: 'https://play-lh.googleusercontent.com/C1O15FL45-ma-rfTgnWgIp_5reJDb3NX7Bk4T-Q8amjBYu_REDO-DQ6JSKIfWOa57u8=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftALUN'
             },
             {
                 id: 'street-racing-3d',
@@ -778,7 +813,7 @@
                 description: 'Fast-paced street racing action in your pocket! Race through dynamic traffic, upgrade your car with quality parts from the in-game shop, and become the ultimate street racer. Simple controls with intense gameplay!',
                 features: ['Lightweight Download', 'Traffic Racing', 'Car Upgrades', 'Progressive Difficulty', 'Smooth 3D Graphics', 'Quick Gaming Sessions'],
                 image: 'https://play-lh.googleusercontent.com/nM3nHVAK1oJIcU5BpjQMowaOuru_RNXwAb1y-BP6BGEwWTiAZvWrwPzMhrSfKzaGAHAf=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.challApps.game.StreetRacing3D'
             },
             {
                 id: 'rally-horizon',
@@ -788,7 +823,7 @@
                 description: 'Off-road rally racing at its finest! Race through challenging terrains including mud, snow, and sand. Customize your rally car with authentic parts and dominate the competition worldwide in intense off-road battles!',
                 features: ['Off-Road Tracks', 'Weather Variations', 'Vehicle Customization', 'Rally Events', 'Terrain Challenges', 'Realistic Handling'],
                 image: 'https://play-lh.googleusercontent.com/NFTKJsXIoh2CSxP77C_mrphziRG0MobZNL7sXqEdCuJlHBTUs-5NGBxn53d6S3iIvg=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.TopSnowStudios.RallyHorizon'
             },
             {
                 id: 'street-racing-evo',
@@ -798,7 +833,7 @@
                 description: 'Unique racing game featuring both cars AND motorcycles! Race through exciting city streets, customize both cars and bikes, and dominate competitions on both two-wheel and four-wheel vehicles. Double the racing action!',
                 features: ['Cars & Motorcycles', 'City Track Designs', 'Dual Vehicle Types', 'Free-to-Play', 'Regular Updates', 'Community Events'],
                 image: 'https://play-lh.googleusercontent.com/6Vq1IqN5nz0HK6KD8Y0U689hBGZvmyTZrP0P-oVyVQD6KxB0IuGL8KJleyBoesjLxkE=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.maddogstudio.StreetRacingEVO'
             },
             {
                 id: 'carx-rider-pro',
@@ -808,7 +843,7 @@
                 description: 'The most realistic motorcycle racing simulator! Experience authentic bike physics, stunning graphics, and the thrill of high-speed racing. Customize your motorcycle and compete in professional racing tournaments!',
                 features: ['Motorcycle Simulation', 'Realistic Physics', 'Pro Tournaments', 'Bike Customization', 'HD Graphics', 'Competitive Ranking'],
                 image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%231a0033"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3ECARx Rider Pro%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3E🏍️ Bike Racing%3C/text%3E%3C/svg%3E',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.carxtech.carxrider'
             },
             {
                 id: 'road-racer-max',
@@ -818,28 +853,29 @@
                 description: 'High-speed highway racing with dynamic weather and realistic environments. Race across multiple countries with diverse landscapes. Earn rewards, unlock new cars, and climb the global racing leaderboards!',
                 features: ['Multiple Countries', 'Dynamic Weather', 'Daily Challenges', 'Leaderboards', 'Vehicle Variety', 'Smooth Performance'],
                 image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%230a0015"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3ERoad Racer Max%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3E🚗 Highway Racing%3C/text%3E%3C/svg%3E',
-                playStoreUrl: 'https://otieu.com/4/10446433'
+                playStoreUrl: 'https://play.google.com/store/apps/details?id=com.roadsoftware.roadracermax'
             }
         ];
 
-        // AD CONFIG - MAXIMUM REVENUE
+        // INSTAGRAM-FRIENDLY AD CONFIG
         const adConfig = {
-            refreshInterval: 25000,
-            scrollRefreshThreshold: 2,
-            clickRefreshThreshold: 3,
+            refreshInterval: 30000,
+            scrollRefreshThreshold: 3,
+            clickRefreshThreshold: 5,
             lastRefresh: Date.now()
         };
 
         function initMaxRevenue() {
+            // Delayed sticky ads for better UX
             setTimeout(() => {
                 const sticky = document.getElementById('stickyAdTop');
                 if (sticky) sticky.classList.add('active');
-            }, 2000);
+            }, 5000);
 
             setTimeout(() => {
                 const floating = document.getElementById('floatingAd');
                 if (floating) floating.classList.add('active');
-            }, 5000);
+            }, 8000);
 
             startRefreshCycles();
         }
@@ -867,14 +903,14 @@
 
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'visible') {
-                    setTimeout(() => refreshAllAds('visibility'), 500);
+                    setTimeout(() => refreshAllAds('visibility'), 1000);
                 }
             });
         }
 
         function refreshAllAds(trigger) {
             const now = Date.now();
-            if (now - adConfig.lastRefresh < 8000) return;
+            if (now - adConfig.lastRefresh < 10000) return;
             adConfig.lastRefresh = now;
         }
 
@@ -882,7 +918,7 @@
             const el = document.getElementById('stickyAdTop');
             if (el) {
                 el.classList.remove('active');
-                setTimeout(() => el.classList.add('active'), 30000);
+                setTimeout(() => el.classList.add('active'), 40000);
             }
         }
 
@@ -890,7 +926,7 @@
             const el = document.getElementById('floatingAd');
             if (el) {
                 el.classList.remove('active');
-                setTimeout(() => el.classList.add('active'), 45000);
+                setTimeout(() => el.classList.add('active'), 50000);
             }
         }
 
