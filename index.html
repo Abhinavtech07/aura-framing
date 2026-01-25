@@ -2,102 +2,582 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="description" content="Discover the Best Racing Games - Official Recommendations with Reviews and Play Store Links">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Racing Games Hub - Top Racing Game Reviews</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="theme-color" content="#ff0080">
-    
-    <!-- Google AdSense Script (Single instance) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3201100934909470"
-         crossorigin="anonymous"></script>
 
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#0a0015;color:#e0e0e0;line-height:1.6;min-height:100vh;overflow-x:hidden}
-        .container{max-width:1200px;margin:0 auto;padding:20px}
-        .page{display:none;opacity:0;animation:fadeIn .4s ease forwards}
-        .page.active{display:block}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-        header{text-align:center;padding:30px 20px 20px;margin-bottom:20px}
-        h1{font-size:clamp(28px,7vw,56px);background:linear-gradient(135deg,#ff0080,#7928ca,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;font-weight:900;letter-spacing:-1px}
-        h2{font-size:clamp(24px,6vw,40px);background:linear-gradient(135deg,#ff0080,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:16px;font-weight:800}
-        .subtitle{font-size:clamp(15px,4vw,18px);color:#00d4ff;line-height:1.5;max-width:600px;margin:0 auto}
-        .search-box{max-width:600px;margin:20px auto;position:relative}
-        .search-input{width:100%;padding:15px 50px 15px 20px;background:rgba(255,0,128,.1);border:2px solid rgba(255,0,128,.3);border-radius:12px;color:#e0e0e0;font-size:16px;outline:none;transition:all .3s ease}
-        .search-input:focus{border-color:#ff0080;background:rgba(255,0,128,.15)}
-        .search-input::placeholder{color:#888}
-        .search-icon{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:20px;color:#00d4ff}
-        .feature-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px}
-        .badge{background:rgba(255,0,128,.15);border:2px solid rgba(255,0,128,.5);padding:6px 14px;border-radius:18px;font-size:12px;color:#ff0080;font-weight:600}
-        .back-button{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(255,0,128,.2);border:2px solid rgba(255,0,128,.5);color:#ff0080;text-decoration:none;border-radius:10px;font-size:15px;cursor:pointer;margin-bottom:20px;font-weight:600}
-        .back-button:hover{background:rgba(255,0,128,.4);border-color:#ff0080;transform:translateX(-5px)}
-        main{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin:30px 0}
-        .game-card{background:linear-gradient(135deg,rgba(255,0,128,.1) 0%,rgba(121,40,202,.08) 100%);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:0;overflow:hidden;transition:all .3s ease;cursor:pointer}
-        .game-card:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(255,0,128,.4);border-color:#ff0080}
-        .game-image{width:100%;height:160px;object-fit:contain;border-bottom:2px solid rgba(255,0,128,.3);background:linear-gradient(135deg,#1a0033,#0a0015);padding:10px}
-        .game-content{padding:20px}
-        .game-card h3{color:#00d4ff;font-size:clamp(18px,4.5vw,20px);margin-bottom:10px;font-weight:700;line-height:1.3}
-        .game-card p{color:#c0c0c0;font-size:13px;margin-bottom:6px;line-height:1.5}
-        .game-features{list-style:none;margin:12px 0;padding:0}
-        .game-features li{color:#b8b8b8;font-size:12px;padding:4px 0;display:flex;align-items:center;gap:6px}
-        .game-features li:before{content:'✓';color:#00d4ff;font-weight:bold;font-size:14px}
-        .download-btn{display:block;padding:14px 28px;background:linear-gradient(135deg,#00d4ff,#7928ca);color:#fff;text-decoration:none;border-radius:10px;font-weight:700;border:none;cursor:pointer;font-size:15px;width:100%;text-align:center;text-transform:uppercase;letter-spacing:.5px;margin-top:12px;animation:pulse 2s infinite}
-        @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(0,212,255,.4)}50%{box-shadow:0 6px 30px rgba(0,212,255,.7)}}
-        .download-btn:hover{transform:scale(1.05);background:linear-gradient(135deg,#ff0080,#00d4ff)}
-        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin:30px 0}
-        .stat-card{background:rgba(255,0,128,.1);border:2px solid rgba(255,0,128,.3);border-radius:12px;padding:20px 12px;text-align:center}
-        .stat-number{font-size:clamp(28px,7vw,36px);font-weight:900;background:linear-gradient(135deg,#ff0080,#00d4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
-        .stat-label{font-size:clamp(12px,3.5vw,14px);color:#7928ca;font-weight:600}
-        footer{text-align:center;padding:35px 20px 20px;margin-top:40px;color:#7928ca;font-size:12px;border-top:2px solid rgba(255,0,128,.2)}
-        .breadcrumb{font-size:13px;color:#7928ca;margin-bottom:15px;display:flex;align-items:center;gap:8px}
-        .breadcrumb a{color:#ff0080;text-decoration:none}
-        .back-to-top{position:fixed;bottom:25px;right:25px;width:50px;height:50px;background:linear-gradient(135deg,#ff0080,#7928ca);color:#fff;border:none;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center;font-size:22px;z-index:1000}
-        .back-to-top.visible{display:flex}
-        .scroll-indicator{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#ff0080,#7928ca,#00d4ff);z-index:9999;transition:width .1s ease}
-        .detail-section{background:linear-gradient(135deg,rgba(255,0,128,.06) 0%,rgba(121,40,202,.04) 100%);border:2px solid rgba(255,0,128,.25);border-radius:20px;padding:25px;margin:20px 0}
-        .detail-section h3{color:#00d4ff;font-size:22px;margin-bottom:12px;font-weight:700}
-        .detail-section p{color:#c0c0c0;font-size:15px;line-height:1.7;margin-bottom:12px}
-        .specs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
-        .spec-item{background:rgba(121,40,202,.1);border:1px solid rgba(121,40,202,.3);border-radius:10px;padding:12px;text-align:center}
-        .spec-item strong{color:#00d4ff;display:block;margin-bottom:4px;font-size:13px}
-        .spec-item span{color:#b8b8b8;font-size:12px}
-        .play-store-link{display:inline-block;margin:15px 10px;padding:16px 32px;background:linear-gradient(135deg,#00d4ff,#7928ca);color:#fff;text-decoration:none;border-radius:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;text-align:center;font-size:16px;transition:all .3s ease}
-        .play-store-link:hover{transform:scale(1.05);background:linear-gradient(135deg,#ff0080,#00d4ff)}
-        .button-group{display:flex;flex-direction:column;gap:15px;margin:25px 0;max-width:500px;margin-left:auto;margin-right:auto}
-        .button-group a{display:block}
-        .legal-notice{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:20px;margin:30px 0;font-size:13px;color:#b8b8b8;line-height:1.8}
-        .legal-notice strong{color:#00d4ff}
-        .no-results{text-align:center;padding:40px 20px;color:#888;font-size:16px}
-        .floating-cta{position:fixed;bottom:80px;right:25px;z-index:999;animation:floatIn .5s ease}
-        @keyframes floatIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-        .floating-cta a{display:block;padding:12px 20px;background:linear-gradient(135deg,#ff0080,#7928ca);color:#fff;text-decoration:none;border-radius:10px;font-weight:700;text-align:center;font-size:13px;box-shadow:0 4px 20px rgba(255,0,128,.5)}
-        .floating-cta a:hover{transform:scale(1.1);box-shadow:0 6px 25px rgba(255,0,128,.7)}
-        .ad-banner{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:15px;margin:20px 0;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px}
-        .ad-native{background:rgba(255,0,128,.08);border:2px solid rgba(255,0,128,.3);border-radius:15px;padding:20px;margin:25px 0;text-align:center;min-height:120px;display:flex;align-items:center;justify-content:center;color:#888;font-size:12px}
-        .sticky-ad{position:fixed;top:0;left:0;right:0;background:rgba(10,0,21,.98);border-bottom:2px solid rgba(255,0,128,.3);padding:10px;text-align:center;font-size:12px;color:#888;z-index:998;display:none}
-        .sticky-ad.active{display:block}
-        .mobile-ad{display:none}
-        @media (max-width:768px){.mobile-ad{display:block}.container{padding:12px}header{padding:25px 12px 15px}main{grid-template-columns:1fr;gap:18px}.button-group{flex-direction:column}.play-store-link{width:100%}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: rgba(255, 0, 128, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #0a0015;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 7vw, 56px);
+            background: linear-gradient(135deg, #ff0080, #7928ca, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        h2 {
+            font-size: clamp(24px, 6vw, 40px);
+            background: linear-gradient(135deg, #ff0080, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: clamp(15px, 4vw, 18px);
+            color: #00d4ff;
+            line-height: 1.5;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: rgba(255, 0, 128, 0.1);
+            border: 2px solid rgba(255, 0, 128, 0.3);
+            border-radius: 12px;
+            color: #e0e0e0;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: #ff0080;
+            background: rgba(255, 0, 128, 0.15);
+        }
+
+        .search-input::placeholder {
+            color: #888;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #00d4ff;
+            pointer-events: none;
+        }
+
+        .feature-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .badge {
+            background: rgba(255, 0, 128, 0.15);
+            border: 2px solid rgba(255, 0, 128, 0.5);
+            padding: 6px 14px;
+            border-radius: 18px;
+            font-size: 12px;
+            color: #ff0080;
+            font-weight: 600;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 0, 128, 0.2);
+            border: 2px solid rgba(255, 0, 128, 0.5);
+            color: #ff0080;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 15px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:active {
+            transform: scale(0.95);
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(121, 40, 202, 0.08) 100%);
+            border: 2px solid rgba(255, 0, 128, 0.3);
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:active {
+            transform: scale(0.98);
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(255, 0, 128, 0.4);
+            border-color: #ff0080;
+        }
+
+        .game-image {
+            width: 100%;
+            height: 160px;
+            object-fit: contain;
+            border-bottom: 2px solid rgba(255, 0, 128, 0.3);
+            background: linear-gradient(135deg, #1a0033, #0a0015);
+            padding: 10px;
+        }
+
+        .game-content {
+            padding: 20px;
+        }
+
+        .game-card h3 {
+            color: #00d4ff;
+            font-size: clamp(18px, 4.5vw, 20px);
+            margin-bottom: 10px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .game-card p {
+            color: #c0c0c0;
+            font-size: 13px;
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        .game-features {
+            list-style: none;
+            margin: 12px 0;
+            padding: 0;
+        }
+
+        .game-features li {
+            color: #b8b8b8;
+            font-size: 12px;
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .game-features li:before {
+            content: '✓';
+            color: #00d4ff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .download-btn {
+            display: block;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #00d4ff, #7928ca);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:active {
+            transform: scale(0.95);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 0, 128, 0.1);
+            border: 2px solid rgba(255, 0, 128, 0.3);
+            border-radius: 12px;
+            padding: 20px 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(28px, 7vw, 36px);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff0080, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: clamp(12px, 3.5vw, 14px);
+            color: #7928ca;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px 20px;
+            margin-top: 40px;
+            color: #7928ca;
+            font-size: 12px;
+            border-top: 2px solid rgba(255, 0, 128, 0.2);
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: #7928ca;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .breadcrumb a {
+            color: #ff0080;
+            text-decoration: none;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff0080, #7928ca);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 128, 0.5);
+        }
+
+        .back-to-top.visible {
+            display: flex;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff0080, #7928ca, #00d4ff);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        .detail-section {
+            background: linear-gradient(135deg, rgba(255, 0, 128, 0.06) 0%, rgba(121, 40, 202, 0.04) 100%);
+            border: 2px solid rgba(255, 0, 128, 0.25);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .detail-section h3 {
+            color: #00d4ff;
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .detail-section p {
+            color: #c0c0c0;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+
+        .spec-item {
+            background: rgba(121, 40, 202, 0.1);
+            border: 1px solid rgba(121, 40, 202, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .spec-item strong {
+            color: #00d4ff;
+            display: block;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .spec-item span {
+            color: #b8b8b8;
+            font-size: 12px;
+        }
+
+        .play-store-link {
+            display: block;
+            margin: 15px 0;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #00d4ff, #7928ca);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .play-store-link:active {
+            transform: scale(0.95);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .legal-notice {
+            background: rgba(255, 0, 128, 0.08);
+            border: 2px solid rgba(255, 0, 128, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 13px;
+            color: #b8b8b8;
+            line-height: 1.8;
+        }
+
+        .legal-notice strong {
+            color: #00d4ff;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #888;
+            font-size: 16px;
+        }
+
+        .ad-container {
+            margin: 25px 0;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 0, 128, 0.04);
+            border: 2px solid rgba(255, 0, 128, 0.15);
+            border-radius: 12px;
+            padding: 10px;
+            position: relative;
+        }
+
+        .ad-native {
+            min-height: 280px;
+        }
+
+        .ad-banner {
+            min-height: 120px;
+        }
+
+        .sticky-ad-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 0, 21, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid rgba(255, 0, 128, 0.3);
+            padding: 8px;
+            text-align: center;
+            z-index: 998;
+            display: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .sticky-ad-top.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .sticky-close {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 0, 128, 0.2);
+            border: 2px solid rgba(255, 0, 128, 0.5);
+            color: #ff0080;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+
+        .floating-ad {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 0, 21, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid rgba(255, 0, 128, 0.3);
+            padding: 8px;
+            text-align: center;
+            z-index: 997;
+            display: none;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .floating-ad.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 12px; }
+            header { padding: 25px 12px 15px; }
+            main { grid-template-columns: 1fr; gap: 18px; }
+            .specs-grid { grid-template-columns: repeat(2, 1fr); }
+            .ad-container { margin: 20px 0; }
+            .back-to-top { bottom: 80px; }
+        }
+
+        @media (max-width: 480px) {
+            .search-input { font-size: 16px !important; }
+        }
     </style>
 </head>
 <body>
-    <!-- STICKY TOP AD - Zone 10481702 (Popunder/Native Hybrid) -->
-    <div class="sticky-ad" id="stickyAd">
-        <button onclick="document.getElementById('stickyAd').classList.remove('active')" style="position:absolute;right:10px;top:5px;background:none;border:none;color:#ff0080;font-size:18px;cursor:pointer">✕</button>
-        <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- MONETAG POPUNDER -->
+    <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481702,document.createElement('script'))</script>
+
+    <!-- MONETAG VIGNETTE AD -->
+    <script>(function(s){s.dataset.zone='10512785',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+    <!-- STICKY TOP BANNER -->
+    <div class="sticky-ad-top" id="stickyAdTop">
+        <div class="ad-container ad-banner" style="margin:0;border:none;background:transparent;min-height:60px">
+            <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
+        </div>
+        <button class="sticky-close" onclick="closeStickyAd()">✕</button>
     </div>
 
-    <!-- POPUNDER AD - Zone 10481702 (Background Ad) -->
-    <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- FLOATING BOTTOM BANNER -->
+    <div class="floating-ad" id="floatingAd">
+        <div class="ad-container ad-banner" style="margin:0;border:none;background:transparent;min-height:60px">
+            <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
+        </div>
+        <button class="sticky-close" onclick="closeFloatingAd()">✕</button>
+    </div>
 
     <div class="scroll-indicator" id="scrollIndicator"></div>
-    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
-    
-    <div class="floating-cta" id="floatingCTA">
-        <a href="https://otieu.com/4/10446433" target="_blank" rel="noopener noreferrer">⭐ SPECIAL OFFER</a>
-    </div>
+    <button class="back-to-top" id="backToTop">↑</button>
     
     <div class="container">
         <!-- HOME PAGE -->
@@ -112,28 +592,30 @@
                 </div>
             </header>
 
-            <!-- ADVERTISEMENT - Top Banner (Zone 10481719 - Monetag) -->
-            <div class="ad-banner">
-                <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            <!-- AD 1 -->
+            <div class="ad-container ad-banner">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
             </div>
 
-            <!-- SEARCH BOX -->
             <div class="search-box">
                 <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search racing games by name..." onkeyup="searchGames()">
                 <span class="search-icon">🔍</span>
             </div>
 
-            <main id="gamesGrid">
-                <!-- Game Cards will be inserted here by JavaScript -->
-            </main>
+            <!-- AD 2 -->
+            <div class="ad-container ad-native">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
+            </div>
+
+            <main id="gamesGrid"></main>
 
             <div id="noResults" class="no-results" style="display:none">
                 ❌ No games found. Try different keywords!
             </div>
 
-            <!-- ADVERTISEMENT - Native Ad (Zone 10481702 - Monetag BEFORE STATS) -->
-            <div class="ad-native">
-                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            <!-- AD 3 -->
+            <div class="ad-container ad-native">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
             </div>
 
             <section class="stats-grid">
@@ -151,20 +633,29 @@
                 </div>
             </section>
 
-            <!-- ADVERTISEMENT - Banner Ad (Zone 10481725 - Monetag AFTER STATS) -->
-            <div class="ad-banner">
-                <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            <!-- AD 4 -->
+            <div class="ad-container ad-banner">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
             </div>
 
-            <!-- CTA Button on Home Page -->
+            <!-- AD 5 -->
+            <div class="ad-container ad-native">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
+            </div>
+
             <div style="text-align:center;margin:30px 0">
                 <a href="https://otieu.com/4/10446433" target="_blank" rel="noopener noreferrer" class="play-store-link">
                     🎁 VISIT OUR SPECIAL PARTNER
                 </a>
             </div>
+
+            <!-- AD 6 -->
+            <div class="ad-container ad-banner">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
+            </div>
         </div>
 
-        <!-- DETAIL PAGE TEMPLATE -->
+        <!-- DETAIL PAGE -->
         <div id="detail-page" class="page">
             <nav class="breadcrumb">
                 <a href="#" onclick="navigateTo('home'); return false;">Home</a>
@@ -178,9 +669,9 @@
                 <p class="subtitle" id="detailSubtitle">Game Description</p>
             </header>
 
-            <!-- ADVERTISEMENT - Top Banner (Zone 10481719 - Monetag) -->
-            <div class="ad-banner">
-                <script>(function(s){s.dataset.zone='10481719',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            <!-- AD 7 -->
+            <div class="ad-container ad-banner">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
             </div>
 
             <div class="detail-section">
@@ -190,19 +681,16 @@
                 <p id="detailDescription"></p>
                 
                 <h3 style="margin-top:20px">✨ Key Features</h3>
-                <ul class="game-features" id="detailFeatures" style="margin-left:20px">
-                </ul>
+                <ul class="game-features" id="detailFeatures" style="margin-left:20px"></ul>
 
-                <div class="specs-grid" id="detailSpecs">
-                </div>
+                <div class="specs-grid" id="detailSpecs"></div>
             </div>
 
-            <!-- ADVERTISEMENT - Native Ad (Zone 10481702 - Monetag MIDDLE) -->
-            <div class="ad-native">
-                <script>(function(s){s.dataset.zone='10481702',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            <!-- AD 8 -->
+            <div class="ad-container ad-native">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
             </div>
 
-            <!-- Button Group with Both Links -->
             <div class="button-group">
                 <a href="" id="detailDownloadBtn" class="play-store-link" target="_blank" rel="noopener noreferrer">
                     📥 VIEW ON GOOGLE PLAY STORE
@@ -210,6 +698,11 @@
                 <a href="https://otieu.com/4/10446433" class="play-store-link" target="_blank" rel="noopener noreferrer">
                     🎁 VISIT OUR SPECIAL PARTNER
                 </a>
+            </div>
+
+            <!-- AD 9 -->
+            <div class="ad-container ad-banner">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
             </div>
 
             <div class="detail-section">
@@ -222,13 +715,18 @@
                 <p style="margin-top:15px;color:#00d4ff;font-weight:600">✓ All games are official versions from their developers with full support and regular updates.</p>
             </div>
 
-            <!-- ADVERTISEMENT - Bottom Banner (Zone 10481725 - Monetag) -->
-            <div class="ad-banner">
-                <script>(function(s){s.dataset.zone='10481725',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+            <!-- AD 10 -->
+            <div class="ad-container ad-native">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
+            </div>
+
+            <!-- AD 11 -->
+            <div class="ad-container ad-banner">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('al5sm.com',10481719,document.createElement('script'))</script>
             </div>
 
             <div class="legal-notice">
-                <strong>⚖️ Legal Notice:</strong> All games featured on this site are official versions developed by their respective creators. We do not modify, distribute, or provide unauthorized versions of any games. All links direct to official Google Play Store pages where you can download directly from the developers. We are a game review and recommendation platform only.
+                <strong>⚖️ Legal Notice:</strong> All games featured on this site are official versions developed by their respective creators. We do not modify, distribute, or provide unauthorized versions of any games. All links direct to official Play Store pages.
             </div>
         </div>
 
@@ -241,7 +739,6 @@
     </div>
 
     <script>
-        // Game Database
         const games = [
             {
                 id: 'carx-street',
@@ -325,63 +822,95 @@
             }
         ];
 
-        // Initialize games on load
-        window.addEventListener('DOMContentLoaded', function() {
-            renderGames(games);
-            setupHybridAdSystem();
-        });
+        // AD CONFIG - MAXIMUM REVENUE
+        const adConfig = {
+            refreshInterval: 25000,
+            scrollRefreshThreshold: 2,
+            clickRefreshThreshold: 3,
+            lastRefresh: Date.now()
+        };
 
-        // HYBRID AD SYSTEM - Modern Technology
-        function setupHybridAdSystem() {
-            // Sticky ad appears after 3 seconds of page load
+        function initMaxRevenue() {
             setTimeout(() => {
-                document.getElementById('stickyAd').classList.add('active');
-            }, 3000);
+                const sticky = document.getElementById('stickyAdTop');
+                if (sticky) sticky.classList.add('active');
+            }, 2000);
 
-            // Track user scroll for ad optimization (CPM boost)
+            setTimeout(() => {
+                const floating = document.getElementById('floatingAd');
+                if (floating) floating.classList.add('active');
+            }, 5000);
+
+            startRefreshCycles();
+        }
+
+        function startRefreshCycles() {
+            setInterval(() => refreshAllAds('time'), adConfig.refreshInterval);
+
             let scrollCount = 0;
             window.addEventListener('scroll', () => {
                 scrollCount++;
-                // Refresh ads every 5 scrolls for higher CPM
-                if (scrollCount % 5 === 0) {
-                    if (typeof window.adsbygoogle !== 'undefined') {
-                        window.adsbygoogle.push({});
-                    }
+                if (scrollCount >= adConfig.scrollRefreshThreshold) {
+                    scrollCount = 0;
+                    refreshAllAds('scroll');
                 }
             }, {passive: true});
 
-            // Time-based ad refresh (every 30 seconds)
-            setInterval(() => {
-                if (typeof window.adsbygoogle !== 'undefined') {
-                    window.adsbygoogle.push({});
+            let clickCount = 0;
+            document.addEventListener('click', () => {
+                clickCount++;
+                if (clickCount >= adConfig.clickRefreshThreshold) {
+                    clickCount = 0;
+                    refreshAllAds('click');
                 }
-            }, 30000);
+            }, {passive: true});
 
-            // Page visibility API - refresh ads when user returns
             document.addEventListener('visibilitychange', () => {
                 if (document.visibilityState === 'visible') {
-                    if (typeof window.adsbygoogle !== 'undefined') {
-                        window.adsbygoogle.push({});
-                    }
+                    setTimeout(() => refreshAllAds('visibility'), 500);
                 }
             });
         }
 
-        // Render game cards
+        function refreshAllAds(trigger) {
+            const now = Date.now();
+            if (now - adConfig.lastRefresh < 8000) return;
+            adConfig.lastRefresh = now;
+        }
+
+        function closeStickyAd() {
+            const el = document.getElementById('stickyAdTop');
+            if (el) {
+                el.classList.remove('active');
+                setTimeout(() => el.classList.add('active'), 30000);
+            }
+        }
+
+        function closeFloatingAd() {
+            const el = document.getElementById('floatingAd');
+            if (el) {
+                el.classList.remove('active');
+                setTimeout(() => el.classList.add('active'), 45000);
+            }
+        }
+
         function renderGames(gamesToRender) {
             const grid = document.getElementById('gamesGrid');
             const noResults = document.getElementById('noResults');
             
+            if (!grid) return;
+            
             if (gamesToRender.length === 0) {
                 grid.innerHTML = '';
-                noResults.style.display = 'block';
+                if (noResults) noResults.style.display = 'block';
                 return;
             }
             
-            noResults.style.display = 'none';
+            if (noResults) noResults.style.display = 'none';
+            
             grid.innerHTML = gamesToRender.map(game => `
                 <article class="game-card" onclick="showGameDetail('${game.id}')">
-                    <img src="${game.image}" alt="${game.name}" class="game-image">
+                    <img src="${game.image}" alt="${game.name}" class="game-image" loading="lazy">
                     <div class="game-content">
                         <h3>${game.name}</h3>
                         <p><strong>Version:</strong> ${game.version}</p>
@@ -395,45 +924,64 @@
             `).join('');
         }
 
-        // Search functionality
         function searchGames() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = games.filter(game => 
-                game.name.toLowerCase().includes(searchTerm) ||
-                game.description.toLowerCase().includes(searchTerm) ||
-                game.features.some(f => f.toLowerCase().includes(searchTerm))
+            const input = document.getElementById('searchInput');
+            if (!input) return;
+            
+            const term = input.value.toLowerCase();
+            const filtered = games.filter(g => 
+                g.name.toLowerCase().includes(term) ||
+                g.description.toLowerCase().includes(term) ||
+                g.features.some(f => f.toLowerCase().includes(term))
             );
             renderGames(filtered);
         }
 
-        // Show game detail
         function showGameDetail(gameId) {
             const game = games.find(g => g.id === gameId);
             if (!game) return;
 
-            document.getElementById('detailBreadcrumb').textContent = game.name;
-            document.getElementById('detailTitle').textContent = `${game.name} - Full Review`;
-            document.getElementById('detailSubtitle').textContent = game.description.substring(0, 100) + '...';
-            document.getElementById('detailImage').src = game.image;
-            document.getElementById('detailDescription').textContent = game.description;
-            document.getElementById('detailDownloadBtn').textContent = `📥 DOWNLOAD ${game.name.toUpperCase()} FROM PLAY STORE`;
-            document.getElementById('detailDownloadBtn').href = game.playStoreUrl;
+            const els = {
+                breadcrumb: document.getElementById('detailBreadcrumb'),
+                title: document.getElementById('detailTitle'),
+                subtitle: document.getElementById('detailSubtitle'),
+                image: document.getElementById('detailImage'),
+                description: document.getElementById('detailDescription'),
+                downloadBtn: document.getElementById('detailDownloadBtn'),
+                features: document.getElementById('detailFeatures'),
+                specs: document.getElementById('detailSpecs')
+            };
+
+            if (els.breadcrumb) els.breadcrumb.textContent = game.name;
+            if (els.title) els.title.textContent = `${game.name} - Full Review`;
+            if (els.subtitle) els.subtitle.textContent = game.description.substring(0, 100) + '...';
+            if (els.image) {
+                els.image.src = game.image;
+                els.image.alt = game.name;
+            }
+            if (els.description) els.description.textContent = game.description;
             
-            // Features
-            document.getElementById('detailFeatures').innerHTML = game.features.map(f => `<li>${f}</li>`).join('');
+            if (els.downloadBtn) {
+                els.downloadBtn.textContent = `📥 DOWNLOAD ${game.name.toUpperCase()} FROM PLAY STORE`;
+                els.downloadBtn.href = game.playStoreUrl;
+            }
             
-            // Specs
-            document.getElementById('detailSpecs').innerHTML = `
-                <div class="spec-item"><strong>Version</strong><span>${game.version}</span></div>
-                <div class="spec-item"><strong>Size</strong><span>${game.size}</span></div>
-                <div class="spec-item"><strong>Android</strong><span>5.0 & Above</span></div>
-                <div class="spec-item"><strong>Updated</strong><span>Recently</span></div>
-            `;
+            if (els.features) {
+                els.features.innerHTML = game.features.map(f => `<li>${f}</li>`).join('');
+            }
+            
+            if (els.specs) {
+                els.specs.innerHTML = `
+                    <div class="spec-item"><strong>Version</strong><span>${game.version}</span></div>
+                    <div class="spec-item"><strong>Size</strong><span>${game.size}</span></div>
+                    <div class="spec-item"><strong>Android</strong><span>5.0 & Above</span></div>
+                    <div class="spec-item"><strong>Updated</strong><span>Recently</span></div>
+                `;
+            }
 
             navigateTo('detail');
         }
 
-        // Page navigation
         const pages = {
             home: document.getElementById('home-page'),
             detail: document.getElementById('detail-page')
@@ -451,213 +999,58 @@
                     pages[pageName].classList.add('active');
                     currentPage = pageName;
                     window.scrollTo({top: 0, behavior: 'smooth'});
-                    // Refresh ads on page change
-                    if (typeof window.adsbygoogle !== 'undefined') {
-                        window.adsbygoogle.push({});
-                    }
+                    refreshAllAds('navigation');
                 }
             }, 50);
         }
 
         window.navigateTo = navigateTo;
 
-        // Scroll indicator
         window.addEventListener('scroll', function() {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
-            document.getElementById('scrollIndicator').style.width = scrolled + '%';
+            const indicator = document.getElementById('scrollIndicator');
+            if (indicator) indicator.style.width = scrolled + '%';
         }, {passive: true});
 
-        // Back to top
-        const backToTopBtn = document.getElementById('backToTop');
-        window.addEventListener('scroll', function() {
-            backToTopBtn.classList.toggle('visible', window.pageYOffset > 300);
-        }, {passive: true});
-
-        backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        });
-
-        // ========================================
-        // HYBRID AD SYSTEM - MODERN TECHNOLOGY
-        // ========================================
-        
-        function setupHybridAdSystem() {
-            // Sticky ad appears after 3 seconds of page load
-            setTimeout(() => {
-                document.getElementById('stickyAd').classList.add('active');
-            }, 3000);
-
-            // TECHNIQUE 1: Scroll-based ad refresh (every 5 scrolls)
-            let scrollCount = 0;
-            window.addEventListener('scroll', () => {
-                scrollCount++;
-                if (scrollCount % 5 === 0) {
-                    refreshAllAds();
-                }
+        const backBtn = document.getElementById('backToTop');
+        if (backBtn) {
+            window.addEventListener('scroll', function() {
+                backBtn.classList.toggle('visible', window.pageYOffset > 300);
             }, {passive: true});
 
-            // TECHNIQUE 2: Time-based ad refresh (every 30 seconds)
-            setInterval(() => {
-                refreshAllAds();
-            }, 30000);
-
-            // TECHNIQUE 3: Page visibility API - refresh when user returns
-            document.addEventListener('visibilitychange', () => {
-                if (document.visibilityState === 'visible') {
-                    refreshAllAds();
-                }
+            backBtn.addEventListener('click', function() {
+                window.scrollTo({top: 0, behavior: 'smooth'});
             });
+        }
 
-            // TECHNIQUE 4: Intersection Observer - refresh when ads become visible
-            const adElements = document.querySelectorAll('.ad-banner, .ad-native');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        refreshAllAds();
-                    }
-                });
-            }, {threshold: 0.5});
-            
-            adElements.forEach(el => observer.observe(el));
+        function isInstagramBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            return (ua.indexOf('Instagram') > -1);
+        }
 
-            // TECHNIQUE 5: User engagement tracking
-            document.addEventListener('click', () => {
-                refreshAllAds();
-            }, {passive: true});
-
-            // TECHNIQUE 6: Mouse movement detection
-            let lastMouseTime = Date.now();
-            document.addEventListener('mousemove', () => {
+        if (isInstagramBrowser()) {
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
                 const now = Date.now();
-                if (now - lastMouseTime > 60000) { // 60 seconds
-                    refreshAllAds();
-                    lastMouseTime = now;
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
                 }
-            }, {passive: true});
+                lastTouchEnd = now;
+            }, false);
         }
 
-        // Universal ad refresh function
-        function refreshAllAds() {
-            // Refresh Google AdSense ads
-            if (typeof adsbygoogle !== 'undefined') {
-                adsbygoogle.push({});
-            }
-
-            // Refresh Monetag ads
-            if (typeof window.monetag !== 'undefined') {
-                window.monetag.refresh();
-            }
-
-            // Force Monetag script reload if needed
-            refreshMonetag();
-        }
-
-        // Monetag refresh helper
-        function refreshMonetag() {
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = 'https://nap5k.com/tag.min.js';
-            document.head.appendChild(script);
-        }
-
-        // Initialize hybrid system on page load
         window.addEventListener('DOMContentLoaded', function() {
             renderGames(games);
-            setupHybridAdSystem();
-            
-            // Additional optimization: Refresh ads on navigation
-            window.addEventListener('hashchange', () => {
-                setTimeout(() => {
-                    refreshAllAds();
-                }, 500);
-            });
+            initMaxRevenue();
         });
 
-        // TECHNIQUE 7: Performance-based refresh (when page is idle)
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => {
-                refreshAllAds();
-            }, {timeout: 2000});
-        } else {
-            // Fallback for older browsers
-            setTimeout(() => {
-                refreshAllAds();
-            }, 2000);
-        }
-
-        // TECHNIQUE 8: Lazy loading ads as user scrolls
-        function lazyLoadAds() {
-            const adSections = document.querySelectorAll('.ad-banner, .ad-native');
-            const lazyObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        refreshAllAds();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
-
-            adSections.forEach(section => {
-                lazyObserver.observe(section);
-            });
-        }
-
-        // Initialize lazy loading
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', lazyLoadAds);
-        } else {
-            lazyLoadAds();
-        }
-
-        // TECHNIQUE 9: Smart CPM optimization - refresh during peak engagement
-        function monitorEngagement() {
-            let engagementScore = 0;
-            
-            document.addEventListener('click', () => {
-                engagementScore++;
-                if (engagementScore % 3 === 0) {
-                    refreshAllAds();
-                }
-            }, {passive: true});
-
-            // Focus detection
-            window.addEventListener('focus', () => {
-                refreshAllAds();
-            });
-
-            window.addEventListener('blur', () => {
-                // Continue earning even when window is blurred
-                setTimeout(() => {
-                    refreshAllAds();
-                }, 5000);
-            });
-        }
-
-        monitorEngagement();
-
-        // TECHNIQUE 10: Dual refresh throttling (prevents excessive refreshing)
-        let lastRefreshTime = 0;
-        const refreshThrottle = 5000; // 5 seconds minimum between refreshes
-
-        function throttledRefresh() {
-            const now = Date.now();
-            if (now - lastRefreshTime > refreshThrottle) {
-                refreshAllAds();
-                lastRefreshTime = now;
+        window.addEventListener('contextmenu', function(e) {
+            if (isInstagramBrowser()) {
+                e.preventDefault();
             }
-        }
-
-        // Replace original navigate function with throttled refresh
-        const originalNavigate = window.navigateTo;
-        window.navigateTo = function(pageName) {
-            originalNavigate(pageName);
-            setTimeout(() => {
-                throttledRefresh();
-            }, 300);
-        };
-
+        });
     </script>
 </body>
 </html>
