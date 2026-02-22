@@ -811,6 +811,28 @@
 
     <script>
         const games = [
+        {
+                id: 'spiderman-mobile',
+                name: "Marvel's Spider-Man: Mobile Port",
+                version: '3.0.1',
+                size: '4.2 GB',
+                description: 'Swing through New York City with console-level graphics on your phone! Experience flawless web-swinging physics, intense combat, and unlock all the iconic suits in this unreleased mobile port.',
+                features: ['Open World NYC', 'Flawless Web-Swinging', 'Suit Unlocks', '60 FPS Support', 'Controller Compatible', 'Ray-Tracing Elements'],
+                // Official Steam Capsule Image for Marvel's Spider-Man Remastered
+                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1817070/capsule_616x353.jpg',
+                playStoreUrl: 'https://otieu.com/4/10446433'
+            },
+            {
+                id: 'jjk-cursed-clash',
+                name: 'Jujutsu Kaisen: Cursed Mobile',
+                version: '1.2.0',
+                size: '2.8 GB',
+                description: 'Unleash your Domain Expansion in this hyper-realistic 3D fighting game. Play as Gojo, Sukuna, and Yuji with stunning visual effects. Engage in global PvP arena battles!',
+                features: ['Domain Expansions', 'Global PvP Combat', 'Unreal Engine 5 VFX', 'All Special Grade Sorcerers', 'Story Mode', 'Original Voice Cast'],
+                // Official Steam Capsule Image for JJK Cursed Clash
+                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1877020/capsule_616x353.jpg',
+                playStoreUrl: 'https://otieu.com/4/10446433'
+            },
             {
                 id: 'demon-slayer-mobile',
                 name: 'Demon Slayer: Mobile Port',
@@ -818,7 +840,8 @@
                 size: '3.4 GB',
                 description: 'Experience the ultimate breathing techniques in this stunning unreleased mobile port. Hyper-realistic combat, full story mode, and PvP multiplayer arena. Unlock all Hashira!',
                 features: ['Unreal Engine 5 Graphics', 'PvP Arena', 'Full Story Arc', 'High FPS Support', 'All Hashira Unlocked', 'Original Voice Acting'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%231a0033"/%3E%3Ctext x="50%25" y="45%25" font-size="28" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3EDemon Slayer Mobile%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3E⚔️ Action RPG%3C/text%3E%3C/svg%3E',
+                // Official Steam Capsule Image for Demon Slayer -The Hinokami Chronicles-
+                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1490890/capsule_616x353.jpg',
                 playStoreUrl: 'https://otieu.com/4/10446433'
             },
             {
@@ -828,7 +851,8 @@
                 size: '1.2 GB',
                 description: 'Unlock all alien forms in this open-world action game. Fight Vilgax, explore the galaxy, and upgrade the Omnitrix in full HD. Console-level graphics on your phone!',
                 features: ['Open World Exploration', 'All Playable Aliens', 'Combo System', 'Omnitrix Upgrades', 'Boss Battles', 'Controller Support'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%23004d00"/%3E%3Ctext x="50%25" y="45%25" font-size="26" fill="%2300ff00" text-anchor="middle" font-family="Arial"%3EBen 10: Unleashed%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%23ffffff" text-anchor="middle" font-family="Arial"%3E👽 Adventure%3C/text%3E%3C/svg%3E',
+                // Official Steam Capsule Image for Ben 10 
+                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/704670/capsule_616x353.jpg',
                 playStoreUrl: 'https://otieu.com/4/10446433'
             },
             {
@@ -838,7 +862,19 @@
                 size: '1.8 GB',
                 description: 'Experience the most realistic street racing with stunning graphics and authentic car physics. Build your dream garage, customize every detail of your vehicles, and dominate the streets in intense, competitive races!',
                 features: ['Realistic Physics Engine', 'Extensive Car Customization', 'Beautiful HD Graphics', 'Multiplayer Racing', 'Regular Updates', 'Active Community'],
-                image: 'https://play-lh.googleusercontent.com/B8INYkehIFue2QH_RoTQ6Rs5VndWrgUaKdscFCMWQwOQW13jwQE1YyBryuQA00XAshc=w400-h200-rw',
+                // Official Steam Capsule Image for CarX Street
+                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1114150/capsule_616x353.jpg',
+                playStoreUrl: 'https://otieu.com/4/10446433'
+            },
+            {
+                id: 'asphalt-legends',
+                name: 'Asphalt Legends Unite',
+                version: '48.0.5a',
+                size: '2.1 GB',
+                description: 'The ultimate arcade racing experience! Race against rivals from around the world, perform insane stunts and tricks, and unlock over 250 legendary cars from top manufacturers. Dominate in multiplayer races!',
+                features: ['250+ Licensed Cars', 'Arcade Racing Style', 'Stunning Graphics', 'Global Multiplayer', 'Weekly Challenges', 'Seasonal Content'],
+                // Official Steam Capsule Image for Asphalt Legends Unite
+                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1815690/capsule_616x353.jpg',
                 playStoreUrl: 'https://otieu.com/4/10446433'
             },
             {
@@ -849,16 +885,6 @@
                 description: 'Master the art of drifting with the most realistic physics engine available. Customize your car to perfection, compete in online multiplayer drift battles with players worldwide, and become the ultimate drift king!',
                 features: ['Advanced Drift Physics', 'Online Multiplayer', 'Car Customization Shop', 'Smooth Gameplay', 'Weekly Tournaments', 'Seasonal Events'],
                 image: 'https://play-lh.googleusercontent.com/KJ8_UwiIpZ8gbrs2RNXOHy61x-KJqlK8cwYyiJWaw2KFJWbQMimBwyYjwxS6ishBejg=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'asphalt-legends',
-                name: 'Asphalt Legends Unite',
-                version: '48.0.5a',
-                size: '2.1 GB',
-                description: 'The ultimate arcade racing experience! Race against rivals from around the world, perform insane stunts and tricks, and unlock over 250 legendary cars from top manufacturers. Dominate in multiplayer races!',
-                features: ['250+ Licensed Cars', 'Arcade Racing Style', 'Stunning Graphics', 'Global Multiplayer', 'Weekly Challenges', 'Seasonal Content'],
-                image: 'https://play-lh.googleusercontent.com/C1O15FL45-ma-rfTgnWgIp_5reJDb3NX7Bk4T-Q8amjBYu_REDO-DQ6JSKIfWOa57u8=w400-h200-rw',
                 playStoreUrl: 'https://otieu.com/4/10446433'
             },
             {
