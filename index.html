@@ -647,27 +647,25 @@
                 <span class="search-icon">🔍</span>
             </div>
 
-            <!-- AD 2 - Native -->
-            <div class="ad-container ad-native">
-                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
-            </div>
-
             <!-- AI SCANNER SECTION -->
-            <div class="ai-scanner-section" style="background: linear-gradient(135deg, #1e0030, #3a0060); padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #ff0080; text-align: center;">
-                <h2 style="color: #00c6ff; margin-bottom: 10px; font-size: 24px;">🤖 AI Device Compatibility Check</h2>
-                <p style="font-size: 14px; margin-bottom: 15px; color: #e0e0e0;">Can your phone run our exclusive 4K Ultra-Realistic Graphics Mod? Enter your device name below to find out.</p>
+            <div class="ai-scanner-section" style="background: linear-gradient(135deg, #1e0030, #3a0060); padding: 25px; border-radius: 15px; margin: 25px auto; border: 2px solid #00d4ff; text-align: center; max-width: 600px; box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);">
+                <h2 style="color: #00c6ff; margin-bottom: 10px; font-size: 22px;">🤖 AI Device Compatibility Check</h2>
+                <p style="font-size: 14px; margin-bottom: 20px; color: #e0e0e0;">Can your phone run our exclusive 4K Ultra-Realistic Graphics Engine? Enter your device name below to find out.</p>
                 
-                <input type="text" id="deviceInput" placeholder="e.g. iPhone 14 Pro, Samsung S23..." style="padding: 12px; width: 90%; max-width: 400px; border-radius: 8px; border: none; margin-bottom: 10px; font-weight: bold; background: white; color: black;">
+                <input type="text" id="deviceInput" placeholder="e.g. iPhone 14 Pro, Samsung S23..." style="padding: 15px; width: 90%; border-radius: 10px; border: 1px solid #ff0080; background: rgba(0,0,0,0.5); color: #fff; margin-bottom: 15px; font-weight: bold; outline: none;">
                 <br>
-                <button id="scanButton" onclick="runAiScan()" style="background: #ff0080; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 90%; max-width: 400px; transition: transform 0.2s;">RUN AI SCAN</button>
+                <button id="scanButton" style="background: linear-gradient(135deg, #ff0080, #7928ca); color: white; padding: 14px 28px; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; width: 90%; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;">RUN AI SCAN</button>
 
-                <div id="aiResult" style="margin-top: 15px; font-size: 14px; color: #00ff88; min-height: 40px; display: none;">
+                <div id="aiResult" style="margin-top: 20px; font-size: 15px; color: #00ff88; min-height: 40px; display: none; line-height: 1.5; padding: 10px; background: rgba(0, 255, 136, 0.1); border-radius: 8px;">
                     Scanning device architecture...
                 </div>
 
-                <div style="display:flex; justify-content:center;">
-                    <a href="https://otieu.com/4/10446433" id="monetagDownloadBtn" target="_blank" rel="noopener noreferrer" style="display: none; background: #00c6ff; color: #000; padding: 14px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; animation: pulse 2s infinite;">📥 UNLOCK 4K DOWNLOAD LINK</a>
-                </div>
+                <a href="https://otieu.com/4/10446433" target="_blank" id="monetagDownloadBtn" style="display: none; background: linear-gradient(135deg, #00d4ff, #7928ca); color: #fff; padding: 16px 20px; text-decoration: none; border-radius: 10px; font-weight: 900; margin-top: 20px; text-transform: uppercase; width: 90%; margin-left: auto; margin-right: auto;">📥 UNLOCK 4K DOWNLOAD LINK</a>
+            </div>
+
+            <!-- AD 2 - Native -->
+            <div class="ad-container ad-native">
+                <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
             </div>
 
             <main id="gamesGrid"></main>
@@ -809,6 +807,8 @@
         }
     </style>
 
+    <script src="main.js"></script>
+
     <script>
         const games = [
             {
@@ -892,45 +892,6 @@
                 playStoreUrl: 'https://otieu.com/4/10446433'
             }
         ];
-
-        // AI SCANNER LOGIC
-        function runAiScan() {
-            const deviceName = document.getElementById('deviceInput').value.trim();
-            if (!deviceName) {
-                alert('Please enter your device name first!');
-                return;
-            }
-
-            const scanBtn = document.getElementById('scanButton');
-            const resultDiv = document.getElementById('aiResult');
-            const downloadBtn = document.getElementById('monetagDownloadBtn');
-
-            scanBtn.disabled = true;
-            scanBtn.textContent = 'SCANNING...';
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = '<span style="color:#ff0080">●</span> Analyzing CPU & GPU architecture...';
-
-            const steps = [
-                'Checking OpenGL ES 3.2 compatibility...',
-                'Verifying Vulkan API support...',
-                'Analyzing Ray Tracing capabilities...',
-                'Scanning VRAM & Thermal capacity...',
-                'Calculating optimal 4K frame buffer...'
-            ];
-
-            let stepIndex = 0;
-            const interval = setInterval(() => {
-                if (stepIndex < steps.length) {
-                    resultDiv.innerHTML = `<span style="color:#ff0080">●</span> ${steps[stepIndex]}`;
-                    stepIndex++;
-                } else {
-                    clearInterval(interval);
-                    resultDiv.innerHTML = `<span style="color:#00ff88; font-weight:bold;">✅ SUCCESS: ${deviceName.toUpperCase()} is compatible with 4K Graphics Mod!</span>`;
-                    scanBtn.style.display = 'none';
-                    downloadBtn.style.display = 'block';
-                }
-            }, 800);
-        }
 
         // INSTAGRAM-FRIENDLY AD CONFIG
         const adConfig = {
