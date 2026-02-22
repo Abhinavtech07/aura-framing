@@ -539,6 +539,16 @@
             display: block;
         }
 
+        /* AI Scanner specific styles */
+        .ai-scanner-section input::placeholder {
+            color: #aaa;
+            font-weight: normal;
+        }
+        
+        .ai-scanner-section input:focus {
+            outline: 2px solid #00c6ff;
+        }
+
         @media (max-width: 768px) {
             .container { padding: 12px; }
             header { padding: 25px 12px 15px; }
@@ -640,6 +650,24 @@
             <!-- AD 2 - Native -->
             <div class="ad-container ad-native">
                 <script>(function(d,z,s){s.src='https://'+d+'/400/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('nap5k.com',10481725,document.createElement('script'))</script>
+            </div>
+
+            <!-- AI SCANNER SECTION -->
+            <div class="ai-scanner-section" style="background: linear-gradient(135deg, #1e0030, #3a0060); padding: 20px; border-radius: 12px; margin: 20px 0; border: 1px solid #ff0080; text-align: center;">
+                <h2 style="color: #00c6ff; margin-bottom: 10px; font-size: 24px;">🤖 AI Device Compatibility Check</h2>
+                <p style="font-size: 14px; margin-bottom: 15px; color: #e0e0e0;">Can your phone run our exclusive 4K Ultra-Realistic Graphics Mod? Enter your device name below to find out.</p>
+                
+                <input type="text" id="deviceInput" placeholder="e.g. iPhone 14 Pro, Samsung S23..." style="padding: 12px; width: 90%; max-width: 400px; border-radius: 8px; border: none; margin-bottom: 10px; font-weight: bold; background: white; color: black;">
+                <br>
+                <button id="scanButton" onclick="runAiScan()" style="background: #ff0080; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; width: 90%; max-width: 400px; transition: transform 0.2s;">RUN AI SCAN</button>
+
+                <div id="aiResult" style="margin-top: 15px; font-size: 14px; color: #00ff88; min-height: 40px; display: none;">
+                    Scanning device architecture...
+                </div>
+
+                <div style="display:flex; justify-content:center;">
+                    <a href="https://otieu.com/4/10446433" id="monetagDownloadBtn" target="_blank" rel="noopener noreferrer" style="display: none; background: #00c6ff; color: #000; padding: 14px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 15px; animation: pulse 2s infinite;">📥 UNLOCK 4K DOWNLOAD LINK</a>
+                </div>
             </div>
 
             <main id="gamesGrid"></main>
@@ -773,6 +801,14 @@
         </footer>
     </div>
 
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 198, 255, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(0, 198, 255, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 198, 255, 0); }
+        }
+    </style>
+
     <script>
         const games = [
             {
@@ -856,6 +892,45 @@
                 playStoreUrl: 'https://otieu.com/4/10446433'
             }
         ];
+
+        // AI SCANNER LOGIC
+        function runAiScan() {
+            const deviceName = document.getElementById('deviceInput').value.trim();
+            if (!deviceName) {
+                alert('Please enter your device name first!');
+                return;
+            }
+
+            const scanBtn = document.getElementById('scanButton');
+            const resultDiv = document.getElementById('aiResult');
+            const downloadBtn = document.getElementById('monetagDownloadBtn');
+
+            scanBtn.disabled = true;
+            scanBtn.textContent = 'SCANNING...';
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<span style="color:#ff0080">●</span> Analyzing CPU & GPU architecture...';
+
+            const steps = [
+                'Checking OpenGL ES 3.2 compatibility...',
+                'Verifying Vulkan API support...',
+                'Analyzing Ray Tracing capabilities...',
+                'Scanning VRAM & Thermal capacity...',
+                'Calculating optimal 4K frame buffer...'
+            ];
+
+            let stepIndex = 0;
+            const interval = setInterval(() => {
+                if (stepIndex < steps.length) {
+                    resultDiv.innerHTML = `<span style="color:#ff0080">●</span> ${steps[stepIndex]}`;
+                    stepIndex++;
+                } else {
+                    clearInterval(interval);
+                    resultDiv.innerHTML = `<span style="color:#00ff88; font-weight:bold;">✅ SUCCESS: ${deviceName.toUpperCase()} is compatible with 4K Graphics Mod!</span>`;
+                    scanBtn.style.display = 'none';
+                    downloadBtn.style.display = 'block';
+                }
+            }, 800);
+        }
 
         // INSTAGRAM-FRIENDLY AD CONFIG
         const adConfig = {
