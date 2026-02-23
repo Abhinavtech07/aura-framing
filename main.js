@@ -29,11 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 aiResult.style.background = 'rgba(0, 255, 136, 0.1)';
                 aiResult.innerHTML = `✅ <b>SUCCESS:</b> The ${device} has enough processing power to handle the 4K Ultra-Realistic Engine. Maximum framerate unlocked.`;
                 
-                // 3. Reveal the Monetag Link
-                monetagBtn.style.display = 'block';
-                scanButton.disabled = false;
+                // 3. Reveal the scroll button instead of Monetag link directly
+                scanButton.innerHTML = '👇 SELECT YOUR GAME BELOW 👇';
+                scanButton.style.background = '#00ff00';
+                scanButton.style.color = '#000';
+                scanButton.style.cursor = 'pointer';
                 scanButton.style.opacity = '1';
-                scanButton.style.display = 'none'; // Hide scan button after success
+                scanButton.disabled = false;
+                
+                scanButton.onclick = function() {
+                    const gamesSection = document.getElementById('games-section');
+                    if (gamesSection) {
+                        gamesSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                };
             }, 3000); // 3 seconds of suspense
         });
     }
