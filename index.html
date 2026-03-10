@@ -10,39 +10,111 @@
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="theme-color" content="#ff0080">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
+        /* --- Dynamic Theme Variables --- */
+        :root {
+            --bg-color: #0a0015;
+            --text-main: #e0e0e0;
+            --text-muted: #c0c0c0;
+            --card-bg: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(121, 40, 202, 0.08) 100%);
+            --card-border: rgba(255, 0, 128, 0.3);
+            --nav-bg: rgba(10, 0, 21, 0.95);
+            --input-bg: rgba(0,0,0,0.5);
+        }
+
+        .light-mode {
+            --bg-color: #f0f2f5;
+            --text-main: #1a1a1a;
+            --text-muted: #4a4a4a;
+            --card-bg: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(240, 240, 250, 1) 100%);
+            --card-border: rgba(0, 212, 255, 0.4);
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --input-bg: rgba(255,255,255,0.8);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: rgba(255, 0, 128, 0.3); }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #0a0015; color: #e0e0e0; line-height: 1.6; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: var(--bg-color); color: var(--text-main); line-height: 1.6; min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased; padding-bottom: 80px; transition: background-color 0.4s, color 0.4s; }
+        
+        /* --- Glitch Easter Egg Styles --- */
+        .glitch-effect { animation: glitchAnim 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; filter: invert(1) hue-rotate(180deg) contrast(1.5); }
+        @keyframes glitchAnim { 0% { transform: translate(0) } 20% { transform: translate(-5px, 5px) } 40% { transform: translate(-5px, -5px) } 60% { transform: translate(5px, 5px) } 80% { transform: translate(5px, -5px) } 100% { transform: translate(0) } }
+        .vip-btn { display: none; padding: 12px 25px; margin-top: 15px; background: #000; border: 2px solid #00d4ff; color: #00d4ff; text-decoration: none; font-weight: 900; border-radius: 8px; box-shadow: 0 0 15px #00d4ff, inset 0 0 10px #00d4ff; text-transform: uppercase; letter-spacing: 2px; animation: pulseGlow 1.5s infinite; cursor: pointer; }
+        @keyframes pulseGlow { 0% { box-shadow: 0 0 15px #00d4ff; } 50% { box-shadow: 0 0 30px #00d4ff, inset 0 0 15px #00d4ff; } 100% { box-shadow: 0 0 15px #00d4ff; } }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; position: relative; }
         .page { display: none; opacity: 0; }
         .page.active { display: block; animation: fadeIn 0.4s ease forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        header { text-align: center; padding: 30px 20px 20px; margin-bottom: 20px; }
-        h1 { font-size: clamp(28px, 7vw, 56px); background: linear-gradient(135deg, #ff0080, #7928ca, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; font-weight: 900; letter-spacing: -1px; }
+        
+        header { text-align: center; padding: 30px 20px 20px; margin-bottom: 20px; position: relative; }
+        #theme-toggle { position: absolute; top: 10px; right: 10px; background: rgba(255, 0, 128, 0.2); border: 2px solid rgba(255, 0, 128, 0.5); color: #00d4ff; padding: 10px 12px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: 0.3s; z-index: 10; }
+        
+        h1 { font-size: clamp(28px, 7vw, 56px); background: linear-gradient(135deg, #ff0080, #7928ca, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; font-weight: 900; letter-spacing: -1px; cursor: pointer; user-select: none; }
         h2 { font-size: clamp(24px, 6vw, 40px); background: linear-gradient(135deg, #ff0080, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; font-weight: 800; }
         .subtitle { font-size: clamp(15px, 4vw, 18px); color: #00d4ff; line-height: 1.5; max-width: 600px; margin: 0 auto; }
+        
         .search-box { max-width: 600px; margin: 20px auto; position: relative; }
-        .search-input { width: 100%; padding: 15px 50px 15px 20px; background: rgba(255, 0, 128, 0.1); border: 2px solid rgba(255, 0, 128, 0.3); border-radius: 12px; color: #e0e0e0; font-size: 16px; outline: none; transition: all 0.3s ease; }
+        .search-input { width: 100%; padding: 15px 50px 15px 20px; background: rgba(255, 0, 128, 0.1); border: 2px solid rgba(255, 0, 128, 0.3); border-radius: 12px; color: var(--text-main); font-size: 16px; outline: none; transition: all 0.3s ease; }
         .search-input:focus { border-color: #ff0080; background: rgba(255, 0, 128, 0.15); }
+        
+        .category-filters { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 15px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+        .category-filters::-webkit-scrollbar { display: none; }
+        .filter-pill { padding: 8px 16px; background: rgba(255, 0, 128, 0.1); border: 1px solid var(--card-border); border-radius: 20px; color: var(--text-main); white-space: nowrap; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .filter-pill.active { background: linear-gradient(135deg, #ff0080, #7928ca); color: white; border-color: transparent; }
+
         .feature-badges { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
         .badge { background: rgba(255, 0, 128, 0.15); border: 2px solid rgba(255, 0, 128, 0.5); padding: 6px 14px; border-radius: 18px; font-size: 12px; color: #ff0080; font-weight: 600; }
         .back-button { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: rgba(255, 0, 128, 0.2); border: 2px solid rgba(255, 0, 128, 0.5); color: #ff0080; text-decoration: none; border-radius: 10px; font-size: 15px; cursor: pointer; margin-bottom: 20px; font-weight: 600; transition: all 0.3s ease; }
+        
         main { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin: 30px 0; }
-        .game-card { background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(121, 40, 202, 0.08) 100%); border: 2px solid rgba(255, 0, 128, 0.3); border-radius: 15px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; }
+        
+        .game-card { background: var(--card-bg); border: 2px solid var(--card-border); border-radius: 15px; overflow: hidden; transition: all 0.3s ease; cursor: pointer; }
         .game-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(255, 0, 128, 0.4); border-color: #ff0080; }
-        .game-image { width: 100%; height: 160px; object-fit: contain; border-bottom: 2px solid rgba(255, 0, 128, 0.3); background: linear-gradient(135deg, #1a0033, #0a0015); padding: 10px; }
+        .game-image { width: 100%; height: 160px; object-fit: cover; border-bottom: 2px solid var(--card-border); background: linear-gradient(135deg, #1a0033, #0a0015); }
         .game-content { padding: 20px; }
         .game-card h3 { color: #00d4ff; font-size: clamp(18px, 4.5vw, 20px); margin-bottom: 10px; font-weight: 700; }
-        .game-card p { color: #c0c0c0; font-size: 13px; margin-bottom: 6px; }
+        .game-card p { color: var(--text-muted); font-size: 13px; margin-bottom: 6px; }
         .game-features { list-style: none; margin: 12px 0; padding: 0; }
-        .game-features li { color: #b8b8b8; font-size: 12px; padding: 4px 0; display: flex; align-items: center; gap: 6px; }
+        .game-features li { color: var(--text-main); font-size: 12px; padding: 4px 0; display: flex; align-items: center; gap: 6px; }
         .game-features li:before { content: '✓'; color: #00d4ff; font-weight: bold; }
+        
         .download-btn { display: block; padding: 14px 28px; background: linear-gradient(135deg, #00d4ff, #7928ca); color: #fff; text-decoration: none; border-radius: 10px; font-weight: 700; border: none; cursor: pointer; font-size: 15px; width: 100%; text-align: center; text-transform: uppercase; margin-top: 12px; }
         .play-store-link { display: block; margin: 15px 0; padding: 16px 32px; background: linear-gradient(135deg, #00d4ff, #7928ca); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 700; text-transform: uppercase; text-align: center; font-size: 16px; cursor: pointer; border: none; width: 100%; transition: 0.3s; }
         .play-store-link:hover { transform: scale(1.02); }
+        .whatsapp-btn { display: block; padding: 16px 32px; background: linear-gradient(135deg, #25D366, #128C7E); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 700; text-transform: uppercase; text-align: center; font-size: 16px; cursor: pointer; border: none; width: 100%; transition: 0.3s; margin-top: 15px; }
+        .whatsapp-btn:hover { transform: scale(1.02); }
         
-        /* Loading Screen Overlay */
+        /* --- Mobile UI Upgrades --- */
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+        #fab { position: fixed; bottom: 90px; right: 20px; background: linear-gradient(135deg, #ff0080, #7928ca); color: #fff; border: none; width: 55px; height: 55px; border-radius: 50%; font-size: 1.4rem; box-shadow: 0 4px 15px rgba(255,0,128,0.4); display: none; z-index: 100; cursor: pointer; transition: transform 0.2s; }
+        #fab:active { transform: scale(0.9); }
+
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: var(--nav-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: flex; justify-content: space-around; padding: 12px 0 15px 0; box-shadow: 0 -2px 20px rgba(0,0,0,0.2); z-index: 1000; border-top: 1px solid var(--card-border); }
+        .nav-item { color: var(--text-muted); text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: 0.75rem; font-weight: 600; transition: 0.2s; cursor: pointer; }
+        .nav-item.active { color: #00d4ff; transform: translateY(-2px); }
+        .nav-item i { font-size: 1.4rem; margin-bottom: 5px; }
+
+        .toast { position: fixed; bottom: 85px; left: 15px; background: var(--nav-bg); border: 1px solid var(--card-border); padding: 12px 18px; border-radius: 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 99; transform: translateY(150%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); backdrop-filter: blur(10px); }
+        .toast.show { transform: translateY(0); }
+        .toast img { width: 30px; height: 30px; border-radius: 5px; object-fit: cover; }
+        .toast-text { font-size: 12px; color: var(--text-main); line-height: 1.3; }
+        .toast-text span { color: #00d4ff; font-weight: bold; }
+
+        .push-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.4s; backdrop-filter: blur(5px); }
+        .push-modal-overlay.show { opacity: 1; pointer-events: all; }
+        .push-modal { background: var(--card-bg); border: 2px solid #00d4ff; padding: 30px 20px; border-radius: 20px; text-align: center; max-width: 90%; width: 350px; transform: scale(0.8); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 40px rgba(0,212,255,0.3); }
+        .push-modal-overlay.show .push-modal { transform: scale(1); }
+        .push-modal h3 { color: #fff; margin-bottom: 10px; font-size: 22px; }
+        .push-modal p { color: var(--text-muted); font-size: 14px; margin-bottom: 20px; }
+        .push-btn-group { display: flex; gap: 10px; justify-content: center; }
+        .push-btn { padding: 12px 20px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; width: 45%; }
+        .push-btn-yes { background: linear-gradient(135deg, #00d4ff, #7928ca); color: #fff; }
+        .push-btn-no { background: rgba(255,255,255,0.1); color: var(--text-muted); }
+
         #loadingOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,0,21,0.98); z-index: 99999; flex-direction: column; align-items: center; justify-content: center; text-align: center; backdrop-filter: blur(10px); }
         .spinner { width: 60px; height: 60px; border: 5px solid rgba(255, 0, 128, 0.3); border-top: 5px solid #00d4ff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -57,11 +129,33 @@
         <div id="countdownText" style="font-size: 48px; font-weight: 900; color: #ff0080; text-shadow: 0 0 20px rgba(255,0,128,0.5);">5</div>
     </div>
 
+    <div class="push-modal-overlay" id="customPushModal">
+        <div class="push-modal">
+            <i class="fas fa-bell" style="font-size: 40px; color: #ff0080; margin-bottom: 15px;"></i>
+            <h3>Get Early Access!</h3>
+            <p>Want an instant alert on your phone when the <strong>GTA V Mobile Port</strong> officially drops?</p>
+            <div class="push-btn-group">
+                <button class="push-btn push-btn-no haptic-btn" onclick="closePushModal()">Maybe Later</button>
+                <button class="push-btn push-btn-yes haptic-btn" onclick="acceptPushModal()">YES, NOTIFY ME!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="socialToast">
+        <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1114150/capsule_616x353.jpg" id="toastImg" alt="Game">
+        <div class="toast-text" id="toastText">Someone from <span>India</span> just downloaded<br><strong>CarX Street</strong>!</div>
+    </div>
+
     <div class="container">
         <div id="home-page" class="page active">
             <header>
-                <h1>🎮 VIRAL GAMES HUB</h1>
+                <button id="theme-toggle" class="haptic-btn" title="Toggle Theme"><i class="fas fa-sun"></i></button>
+                
+                <h1 id="mainTitle">🎮 VIRAL GAMES HUB</h1>
                 <p class="subtitle">Discover the Best High-Graphics Mobile Ports & Official Recommendations</p>
+                
+                <a href="https://omg10.com/4/10446433" id="vipBtn" class="vip-btn haptic-btn" target="_blank">👑 ACCESS VIP SERVER 秘密</a>
+
                 <div class="feature-badges">
                     <span class="badge">📱 100+ Games Reviewed</span>
                     <span class="badge">⭐ Expert Tips Daily</span>
@@ -69,17 +163,24 @@
                 </div>
             </header>
 
-            <div class="search-box">
+            <div class="search-box animate-on-scroll">
                 <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search viral games by name..." onkeyup="searchGames()">
             </div>
 
-            <div class="ai-scanner-section" style="background: linear-gradient(135deg, #1e0030, #3a0060); padding: 25px; border-radius: 15px; margin: 25px auto; border: 2px solid #00d4ff; text-align: center; max-width: 600px; box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);">
+            <div class="category-filters animate-on-scroll" id="filtersContainer">
+                <div class="filter-pill active haptic-btn" onclick="filterCategory('All', this)">🔥 All Games</div>
+                <div class="filter-pill haptic-btn" onclick="filterCategory('Racing', this)">🏎️ Racing</div>
+                <div class="filter-pill haptic-btn" onclick="filterCategory('Action', this)">⚔️ Action</div>
+                <div class="filter-pill haptic-btn" onclick="filterCategory('Low MB', this)">📱 Low MB</div>
+            </div>
+
+            <div class="ai-scanner-section animate-on-scroll" style="background: var(--card-bg); padding: 25px; border-radius: 15px; margin: 25px auto; border: 2px solid #00d4ff; text-align: center; max-width: 600px; box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);">
                 <h2 style="color: #00c6ff; margin-bottom: 10px; font-size: 22px;">🤖 AI Device Compatibility Check</h2>
-                <p style="font-size: 14px; margin-bottom: 20px; color: #e0e0e0;">Can your phone run our exclusive 4K Ultra-Realistic Graphics Engine? Enter your device name below to find out.</p>
+                <p style="font-size: 14px; margin-bottom: 20px; color: var(--text-muted);">Can your phone run our exclusive 4K Ultra-Realistic Graphics Engine? Enter your device name below to find out.</p>
                 
-                <input type="text" id="deviceInput" placeholder="e.g. iPhone 14 Pro, POCO X5..." style="padding: 15px; width: 90%; border-radius: 10px; border: 1px solid #ff0080; background: rgba(0,0,0,0.5); color: #fff; margin-bottom: 15px; font-weight: bold; outline: none;">
+                <input type="text" id="deviceInput" placeholder="e.g. iPhone 14 Pro, POCO X5..." style="padding: 15px; width: 90%; border-radius: 10px; border: 1px solid #ff0080; background: var(--input-bg); color: var(--text-main); margin-bottom: 15px; font-weight: bold; outline: none;">
                 <br>
-                <button id="scanButton" onclick="startAIScan()" style="background: linear-gradient(135deg, #ff0080, #7928ca); color: white; padding: 14px 28px; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; width: 90%; text-transform: uppercase; transition: 0.3s;">RUN AI SCAN</button>
+                <button id="scanButton" class="haptic-btn" onclick="startAIScan()" style="background: linear-gradient(135deg, #ff0080, #7928ca); color: white; padding: 14px 28px; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; width: 90%; text-transform: uppercase; transition: 0.3s;">RUN AI SCAN</button>
 
                 <div id="aiResult" style="margin-top: 20px; font-size: 15px; color: #00ff88; min-height: 40px; display: none; line-height: 1.5; padding: 10px; background: rgba(0, 255, 136, 0.1); border-radius: 8px;">
                     Scanning device architecture...
@@ -91,199 +192,177 @@
 
         <div id="detail-page" class="page">
             <header>
-                <button class="back-button" onclick="navigateTo('home')">← Back to Games</button>
+                <button class="back-button haptic-btn" onclick="navigateTo('home')">← Back to Games</button>
                 <h2 id="detailTitle">Game Title</h2>
                 <p class="subtitle" id="detailSubtitle">Game Description</p>
             </header>
 
-            <div style="background: linear-gradient(135deg, rgba(255, 0, 128, 0.06) 0%, rgba(121, 40, 202, 0.04) 100%); border: 2px solid rgba(255, 0, 128, 0.25); border-radius: 20px; padding: 25px; margin: 20px 0;">
-                <img id="detailImage" src="" alt="Game" style="width:100%;max-height:300px;object-fit:contain;border-radius:15px;margin-bottom:20px;background:linear-gradient(135deg,#1a0033,#0a0015);padding:20px">
+            <div class="animate-on-scroll" style="background: var(--card-bg); border: 2px solid var(--card-border); border-radius: 20px; padding: 25px; margin: 20px 0;">
+                <img id="detailImage" src="" alt="Game" style="width:100%;max-height:300px;object-fit:cover;border-radius:15px;margin-bottom:20px;background:linear-gradient(135deg,#1a0033,#0a0015);">
                 
-                <h3>📝 About This Game</h3>
-                <p id="detailDescription" style="color: #c0c0c0; font-size: 15px; line-height: 1.7; margin-bottom: 12px;"></p>
+                <h3 style="color: var(--text-main);">📝 About This Game</h3>
+                <p id="detailDescription" style="color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 12px;"></p>
                 
-                <h3 style="margin-top:20px">✨ Key Features</h3>
+                <h3 style="margin-top:20px; color: var(--text-main);">✨ Key Features</h3>
                 <ul class="game-features" id="detailFeatures" style="margin-left:20px"></ul>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 15px; margin: 25px 0;">
-                <button id="mainDownloadBtn" class="play-store-link">
+            <div class="animate-on-scroll" style="display: flex; flex-direction: column; gap: 15px; margin: 25px 0;">
+                <button id="mainDownloadBtn" class="play-store-link haptic-btn">
                     📥 DOWNLOAD OFFICIAL PORT
                 </button>
-                <button id="altDownloadBtn" class="play-store-link" style="background: linear-gradient(135deg, #ff0080, #7928ca);">
+                <button id="altDownloadBtn" class="play-store-link haptic-btn" style="background: linear-gradient(135deg, #ff0080, #7928ca);">
                     🎁 UNLOCK 60FPS SETTINGS
+                </button>
+                <button id="whatsappShareBtn" class="whatsapp-btn haptic-btn" onclick="shareToWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> SHARE WITH FRIENDS
                 </button>
             </div>
         </div>
     </div>
 
+    <button id="fab" class="haptic-btn"><i class="fas fa-arrow-up"></i></button>
+
+    <nav class="bottom-nav">
+        <a class="nav-item haptic-btn active" onclick="navigateTo('home')">
+            <i class="fas fa-gamepad"></i>
+            <span>Games</span>
+        </a>
+        <a class="nav-item haptic-btn" onclick="document.getElementById('searchInput').focus(); window.scrollTo(0,0);">
+            <i class="fas fa-search"></i>
+            <span>Search</span>
+        </a>
+        <a class="nav-item haptic-btn" onclick="document.getElementById('scanButton').scrollIntoView({ behavior: 'smooth' });">
+            <i class="fas fa-microchip"></i>
+            <span>AI Scan</span>
+        </a>
+    </nav>
+
     <script>
+        // Massive 21-Game Database with Real Steam/Store Assets
         const games = [
-            {
-                id: 'wukong-mobile',
-                name: 'Black Myth: Wukong (Mobile Port)',
-                version: '1.0.2',
-                size: '6.8 GB',
-                description: 'Experience the breathtaking Unreal Engine 5 action of the Monkey King directly on your phone. Master fluid combat, epic boss fights, and explore a hyper-realistic mythic world.',
-                features: ['Unreal Engine 5 Graphics', '60 FPS Boss Fights', 'Full Skill Tree', 'Cloud Save Sync', 'Controller Support', 'No Pay-to-Win'],
-                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/capsule_616x353.jpg',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'spiderman-mobile',
-                name: "Marvel's Spider-Man: Mobile Port",
-                version: '3.0.1',
-                size: '4.2 GB',
-                description: 'Swing through New York City with console-level graphics on your phone! Experience flawless web-swinging physics, intense combat, and unlock all the iconic suits in this unreleased mobile port.',
-                features: ['Open World NYC', 'Flawless Web-Swinging', 'Suit Unlocks', '60 FPS Support', 'Controller Compatible', 'Ray-Tracing Elements'],
-                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1817070/capsule_616x353.jpg',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'jjk-cursed-clash',
-                name: 'Jujutsu Kaisen: Cursed Mobile',
-                version: '1.2.0',
-                size: '2.8 GB',
-                description: 'Unleash your Domain Expansion in this hyper-realistic 3D fighting game. Play as Gojo, Sukuna, and Yuji with stunning visual effects. Engage in global PvP arena battles!',
-                features: ['Domain Expansions', 'Global PvP Combat', 'Unreal Engine 5 VFX', 'All Special Grade Sorcerers', 'Story Mode', 'Original Voice Cast'],
-                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1877020/capsule_616x353.jpg',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'demon-slayer-mobile',
-                name: 'Demon Slayer: Mobile Port',
-                version: '2.1.0',
-                size: '3.4 GB',
-                description: 'Experience the ultimate breathing techniques in this stunning unreleased mobile port. Hyper-realistic combat, full story mode, and PvP multiplayer arena. Unlock all Hashira!',
-                features: ['Unreal Engine 5 Graphics', 'PvP Arena', 'Full Story Arc', 'High FPS Support', 'All Hashira Unlocked', 'Original Voice Acting'],
-                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1490890/capsule_616x353.jpg',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'ben10-protector',
-                name: 'Ben 10: Omniverse Unleashed',
-                version: '1.5.2',
-                size: '1.2 GB',
-                description: 'Unlock all alien forms in this open-world action game. Fight Vilgax, explore the galaxy, and upgrade the Omnitrix in full HD. Console-level graphics on your phone!',
-                features: ['Open World Exploration', 'All Playable Aliens', 'Combo System', 'Omnitrix Upgrades', 'Boss Battles', 'Controller Support'],
-                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/704670/capsule_616x353.jpg',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'carx-street',
-                name: 'CarX Street',
-                version: '1.9.1',
-                size: '1.8 GB',
-                description: 'Experience the most realistic street racing with stunning graphics and authentic car physics. Build your dream garage, customize every detail of your vehicles, and dominate the streets in intense, competitive races!',
-                features: ['Realistic Physics Engine', 'Extensive Car Customization', 'Beautiful HD Graphics', 'Multiplayer Racing', 'Regular Updates', 'Active Community'],
-                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1114150/capsule_616x353.jpg',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'asphalt-legends',
-                name: 'Asphalt Legends Unite',
-                version: '48.0.5a',
-                size: '2.1 GB',
-                description: 'The ultimate arcade racing experience! Race against rivals from around the world, perform insane stunts and tricks, and unlock over 250 legendary cars from top manufacturers. Dominate in multiplayer races!',
-                features: ['250+ Licensed Cars', 'Arcade Racing Style', 'Stunning Graphics', 'Global Multiplayer', 'Weekly Challenges', 'Seasonal Content'],
-                image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1815690/capsule_616x353.jpg',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'carx-drift-2',
-                name: 'CarX Drift Racing 2',
-                version: '1.41.0',
-                size: '1.5 GB',
-                description: 'Master the art of drifting with the most realistic physics engine available. Customize your car to perfection, compete in online multiplayer drift battles with players worldwide, and become the ultimate drift king!',
-                features: ['Advanced Drift Physics', 'Online Multiplayer', 'Car Customization Shop', 'Smooth Gameplay', 'Weekly Tournaments', 'Seasonal Events'],
-                image: 'https://play-lh.googleusercontent.com/KJ8_UwiIpZ8gbrs2RNXOHy61x-KJqlK8cwYyiJWaw2KFJWbQMimBwyYjwxS6ishBejg=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'street-racing-3d',
-                name: 'Street Racing 3D',
-                version: '7.5.0',
-                size: '98 MB',
-                description: 'Fast-paced street racing action in your pocket! Race through dynamic traffic, upgrade your car with quality parts from the in-game shop, and become the ultimate street racer. Simple controls with intense gameplay!',
-                features: ['Lightweight Download', 'Traffic Racing', 'Car Upgrades', 'Progressive Difficulty', 'Smooth 3D Graphics', 'Quick Gaming Sessions'],
-                image: 'https://play-lh.googleusercontent.com/nM3nHVAK1oJIcU5BpjQMowaOuru_RNXwAb1y-BP6BGEwWTiAZvWrwPzMhrSfKzaGAHAf=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'rally-horizon',
-                name: 'Rally Horizon',
-                version: '2.5.13',
-                size: '450 MB',
-                description: 'Off-road rally racing at its finest! Race through challenging terrains including mud, snow, and sand. Customize your rally car with authentic parts and dominate the competition worldwide in intense off-road battles!',
-                features: ['Off-Road Tracks', 'Weather Variations', 'Vehicle Customization', 'Rally Events', 'Terrain Challenges', 'Realistic Handling'],
-                image: 'https://play-lh.googleusercontent.com/NFTKJsXIoh2CSxP77C_mrphziRG0MobZNL7sXqEdCuJlHBTUs-5NGBxn53d6S3iIvg=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'street-racing-evo',
-                name: 'Street Racing EVO',
-                version: '1.8.2',
-                size: '125 MB',
-                description: 'Unique racing game featuring both cars AND motorcycles! Race through exciting city streets, customize both cars and bikes, and dominate competitions on both two-wheel and four-wheel vehicles. Double the racing action!',
-                features: ['Cars & Motorcycles', 'City Track Designs', 'Dual Vehicle Types', 'Free-to-Play', 'Regular Updates', 'Community Events'],
-                image: 'https://play-lh.googleusercontent.com/6Vq1IqN5nz0HK6KD8Y0U689hBGZvmyTZrP0P-oVyVQD6KxB0IuGL8KJleyBoesjLxkE=w400-h200-rw',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'carx-rider-pro',
-                name: 'CARx Rider Pro',
-                version: '2.98.2',
-                size: '1.2 GB',
-                description: 'The most realistic motorcycle racing simulator! Experience authentic bike physics, stunning graphics, and the thrill of high-speed racing. Customize your motorcycle and compete in professional racing tournaments!',
-                features: ['Motorcycle Simulation', 'Realistic Physics', 'Pro Tournaments', 'Bike Customization', 'HD Graphics', 'Competitive Ranking'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%231a0033"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%2300d4ff" text-anchor="middle" font-family="Arial"%3ECARx Rider Pro%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3E🏍️ Bike Racing%3C/text%3E%3C/svg%3E',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            },
-            {
-                id: 'road-racer-max',
-                name: 'Road Racer Max',
-                version: '3.2.5',
-                size: '340 MB',
-                description: 'High-speed highway racing with dynamic weather and realistic environments. Race across multiple countries with diverse landscapes. Earn rewards, unlock new cars, and climb the global racing leaderboards!',
-                features: ['Multiple Countries', 'Dynamic Weather', 'Daily Challenges', 'Leaderboards', 'Vehicle Variety', 'Smooth Performance'],
-                image: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="200"%3E%3Crect width="400" height="200" fill="%230a0015"/%3E%3Ctext x="50%25" y="45%25" font-size="30" fill="%23ff0080" text-anchor="middle" font-family="Arial"%3ERoad Racer Max%3C/text%3E%3Ctext x="50%25" y="65%25" font-size="18" fill="%%2300d4ff" text-anchor="middle" font-family="Arial"%3E🚗 Highway Racing%3C/text%3E%3C/svg%3E',
-                playStoreUrl: 'https://otieu.com/4/10446433'
-            }
+            // TOP PRIORITY GAMES
+            { id: 'forza-horizon-5', name: 'Forza Horizon 5 (Mobile Beta)', category: 'Racing', image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg', version: 'Beta 1.0', size: '4.5 GB', description: 'Experience the ultimate open-world racing simulator. High-fidelity graphics, real-time weather reflections, and massive car customization, now optimized for high-end mobile processors.', features: ['Ultra-realistic ray-tracing', '60FPS uncapped performance', 'Massive open-world map', 'Advanced drift physics'], playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'carx-street', name: 'CarX Street', category: 'Racing', version: '1.9.1', size: '1.8 GB', description: 'Experience the most realistic street racing with stunning graphics and authentic car physics. Build your dream garage and dominate the streets in intense competitive races!', features: ['Realistic Physics Engine', 'Extensive Car Customization', 'Beautiful HD Graphics', 'Multiplayer Racing'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1114150/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'ben10-protector', name: 'Ben 10: Omniverse Unleashed', category: 'Action', version: '1.5.2', size: '1.2 GB', description: 'Unlock all alien forms in this open-world action game. Fight Vilgax, explore the galaxy, and upgrade the Omnitrix in full HD. Console-level graphics on your phone!', features: ['Open World Exploration', 'All Playable Aliens', 'Combo System', 'Omnitrix Upgrades'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/704670/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'jjk-cursed-clash', name: 'Jujutsu Kaisen: Cursed Mobile', category: 'Action', version: '1.2.0', size: '2.8 GB', description: 'Unleash your Domain Expansion in this hyper-realistic 3D fighting game. Play as Gojo, Sukuna, and Yuji with stunning visual effects. Engage in global PvP arena battles!', features: ['Domain Expansions', 'Global PvP Combat', 'Unreal Engine 5 VFX', 'Story Mode'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1877020/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            
+            // HIGH TIER ACTION
+            { id: 'wukong-mobile', name: 'Black Myth: Wukong (Mobile)', category: 'Action', version: '1.0.2', size: '6.8 GB', description: 'Experience the breathtaking Unreal Engine 5 action of the Monkey King directly on your phone. Master fluid combat, epic boss fights, and explore a hyper-realistic mythic world.', features: ['Unreal Engine 5 Graphics', '60 FPS Boss Fights', 'Full Skill Tree', 'Controller Support'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'gta-v-mobile', name: 'Grand Theft Auto V: Mobile Beta', category: 'Action', version: '0.9.5', size: '8.1 GB', description: 'Return to Los Santos in this incredibly optimized mobile port of the legendary open-world game. Switch between Michael, Franklin, and Trevor on the go.', features: ['Full Los Santos Map', '3 Playable Characters', 'Adjustable Graphics Settings', 'Cloud Save Integration'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/271590/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'spiderman-mobile', name: "Marvel's Spider-Man: Mobile Port", category: 'Action', version: '3.0.1', size: '4.2 GB', description: 'Swing through New York City with console-level graphics on your phone! Experience flawless web-swinging physics, intense combat, and unlock all the iconic suits.', features: ['Open World NYC', 'Flawless Web-Swinging', 'Suit Unlocks', '60 FPS Support'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1817070/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'cyberpunk-mobile', name: 'Cyberpunk 2077: Pocket City', category: 'Action', version: '1.1.0', size: '7.5 GB', description: 'Welcome to Night City! Explore the massive, neon-drenched open world right from your mobile device. Customize your cyberware and take on dangerous corporate mercenaries.', features: ['Ray-Traced Neon Lights', 'Deep Cyberware System', 'First Person Combat', 'Dynamic Crowds'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'rdr2-mobile', name: 'Red Dead Redemption 2 Port', category: 'Action', version: '1.0.1', size: '9.2 GB', description: 'Experience the epic tale of Arthur Morgan in the palm of your hand. Incredible draw distances, dynamic weather, and realistic horse physics natively rendered for mobile.', features: ['Massive Open World', 'Dynamic Weather', 'Story Mode Complete', 'High-Res Textures'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'demon-slayer-mobile', name: 'Demon Slayer: Mobile Port', category: 'Action', version: '2.1.0', size: '3.4 GB', description: 'Experience the ultimate breathing techniques in this stunning unreleased mobile port. Hyper-realistic combat, full story mode, and PvP multiplayer arena. Unlock all Hashira!', features: ['Unreal Engine 5 Graphics', 'PvP Arena', 'Full Story Arc', 'High FPS Support'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1490890/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'elden-ring-mobile', name: 'Elden Ring: Mobile Edition', category: 'Action', version: '1.0.5', size: '6.1 GB', description: 'Rise, Tarnished! The Lands Between await in this hardcore mobile adaptation. Battle massive demigods and discover hidden dungeons with incredibly smooth touch controls.', features: ['Seamless Co-op', 'Massive Boss Fights', 'Customizable Builds', 'Full Map Exploration'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'god-of-war', name: 'God of War Ragnarök (Port)', category: 'Action', version: '1.2', size: '8.5 GB', description: 'Kratos and Atreus arrive on mobile! Experience the visceral combat of the Leviathan Axe and Blades of Chaos with heavily optimized mobile rendering techniques.', features: ['Godly Combat System', 'Immersive Storyline', 'Stunning Visuals', 'No Microtransactions'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1593500/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+
+            // RACING
+            { id: 'nfs-unbound', name: 'Need for Speed Unbound Mobile', category: 'Racing', version: '2.0.4', size: '3.1 GB', description: 'Hit the streets in a custom BMW M4 or a sleek Porsche 911 GT3 RS. Experience unique cel-shaded graphics combined with hyper-realistic car models in intense street races.', features: ['Unique Cel-Shaded VFX', 'Deep Customization', 'Cop Chases', 'Online Meetups'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1846380/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'asphalt-legends', name: 'Asphalt Legends Unite', category: 'Racing', version: '48.0.5a', size: '2.1 GB', description: 'The ultimate arcade racing experience! Race against rivals from around the world, perform insane stunts and tricks, and unlock over 250 legendary cars.', features: ['250+ Licensed Cars', 'Arcade Racing Style', 'Stunning Graphics', 'Global Multiplayer'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1815690/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'carx-drift-2', name: 'CarX Drift Racing 2', category: 'Racing', version: '1.41.0', size: '1.5 GB', description: 'Master the art of drifting with the most realistic physics engine available. Customize your car to perfection and compete in online multiplayer drift battles!', features: ['Advanced Drift Physics', 'Online Multiplayer', 'Car Customization Shop', 'Smooth Gameplay'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/815780/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'assetto-corsa', name: 'Assetto Corsa Mobile', category: 'Racing', version: '1.1.4', size: '2.5 GB', description: 'The premier racing simulator comes to mobile. Precision driving, realistic tire wear models, and laser-scanned tracks ensure the most authentic racing experience.', features: ['Laser-Scanned Tracks', 'Simulation Physics', 'Real Tire Degradation', 'Wheel Support'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/244210/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+
+            // LOW MB / QUICK PLAY
+            { id: 'street-racing-3d', name: 'Burnout Street Racing 3D', category: 'Low MB', version: '7.5.0', size: '98 MB', description: 'Fast-paced street racing action in your pocket! Race through dynamic traffic, upgrade your car with quality parts from the in-game shop, and become the ultimate street racer.', features: ['Lightweight Download', 'Traffic Racing', 'Car Upgrades', 'Smooth 3D Graphics'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/24780/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'rally-horizon', name: 'Dirt Rally Horizon', category: 'Low MB', version: '2.5.13', size: '450 MB', description: 'Off-road rally racing at its finest! Race through challenging terrains including mud, snow, and sand. Customize your rally car and dominate the competition.', features: ['Off-Road Tracks', 'Weather Variations', 'Vehicle Customization', 'Rally Events'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/690790/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'street-racing-evo', name: 'Grid Racing EVO', category: 'Low MB', version: '1.8.2', size: '125 MB', description: 'Unique racing game featuring closed-circuit tracks and aggressive AI! Race through exciting city streets and dominate competitions. Double the racing action!', features: ['Aggressive AI', 'City Track Designs', 'Free-to-Play', 'Regular Updates'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/703860/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'carx-rider-pro', name: 'MotoGP Rider Pro', category: 'Low MB', version: '2.98.2', size: '240 MB', description: 'The most realistic lightweight motorcycle simulator! Experience authentic bike physics, stunning graphics, and the thrill of high-speed racing.', features: ['Motorcycle Simulation', 'Realistic Physics', 'Pro Tournaments', 'Bike Customization'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2111630/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' },
+            { id: 'traffic-rider-max', name: 'Traffic Rider: Max Speed', category: 'Low MB', version: '1.9.5', size: '110 MB', description: 'Weave through endless highway traffic in first-person view. Upgrade your sports bike, complete missions, and reach insane top speeds in this classic hit.', features: ['First-Person View', 'Endless Highway Mode', 'Real Motor Sounds', 'Career Mode'], image: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1259980/capsule_616x353.jpg', playStoreUrl: 'https://otieu.com/4/10446433' }
         ];
 
+        let currentGameToShare = null;
+
+        // --- THE 3-TAP VIP EASTER EGG ---
+        let titleClicks = 0;
+        let titleClickTimer;
+        document.getElementById('mainTitle').addEventListener('click', () => {
+            titleClicks++;
+            clearTimeout(titleClickTimer);
+            
+            if(titleClicks === 3) {
+                document.body.classList.add('glitch-effect');
+                if('vibrate' in navigator) navigator.vibrate([50, 50, 50, 50, 150]); 
+                
+                setTimeout(() => {
+                    document.body.classList.remove('glitch-effect');
+                    document.getElementById('vipBtn').style.display = 'inline-block';
+                    document.getElementById('mainTitle').style.display = 'none'; 
+                }, 350); 
+                
+                titleClicks = 0;
+            } else {
+                titleClickTimer = setTimeout(() => { titleClicks = 0; }, 800); 
+            }
+        });
+
+        // --- Filter Logic ---
+        function filterCategory(category, element) {
+            document.querySelectorAll('.filter-pill').forEach(pill => pill.classList.remove('active'));
+            element.classList.add('active');
+            if(category === 'All') { renderGames(games); } 
+            else { renderGames(games.filter(g => g.category === category)); }
+        }
+
+        // --- WhatsApp Share Logic ---
+        function shareToWhatsApp() {
+            if(!currentGameToShare) return;
+            const msg = `Bro, check out this unreleased mobile port for *${currentGameToShare.name}*! It's insane. 🔥%0A%0ADownload it here: ${window.location.href}`;
+            window.open(`whatsapp://send?text=${msg}`, '_blank');
+        }
+
+        // --- Social Proof Toast Logic ---
+        const locations = ['India', 'the US', 'Brazil', 'Indonesia', 'the UK'];
+        function triggerSocialProof() {
+            const toast = document.getElementById('socialToast');
+            const randomGame = games[Math.floor(Math.random() * games.length)];
+            const randomLoc = locations[Math.floor(Math.random() * locations.length)];
+            document.getElementById('toastImg').src = randomGame.image;
+            document.getElementById('toastText').innerHTML = `Someone from <span>${randomLoc}</span> just downloaded<br><strong>${randomGame.name}</strong>!`;
+            toast.classList.add('show');
+            if ('vibrate' in navigator) navigator.vibrate(20); 
+            setTimeout(() => { toast.classList.remove('show'); }, 4000);
+        }
+        setInterval(triggerSocialProof, 18000);
+
+        // --- Monetag Custom Push Notification Logic ---
+        function showPushModal() {
+            if(!sessionStorage.getItem('pushAsked')) {
+                document.getElementById('customPushModal').classList.add('show');
+                sessionStorage.setItem('pushAsked', 'true');
+            }
+        }
+        function closePushModal() { document.getElementById('customPushModal').classList.remove('show'); }
+
+        function acceptPushModal() {
+            closePushModal(); 
+            let pushScript = document.createElement('script');
+            pushScript.src = "https://5gvci.com/act/files/tag.min.js?z=10706955";
+            pushScript.dataset.cfasync = "false";
+            pushScript.async = true;
+            document.head.appendChild(pushScript);
+        }
+        setTimeout(showPushModal, 12000);
+
+        // --- Core UI & Rendering Logic ---
         function searchGames() {
-            const input = document.getElementById('searchInput');
-            if (!input) return;
-            const term = input.value.toLowerCase();
-            const filtered = games.filter(g => 
-                g.name.toLowerCase().includes(term) || g.description.toLowerCase().includes(term) || g.features.some(f => f.toLowerCase().includes(term))
-            );
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = games.filter(g => g.name.toLowerCase().includes(term) || g.description.toLowerCase().includes(term));
             renderGames(filtered);
+            document.querySelectorAll('.filter-pill').forEach(pill => pill.classList.remove('active'));
+            document.querySelectorAll('.filter-pill')[0].classList.add('active'); 
         }
 
         function startAIScan() {
             const btn = document.getElementById('scanButton');
             const res = document.getElementById('aiResult');
             const input = document.getElementById('deviceInput').value;
-
-            if(!input) { alert("Enter your phone model first! (e.g., iPhone 13, POCO X5)"); return; }
-
-            btn.disabled = true;
-            btn.innerHTML = 'ANALYZING GPU...';
-            res.style.display = 'block';
-            res.innerHTML = 'Scanning device architecture and GPU capabilities...';
-
+            if(!input) { alert("Enter your phone model first!"); return; }
+            btn.disabled = true; btn.innerHTML = 'ANALYZING GPU...'; res.style.display = 'block'; res.innerHTML = 'Scanning device architecture and GPU capabilities...';
             setTimeout(() => {
                 res.innerHTML = '<span style="color: #00ff00; font-weight: bold;">✅ DEVICE SUPPORTED: 4K / 60FPS UNLOCKED</span>';
-                btn.innerHTML = '👇 CHOOSE YOUR GAME BELOW 👇';
-                btn.style.background = '#00ff00';
-                btn.style.color = '#000';
-                btn.style.cursor = 'pointer';
-                btn.disabled = false;
-                
-                btn.onclick = function() {
-                    document.getElementById('gamesGrid').scrollIntoView({ behavior: 'smooth' });
-                };
+                btn.innerHTML = '👇 CHOOSE YOUR GAME BELOW 👇'; btn.style.background = '#00ff00'; btn.style.color = '#000'; btn.style.cursor = 'pointer'; btn.disabled = false;
+                btn.onclick = function() { document.getElementById('gamesGrid').scrollIntoView({ behavior: 'smooth' }); };
             }, 3000);
         }
 
@@ -291,60 +370,30 @@
             const overlay = document.getElementById('loadingOverlay');
             const countdownEl = document.getElementById('countdownText');
             let timeLeft = 5;
-
-            overlay.style.display = 'flex';
-            countdownEl.innerText = timeLeft;
-
-            (function(d,z,s){
-                s.src='https://'+d+'/400/'+z;
-                try{(document.body||document.documentElement).appendChild(s)}catch(e){}
-            })('nap5k.com',10481702,document.createElement('script'));
-
+            overlay.style.display = 'flex'; countdownEl.innerText = timeLeft;
+            (function(d,z,s){ s.src='https://'+d+'/400/'+z; try{(document.body||document.documentElement).appendChild(s)}catch(e){} })('nap5k.com',10481702,document.createElement('script'));
             const timer = setInterval(() => {
-                timeLeft--;
-                countdownEl.innerText = timeLeft;
-                
-                if(timeLeft <= 0) {
-                    clearInterval(timer);
-                    overlay.style.display = 'none';
-                    window.location.href = url;
-                }
+                timeLeft--; countdownEl.innerText = timeLeft;
+                if(timeLeft <= 0) { clearInterval(timer); overlay.style.display = 'none'; window.location.href = url; }
             }, 1000);
         }
 
         function renderGames(gamesToRender) {
             const grid = document.getElementById('gamesGrid');
             grid.innerHTML = gamesToRender.map(game => `
-                <article class="game-card" onclick="showGameDetail('${game.id}')">
+                <article class="game-card haptic-btn animate-on-scroll" onclick="showGameDetail('${game.id}')">
                     <img src="${game.image}" alt="${game.name}" class="game-image" loading="lazy">
                     <div class="game-content">
                         <h3>${game.name}</h3>
-                        <p><strong>Version:</strong> ${game.version}</p>
+                        <p><strong>Category:</strong> ${game.category}</p>
                         <p><strong>Size:</strong> ${game.size}</p>
-                        <ul class="game-features">
-                            ${game.features.slice(0, 3).map(f => `<li>${f}</li>`).join('')}
-                        </ul>
-                        <button class="download-btn" onclick="event.stopPropagation(); showGameDetail('${game.id}')">📥 VIEW DETAILS</button>
+                        <ul class="game-features">${game.features.slice(0, 3).map(f => `<li>${f}</li>`).join('')}</ul>
+                        <button class="download-btn haptic-btn" onclick="event.stopPropagation(); showGameDetail('${game.id}')">📥 VIEW DETAILS</button>
                     </div>
                 </article>
             `).join('');
-        }
-
-        function showGameDetail(gameId) {
-            const game = games.find(g => g.id === gameId);
-            if (!game) return;
-
-            document.getElementById('detailTitle').textContent = `${game.name} - Full Review`;
-            document.getElementById('detailSubtitle').textContent = game.description.substring(0, 100) + '...';
-            document.getElementById('detailImage').src = game.image;
-            document.getElementById('detailDescription').textContent = game.description;
-            document.getElementById('detailFeatures').innerHTML = game.features.map(f => `<li>${f}</li>`).join('');
-
-            // Attach the 5-second delay ONLY to the buttons on this details page
-            document.getElementById('mainDownloadBtn').onclick = function() { triggerSecureLink(game.playStoreUrl); };
-            document.getElementById('altDownloadBtn').onclick = function() { triggerSecureLink(game.playStoreUrl); };
-
-            navigateTo('detail');
+            setTimeout(handleScrollAnimation, 100);
+            attachHapticFeedback();
         }
 
         let currentPage = 'home';
@@ -352,26 +401,21 @@
 
         function navigateTo(pageName) {
             if (pages[currentPage]) pages[currentPage].classList.remove('active');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if(pageName === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
             setTimeout(() => {
-                if (pages[pageName]) {
-                    pages[pageName].classList.add('active');
-                    currentPage = pageName;
-                    window.scrollTo({top: 0, behavior: 'smooth'});
-                }
+                if (pages[pageName]) { pages[pageName].classList.add('active'); currentPage = pageName; window.scrollTo({top: 0, behavior: 'smooth'}); handleScrollAnimation(); }
             }, 50);
         }
 
-        window.addEventListener('DOMContentLoaded', () => renderGames(games));
         function showGameDetail(gameId) {
             const game = games.find(g => g.id === gameId);
             if (!game) return;
+            
+            currentGameToShare = game;
 
-            // TRIGGER THE HIGH-CPM VIGNETTE AD HERE ON CARD CLICK
-            (function(s){
-                s.dataset.zone='10512785'; // Your specific Monetag Vignette Zone
-                s.src='https://gizokraijaw.net/vignette.min.js';
-                document.body.appendChild(s);
-            })(document.createElement('script'));
+            // Monetag Vignette Code
+            (function(s){ s.dataset.zone='10512785'; s.src='https://gizokraijaw.net/vignette.min.js'; document.body.appendChild(s); })(document.createElement('script'));
 
             document.getElementById('detailTitle').textContent = `${game.name} - Full Review`;
             document.getElementById('detailSubtitle').textContent = game.description.substring(0, 100) + '...';
@@ -379,12 +423,43 @@
             document.getElementById('detailDescription').textContent = game.description;
             document.getElementById('detailFeatures').innerHTML = game.features.map(f => `<li>${f}</li>`).join('');
 
-            // Attach the 5-second delay ONLY to the buttons on this details page
             document.getElementById('mainDownloadBtn').onclick = function() { triggerSecureLink(game.playStoreUrl); };
             document.getElementById('altDownloadBtn').onclick = function() { triggerSecureLink(game.playStoreUrl); };
 
             navigateTo('detail');
         }
+
+        // UI Upgrades 
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeBtn.querySelector('i');
+        if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); themeIcon.classList.replace('fa-sun', 'fa-moon'); }
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            if (document.body.classList.contains('light-mode')) { localStorage.setItem('theme', 'light'); themeIcon.classList.replace('fa-sun', 'fa-moon'); } 
+            else { localStorage.setItem('theme', 'dark'); themeIcon.classList.replace('fa-moon', 'fa-sun'); }
+        });
+
+        function attachHapticFeedback() {
+            document.querySelectorAll('.haptic-btn').forEach(btn => {
+                btn.removeEventListener('click', triggerHaptic); btn.addEventListener('click', triggerHaptic);
+            });
+        }
+        function triggerHaptic() { if ('vibrate' in navigator) { navigator.vibrate(40); } }
+
+        const fab = document.getElementById('fab');
+        const handleScrollAnimation = () => {
+            document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+                if (el.getBoundingClientRect().top <= (window.innerHeight || document.documentElement.clientHeight) * 0.9) { el.classList.add('visible'); }
+            });
+            if (window.scrollY > 300) { fab.style.display = 'block'; } else { fab.style.display = 'none'; }
+        };
+
+        fab.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+        window.addEventListener('scroll', handleScrollAnimation);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderGames(games); attachHapticFeedback(); handleScrollAnimation();
+        });
     </script>
 </body>
 </html>
