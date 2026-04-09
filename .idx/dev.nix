@@ -1,44 +1,49 @@
-# To learn more about how to use Nix to configure your environment
-# see: https://developers.google.com/idx/guides/customize-idx-env
-{ pkgs, ... }: {
-  # Which nixpkgs channel to use.
-  channel = "stable-23.11"; # or "unstable"
-  # Use https://search.nixos.org/packages to find packages
+# IDX workspace configuration for Aura Framing
+# Learn more: https://firebase.google.com/docs/studio/customize-workspace
+{ ... }: {
+  # Which nixpkgs channel to use
+  channel = "stable-24.05"; # or "unstable"
+
+  # Packages available in the environment
   packages = [
+    # Node.js runtime
     pkgs.nodejs_20
-    pkgs.python3
+    # Firebase CLI for hosting/deploy commands
+    pkgs.nodePackages.firebase-tools
   ];
-  # Sets environment variables in the workspace
-  env = {};
+
+  # Environment variables
+  env = { };
+
   idx = {
-    # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
+    # Extensions from Open VSX
     extensions = [
       # "vscodevim.vim"
-      "google.gemini-cli-vscode-ide-companion"
-      "audits.lighthouse"
     ];
-    # Enable previews and customize configuration
+
+    # Enable previews
     previews = {
       enable = true;
       previews = {
         web = {
-          command = ["python3" "-m" "http.server" "$PORT" "--bind" "0.0.0.0"];
+          # Run your dev server with IDX’s preview port
+          command = ["npm" "run" "dev"];
           manager = "web";
+          env = {
+            PORT = "$PORT";
+          };
         };
       };
     };
+
     # Workspace lifecycle hooks
     workspace = {
-      # Runs when a workspace is first created
       onCreate = {
-        # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
-        # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "style.css" "main.js" "index.html" ];
+        # Install dependencies when workspace is created
+        npm-install = "npm install";
       };
-      # Runs when the workspace is (re)started
       onStart = {
-        # Example: start a background task to watch and re-build backend code
+        # Example: start background tasks if needed
         # watch-backend = "npm run watch-backend";
       };
     };
