@@ -229,12 +229,13 @@ const Badge = ({ name, icon, description }: { name: string; icon: string; descri
   </motion.div>
 );
 
-const GameCard = ({ game, onClick, onDownload, onShare, layoutId }: { 
+const GameCard = ({ game, onClick, onDownload, onShare, layoutId, onKeyDown }: { 
   game: Game; 
   onClick: () => void; 
   onDownload: (e: React.MouseEvent) => void; 
   onShare: (e: React.MouseEvent) => void;
   layoutId?: string; 
+  onKeyDown: (e: React.KeyboardEvent) => void;
   key?: React.Key 
 }) => (
   <motion.article 
@@ -242,7 +243,7 @@ const GameCard = ({ game, onClick, onDownload, onShare, layoutId }: {
     whileHover={{ y: -12, scale: 1.02 }}
     className={`group relative bg-[var(--card-bg)] border-2 border-[var(--card-border)] rounded-[2rem] overflow-hidden cursor-pointer transition-all hover:shadow-[0_20px_60px_rgba(255,0,128,0.5)] hover:border-accent ${game.isAd ? 'ring-4 ring-secondary/30' : ''}`}
     onClick={onClick}
-    onKeyDown={(e) => handleKeyDown(e, onClick)}
+    onKeyDown={onKeyDown}
     tabIndex={0}
     role="button"
     aria-label={`View details for ${game.name}`}
@@ -773,6 +774,7 @@ export default function App() {
                   onClick={() => { setSelectedGame(game); setSelectedLayoutId(`rec-${game.id}`); setPage('detail'); addPoints(20); }}
                   onDownload={(e: React.MouseEvent) => { e.stopPropagation(); handleDownload(game); }}
                   onShare={(e: React.MouseEvent) => handleShare(e, game)}
+                  onKeyDown={(e) => handleKeyDown(e, () => { setSelectedGame(game); setSelectedLayoutId(`rec-${game.id}`); setPage('detail'); addPoints(20); })}
                 />
               ))}
             </div>
@@ -793,6 +795,7 @@ export default function App() {
                     onClick={() => { setSelectedGame(game); setSelectedLayoutId(`all-${game.id}`); setPage('detail'); addPoints(20); }}
                     onDownload={(e: React.MouseEvent) => { e.stopPropagation(); handleDownload(game); }}
                     onShare={(e: React.MouseEvent) => handleShare(e, game)}
+                    onKeyDown={(e) => handleKeyDown(e, () => { setSelectedGame(game); setSelectedLayoutId(`all-${game.id}`); setPage('detail'); addPoints(20); })}
                   />
                   {/* Inject In-Feed Ad every 6 items */}
                   {(idx + 1) % 6 === 0 && (
