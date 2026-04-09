@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, Suspense, lazy } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Gamepad2, 
@@ -132,7 +132,7 @@ const MonetagAd = ({ zoneId, type = 'banner', className = '' }: { zoneId: string
         <div className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity">
           <img 
             src={ad.image} 
-            alt="" 
+            alt={`${ad.title} - ${ad.desc}`}
             className="w-full h-full object-cover"
             referrerPolicy="no-referrer"
           />
@@ -242,6 +242,10 @@ const GameCard = ({ game, onClick, onDownload, onShare, layoutId }: {
     whileHover={{ y: -12, scale: 1.02 }}
     className={`group relative bg-[var(--card-bg)] border-2 border-[var(--card-border)] rounded-[2rem] overflow-hidden cursor-pointer transition-all hover:shadow-[0_20px_60px_rgba(255,0,128,0.5)] hover:border-accent ${game.isAd ? 'ring-4 ring-secondary/30' : ''}`}
     onClick={onClick}
+    onKeyDown={(e) => handleKeyDown(e, onClick)}
+    tabIndex={0}
+    role="button"
+    aria-label={`View details for ${game.name}`}
   >
     <div className="relative h-48 overflow-hidden">
       <img 
@@ -326,6 +330,24 @@ const GameCard = ({ game, onClick, onDownload, onShare, layoutId }: {
   </motion.article>
 );
 
+const GameCardSkeleton = () => (
+  <div className="bg-[var(--card-bg)] border-2 border-[var(--card-border)] rounded-[2rem] overflow-hidden animate-pulse">
+    <div className="h-48 bg-white/10"></div>
+    <div className="p-6 space-y-4">
+      <div className="h-6 bg-white/10 rounded"></div>
+      <div className="flex gap-4">
+        <div className="h-4 bg-white/10 rounded w-16"></div>
+        <div className="h-4 bg-white/10 rounded w-12"></div>
+      </div>
+      <div className="space-y-2">
+        <div className="h-3 bg-white/10 rounded"></div>
+        <div className="h-3 bg-white/10 rounded w-3/4"></div>
+      </div>
+      <div className="h-12 bg-white/10 rounded-2xl"></div>
+    </div>
+  </div>
+);
+
 const SocialToast = ({ game, location }: { game: Game; location: string; key?: React.Key }) => (
   <motion.div 
     key={`toast-${game.id}-${location}`}
@@ -334,7 +356,7 @@ const SocialToast = ({ game, location }: { game: Game; location: string; key?: R
     exit={{ y: 100, opacity: 0 }}
     className="fixed bottom-24 left-4 glass p-3 rounded-xl flex items-center gap-3 shadow-2xl z-50 max-w-[280px]"
   >
-    <img src={game.image} alt="" className="w-10 h-10 rounded-lg object-cover" />
+    <img src={game.image} alt={`${game.name} game thumbnail`} className="w-10 h-10 rounded-lg object-cover" />
     <div className="text-[11px] leading-tight">
       Someone from <span className="text-secondary font-bold">{location}</span> just downloaded <br />
       <strong className="text-accent">{game.name}</strong>!
@@ -366,6 +388,13 @@ export default function App() {
   const [supportTimer, setSupportTimer] = useState(5);
   const [pendingDownloadGame, setPendingDownloadGame] = useState<Game | null>(null);
   const observerTarget = useRef<HTMLDivElement>(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      action();
+    }
+  };
 
   // Detail Interstitial Delay
   useEffect(() => {
@@ -575,15 +604,18 @@ export default function App() {
           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
         </button>
 
-        <motion.h1 
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="text-4xl md:text-6xl font-black text-gradient tracking-tighter mb-2 cursor-pointer select-none"
-          onClick={() => {
-            if (Math.random() > 0.8) document.body.classList.add('glitch-effect');
-            setTimeout(() => document.body.classList.remove('glitch-effect'), 500);
-          }}
-        >
+      <motion.h1 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="text-4xl md:text-6xl font-black text-gradient tracking-tighter mb-2 cursor-pointer select-none"
+        onClick={() => {
+          if (Math.random() > 0.8) document.body.classList.add('glitch-effect');
+          setTimeout(() => document.body.classList.remove('glitch-effect'), 500);
+        }}
+        tabIndex={0}
+        role="banner"
+        aria-label="Viral Games Hub main title"
+      >
           VIRAL GAMES HUB
         </motion.h1>
         <p className="text-sm text-[var(--text-main)] font-bold max-w-md mx-auto opacity-90">
@@ -620,7 +652,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 relative">
+      <main className="container mx-auto px-6 relative" role="main">
         {/* --- Home Content (Always Mounted) --- */}
         <div className={`transition-all duration-500 ${page === 'detail' ? 'blur-xl scale-95 opacity-30 pointer-events-none' : ''}`}>
           {/* --- Monetag Banner Placeholder --- */}
@@ -728,8 +760,8 @@ export default function App() {
           </div>
 
           {/* --- Recommendations --- */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-black text-gradient mb-6 flex items-center gap-2">
+          <section className="mb-12" aria-labelledby="recommendations-heading">
+            <h2 id="recommendations-heading" className="text-2xl font-black text-gradient mb-6 flex items-center gap-2">
               <TrendingUp size={24} className="text-accent" /> RECOMMENDED FOR YOU
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -747,8 +779,8 @@ export default function App() {
           </section>
 
           {/* --- All Games Grid --- */}
-          <section className="mb-12">
-            <h2 className="text-2xl font-black text-gradient mb-6 flex items-center gap-2">
+          <section className="mb-12" aria-labelledby="all-games-heading">
+            <h2 id="all-games-heading" className="text-2xl font-black text-gradient mb-6 flex items-center gap-2">
               <Flame size={24} className="text-accent" /> ALL VIRAL GAMES
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -767,6 +799,10 @@ export default function App() {
                     <MonetagAd key={`in-feed-ad-${idx}`} zoneId={`in-feed-${idx}`} type="native" className="h-full min-h-[300px]" />
                   )}
                 </React.Fragment>
+              ))}
+              {/* Show loading skeletons for remaining items */}
+              {visibleCount < filteredGames.length && Array.from({ length: Math.min(3, filteredGames.length - visibleCount) }).map((_, idx) => (
+                <GameCardSkeleton key={`skeleton-${idx}`} />
               ))}
             </div>
 
@@ -969,10 +1005,11 @@ export default function App() {
       </motion.div>
 
       {/* --- Bottom Nav --- */}
-      <nav className="fixed bottom-0 left-0 right-0 glass h-20 flex justify-around items-center px-6 z-50 md:flex hidden">
+      <nav className="fixed bottom-0 left-0 right-0 glass h-20 flex justify-around items-center px-6 z-50 md:flex hidden" role="navigation" aria-label="Main navigation">
         <button 
           onClick={() => setPage('home')}
           className={`flex flex-col items-center gap-1 transition-all ${page === 'home' ? 'text-secondary scale-110' : 'text-[var(--text-muted)] opacity-60'}`}
+          aria-label="Go to games home"
         >
           <Gamepad2 size={24} />
           <span className="text-[10px] font-black uppercase tracking-tighter">Games</span>
@@ -983,6 +1020,7 @@ export default function App() {
         <button 
           onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); document.querySelector('input')?.focus(); }}
           className="flex flex-col items-center gap-1 text-[var(--text-muted)] opacity-60"
+          aria-label="Search games"
         >
           <Search size={24} />
           <span className="text-[10px] font-black uppercase tracking-tighter">Search</span>
@@ -990,6 +1028,7 @@ export default function App() {
         <button 
           onClick={() => { document.querySelector('.bg-secondary')?.scrollIntoView({ behavior: 'smooth' }); }}
           className="flex flex-col items-center gap-1 text-[var(--text-muted)] opacity-60"
+          aria-label="Go to AI device scanner"
         >
           <Cpu size={24} />
           <span className="text-[10px] font-black uppercase tracking-tighter">AI Scan</span>
@@ -997,16 +1036,16 @@ export default function App() {
       </nav>
 
       {/* --- Mobile Bottom Nav (Simplified for Sticky Ad) --- */}
-      <nav className="fixed bottom-16 left-0 right-0 glass h-16 flex justify-around items-center px-6 z-50 md:hidden">
-        <button onClick={() => setPage('home')} className={`flex flex-col items-center gap-1 ${page === 'home' ? 'text-secondary' : 'text-[var(--text-muted)] opacity-60'}`}>
+      <nav className="fixed bottom-16 left-0 right-0 glass h-16 flex justify-around items-center px-6 z-50 md:hidden" role="navigation" aria-label="Mobile navigation">
+        <button onClick={() => setPage('home')} className={`flex flex-col items-center gap-1 ${page === 'home' ? 'text-secondary' : 'text-[var(--text-muted)] opacity-60'}`} aria-label="Games">
           <Gamepad2 size={20} />
           <span className="text-[8px] font-black uppercase">Games</span>
         </button>
-        <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); document.querySelector('input')?.focus(); }} className="flex flex-col items-center gap-1 text-[var(--text-muted)] opacity-60">
+        <button onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); document.querySelector('input')?.focus(); }} className="flex flex-col items-center gap-1 text-[var(--text-muted)] opacity-60" aria-label="Search">
           <Search size={20} />
           <span className="text-[8px] font-black uppercase">Search</span>
         </button>
-        <button onClick={() => { document.querySelector('.bg-secondary')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex flex-col items-center gap-1 text-[var(--text-muted)] opacity-60">
+        <button onClick={() => { document.querySelector('.bg-secondary')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex flex-col items-center gap-1 text-[var(--text-muted)] opacity-60" aria-label="AI Scan">
           <Cpu size={20} />
           <span className="text-[8px] font-black uppercase">AI Scan</span>
         </button>
