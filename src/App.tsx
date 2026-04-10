@@ -21,13 +21,15 @@ import {
   TrendingUp,
   Award,
   Sun,
-  Moon
+  Moon,
+  Target,
+  Users
 } from 'lucide-react';
-import { Game, GAMES, UserStats, BADGES } from './types';
+import { Game, GAMES, UserStats, BADGES, DAILY_CHALLENGES, LEADERBOARD } from './types';
 
 // --- Components ---
 
-const MonetagAd = ({ zoneId, type = 'banner', className = '' }: { zoneId: string; type?: 'banner' | 'native' | 'sidebar' | 'interstitial' | 'popunder' | 'vignette' | 'page-push' | 'vignette-banner'; className?: string; key?: React.Key }) => {
+const MonetagAd: React.FC<{ zoneId: string; type?: 'banner' | 'native' | 'sidebar' | 'interstitial' | 'popunder' | 'vignette' | 'page-push' | 'vignette-banner'; className?: string }> = ({ zoneId, type = 'banner', className = '' }) => {
   const [refreshKey, setRefreshKey] = useState(0);
   const adRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -175,7 +177,7 @@ const MonetagAd = ({ zoneId, type = 'banner', className = '' }: { zoneId: string
   );
 };
 
-const VignetteAd = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; key?: React.Key }) => (
+const VignetteAd: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => (
   <AnimatePresence>
     {isOpen && (
       <motion.div 
@@ -217,7 +219,126 @@ const VignetteAd = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void;
   </AnimatePresence>
 );
 
-const Badge = ({ name, icon, description }: { name: string; icon: string; description: string; key?: React.Key }) => (
+// Daily Challenge Card Component
+const DailyChallengeCard: React.FC<{ challenge: any; isCompleted: boolean; onComplete: () => void }> = ({ challenge, isCompleted, onComplete }) => (
+  <motion.div 
+    whileHover={{ y: -4 }}
+    className="bg-[var(--card-bg)] border border-accent/30 rounded-xl p-4 cursor-pointer hover:border-accent transition-all hover:shadow-[0_10px_30px_rgba(255,0,128,0.2)]"
+    onClick={onComplete}
+  >
+    <div className="flex items-start justify-between mb-2">
+      <span className="text-2xl">{challenge.icon}</span>
+      <span className={`text-xs font-black px-2 py-1 rounded-full ${isCompleted ? 'bg-green-500/20 text-green-400' : 'bg-accent/20 text-accent'}`}>
+        {isCompleted ? '✓ DONE' : `+${challenge.reward} PTS`}
+      </span>
+    </div>
+    <h4 className="text-sm font-black text-white mb-1">{challenge.title}</h4>
+    <p className="text-xs text-[var(--text-muted)] mb-2">{challenge.description}</p>
+    <div className="w-full bg-white/10 rounded-full h-2">
+      <div className="bg-gradient-to-r from-accent to-secondary h-2 rounded-full transition-all" style={{ width: `${isCompleted ? 100 : 30}%` }} />
+    </div>
+  </motion.div>
+);
+
+// Leaderboard Position Component
+const LeaderboardRow: React.FC<{ entry: any; isCurrentUser?: boolean }> = ({ entry, isCurrentUser }) => (
+  <motion.div 
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    className={`flex items-center justify-between p-3 rounded-lg ${isCurrentUser ? 'bg-accent/10 border border-accent/30' : 'bg-white/5 border border-white/10'} hover:bg-white/10 transition-colors`}
+  >
+    <div className="flex items-center gap-3 flex-1">
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-black text-sm ${
+        entry.rank === 1 ? 'bg-yellow-500/20 text-yellow-300' :
+        entry.rank === 2 ? 'bg-gray-400/20 text-gray-300' :
+        entry.rank === 3 ? 'bg-orange-500/20 text-orange-300' :
+        'bg-accent/20 text-accent'
+      }`}>
+        {entry.rank}
+      </div>
+      <div className="flex-1">
+        <p className="text-sm font-bold text-white">{entry.username}</p>
+        <p className="text-xs text-[var(--text-muted)]">Level {entry.level}</p>
+      </div>
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="text-lg">{entry.badge}</span>
+      <span className="text-sm font-black text-accent">{entry.points.toLocaleString()}</span>
+    </div>
+  </motion.div>
+);
+
+// Trending Games Section
+const TrendingGamesSection: React.FC<{ games: Game[]; onSelectGame: (game: Game) => void }> = ({ games, onSelectGame }) => (
+  <div className="mb-12">
+    <div className="flex items-center gap-2 mb-4">
+      <Flame size={24} className="text-secondary animate-bounce" />
+      <h2 className="text-2xl font-black text-white">Trending Now 🔥</h2>
+      <div className="h-1 flex-1 bg-gradient-to-r from-secondary via-accent to-transparent rounded-full" />
+    </div>
+    <div className="grid grid-cols-1 gap-3">
+      {games.slice(0, 3).map((game, i) => (
+        <motion.div
+          key={`trending-${game.id}`}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: i * 0.1 }}
+          onClick={() => onSelectGame(game)}
+          className="flex items-center gap-4 bg-gradient-to-r from-secondary/10 to-accent/5 border border-secondary/20 rounded-lg p-3 cursor-pointer hover:border-secondary/50 hover:scale-105 transition-all group"
+        >
+          <img src={game.image} alt={game.name} className="w-12 h-12 rounded object-cover" />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-black text-white truncate group-hover:text-secondary transition-colors">{game.name}</p>
+            <p className="text-xs text-[var(--text-muted)]">⭐ {game.rating} • {game.category}</p>
+          </div>
+          <TrendingUp size={16} className="text-secondary shrink-0" />
+        </motion.div>
+      ))}
+    </div>
+  </div>
+);
+
+// Top Performers Component
+const TopPerformersSection: React.FC = () => (
+  <div className="mb-12">
+    <div className="flex items-center gap-2 mb-4">
+      <Trophy size={24} className="text-yellow-400" />
+      <h2 className="text-2xl font-black text-white">Top Players</h2>
+      <div className="h-1 flex-1 bg-gradient-to-r from-yellow-400 via-accent to-transparent rounded-full" />
+    </div>
+    <div className="space-y-2">
+      {LEADERBOARD.slice(0, 5).map((entry) => (
+        <LeaderboardRow key={`lb-${entry.rank}`} entry={entry} />
+      ))}
+    </div>
+    <button className="w-full mt-4 py-2 text-sm font-black text-accent hover:text-secondary border border-accent/30 hover:border-secondary/50 rounded-lg transition-all">
+      View Full Leaderboard
+    </button>
+  </div>
+);
+
+// Daily Challenges Section
+const DailyChallengesSection: React.FC<{ completedChallenges: string[]; onCompleteChallenge: (id: string) => void }> = ({ completedChallenges, onCompleteChallenge }) => (
+  <div className="mb-12">
+    <div className="flex items-center gap-2 mb-4">
+      <Zap size={24} className="text-secondary" />
+      <h2 className="text-2xl font-black text-white">Daily Quests</h2>
+      <div className="h-1 flex-1 bg-gradient-to-r from-secondary via-accent to-transparent rounded-full" />
+    </div>
+    <div className="grid grid-cols-2 gap-3">
+      {DAILY_CHALLENGES.map((challenge) => (
+        <DailyChallengeCard
+          key={`dc-${challenge.id}`}
+          challenge={challenge}
+          isCompleted={completedChallenges.includes(challenge.id)}
+          onComplete={() => onCompleteChallenge(challenge.id)}
+        />
+      ))}
+    </div>
+  </div>
+);
+
+const Badge: React.FC<{ name: string; icon: string; description: string }> = ({ name, icon, description }) => (
   <motion.div 
     initial={{ scale: 0.8, opacity: 0 }}
     animate={{ scale: 1, opacity: 1 }}
@@ -229,15 +350,14 @@ const Badge = ({ name, icon, description }: { name: string; icon: string; descri
   </motion.div>
 );
 
-const GameCard = ({ game, onClick, onDownload, onShare, layoutId, onKeyDown }: { 
+const GameCard: React.FC<{ 
   game: Game; 
   onClick: () => void; 
   onDownload: (e: React.MouseEvent) => void; 
   onShare: (e: React.MouseEvent) => void;
   layoutId?: string; 
   onKeyDown: (e: React.KeyboardEvent) => void;
-  key?: React.Key 
-}) => (
+}> = ({ game, onClick, onDownload, onShare, layoutId, onKeyDown }) => (
   <motion.article 
     layoutId={layoutId}
     whileHover={{ y: -12, scale: 1.02 }}
@@ -349,7 +469,7 @@ const GameCardSkeleton = () => (
   </div>
 );
 
-const SocialToast = ({ game, location }: { game: Game; location: string; key?: React.Key }) => (
+const SocialToast: React.FC<{ game: Game; location: string }> = ({ game, location }) => (
   <motion.div 
     key={`toast-${game.id}-${location}`}
     initial={{ y: 100, opacity: 0 }}
@@ -388,6 +508,9 @@ export default function App() {
   const [showVignette, setShowVignette] = useState(false);
   const [supportTimer, setSupportTimer] = useState(5);
   const [pendingDownloadGame, setPendingDownloadGame] = useState<Game | null>(null);
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [shareCount, setShareCount] = useState(0);
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
@@ -495,13 +618,29 @@ export default function App() {
         alert('Link copied to clipboard! Share it on your Instagram Story.');
       }
       addPoints(50);
+      setShareCount(prev => prev + 1);
+      completeChallenge('share-daily');
+      if (shareCount + 1 >= 5) unlockBadge('sharer-pro');
       unlockBadge('social-butterfly');
       return;
     }
 
     if (shareUrl) window.open(shareUrl, '_blank');
     addPoints(50);
+    setShareCount(prev => prev + 1);
+    completeChallenge('share-daily');
+    if (shareCount + 1 >= 5) unlockBadge('sharer-pro');
     unlockBadge('social-butterfly');
+  };
+
+  const completeChallenge = (challengeId: string) => {
+    if (completedChallenges.includes(challengeId)) return;
+    
+    const challenge = DAILY_CHALLENGES.find(c => c.id === challengeId);
+    if (challenge) {
+      addPoints(challenge.reward);
+      setCompletedChallenges(prev => [...prev, challengeId]);
+    }
   };
 
   const handleDownload = (game: Game) => {
@@ -523,6 +662,9 @@ export default function App() {
   const confirmDownload = () => {
     if (!pendingDownloadGame) return;
     addPoints(100);
+    completeChallenge('download-daily');
+    if (stats.points >= 1000 && !stats.badges.includes('trending-hunter')) unlockBadge('trending-hunter');
+    if (stats.badges.filter(b => b.includes('collected')).length >= 10) unlockBadge('collector');
     if (pendingDownloadGame.isAd) unlockBadge('ad-clicker');
     if (pendingDownloadGame.category === 'Racing') {
       const racingCount = GAMES.filter(g => g.category === 'Racing' && stats.badges.includes(g.id)).length;
@@ -759,6 +901,21 @@ export default function App() {
               )}
             </div>
           </div>
+
+          {/* --- Daily Challenges Section --- */}
+          <DailyChallengesSection 
+            completedChallenges={completedChallenges}
+            onCompleteChallenge={completeChallenge}
+          />
+
+          {/* --- Trending Games Section --- */}
+          <TrendingGamesSection 
+            games={filteredGames}
+            onSelectGame={(game) => { setSelectedGame(game); setSelectedLayoutId(`trending-${game.id}`); setPage('detail'); addPoints(25); }}
+          />
+
+          {/* --- Top Performers Section --- */}
+          <TopPerformersSection />
 
           {/* --- Recommendations --- */}
           <section className="mb-12" aria-labelledby="recommendations-heading">

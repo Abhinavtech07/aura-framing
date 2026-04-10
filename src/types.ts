@@ -22,6 +22,30 @@ export interface UserStats {
   points: number;
   level: number;
   badges: string[];
+  totalShares?: number;
+  totalDownloads?: number;
+  joinDate?: string;
+  username?: string;
+  rank?: number;
+}
+
+export interface DailyChallenge {
+  id: string;
+  title: string;
+  description: string;
+  reward: number;
+  icon: string;
+  completed?: boolean;
+  progress?: number;
+  target?: number;
+}
+
+export interface LeaderboardEntry {
+  rank: number;
+  username: string;
+  points: number;
+  level: number;
+  badge?: string;
 }
 
 export const GAMES: Game[] = [
@@ -177,5 +201,29 @@ export const BADGES = [
   { id: 'action-hero', name: 'Action Hero', icon: '⚔️', description: 'Viewed 3 action games.' },
   { id: 'ad-clicker', name: 'Ad Enthusiast', icon: '💰', description: 'Clicked on a sponsored link.' },
   { id: 'device-master', name: 'Device Master', icon: '📱', description: 'Successfully scanned your device.' },
-  { id: 'social-butterfly', name: 'Social Butterfly', icon: '🦋', description: 'Shared a game on social media.' }
+  { id: 'social-butterfly', name: 'Social Butterfly', icon: '🦋', description: 'Shared a game on social media.' },
+  { id: 'sharer-pro', name: 'Sharer Pro', icon: '📢', description: 'Shared 5 games.' },
+  { id: 'collector', name: 'Collector', icon: '🎮', description: 'Downloaded 10 games.' },
+  { id: 'daily-grinder', name: 'Daily Grinder', icon: '⭐', description: 'Completed 5 daily challenges.' },
+  { id: 'trending-hunter', name: 'Trending Hunter', icon: '🔥', description: 'Downloaded 3 trending games.' }
+];
+
+export const DAILY_CHALLENGES: DailyChallenge[] = [
+  { id: 'share-daily', title: 'Share a Game', description: 'Share any game on Instagram/WhatsApp', reward: 100, icon: '📱', target: 1 },
+  { id: 'download-daily', title: 'Get a Port', description: 'Download any game today', reward: 150, icon: '⬇️', target: 1 },
+  { id: 'explore-daily', title: 'Explore Category', description: 'View 3 games from a category', reward: 75, icon: '🔍', target: 3 },
+  { id: 'watch-ads', title: 'Watch Ads', description: 'Interact with 2 ads', reward: 50, icon: '👀', target: 2 }
+];
+
+export const LEADERBOARD: LeaderboardEntry[] = [
+  { rank: 1, username: '@GamerPro99', points: 15420, level: 31, badge: '🔥' },
+  { rank: 2, username: '@MobileGod', points: 14890, level: 30, badge: '👑' },
+  { rank: 3, username: '@ViralGamer', points: 13560, level: 28, badge: '💎' },
+  { rank: 4, username: '@InstaNinja', points: 12340, level: 25, badge: '🚀' },
+  { rank: 5, username: '@TrendsetterX', points: 11200, level: 23, badge: '⭐' },
+  { rank: 6, username: '@GameHunter', points: 10100, level: 21, badge: '🎯' },
+  { rank: 7, username: '@PortMaster', points: 9800, level: 20, badge: '💪' },
+  { rank: 8, username: '@SocialBuzz', points: 8500, level: 18, badge: '🌟' },
+  { rank: 9, username: '@VaporKing', points: 7200, level: 17, badge: '⚡' },
+  { rank: 10, username: '@ReelGamer', points: 6100, level: 15, badge: '🎮' }
 ];
