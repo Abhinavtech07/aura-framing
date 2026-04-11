@@ -267,54 +267,56 @@ const OfferWall: React.FC<{ game: Game; isOpen: boolean; onClose: () => void; on
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[600] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
+          className="fixed inset-0 z-[10000] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-2 md:p-4"
+          style={{ pointerEvents: 'auto' }}
         >
           <motion.div
-            initial={{ scale: 0.9, y: 20 }}
+            initial={{ scale: 0.95, y: 20 }}
             animate={{ scale: 1, y: 0 }}
-            exit={{ scale: 0.9, y: 20 }}
-            className="w-full max-w-md max-h-[90vh] overflow-y-auto bg-[var(--card-bg)] border-2 border-accent rounded-3xl shadow-[0_0_100px_rgba(255,0,128,0.4)]"
+            exit={{ scale: 0.95, y: 20 }}
+            className="w-full max-w-sm md:max-w-lg max-h-[90vh] md:max-h-[95vh] overflow-hidden bg-[var(--card-bg)] border-2 border-accent rounded-2xl md:rounded-3xl shadow-[0_0_100px_rgba(255,0,128,0.4)] flex flex-col"
           >
-            <div className="sticky top-0 bg-[var(--card-bg)] border-b border-white/10 p-6">
-              <div className="flex items-center justify-between mb-4">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-accent/20 to-secondary/20 border-b border-white/10 p-4 md:p-6">
+              <div className="flex items-center justify-between mb-3 md:mb-4">
                 <div>
-                  <p className="text-[10px] text-secondary font-black uppercase tracking-[0.3em] mb-2">Offerwall</p>
-                  <h2 className="text-2xl font-black text-white">Free Game Unlock</h2>
+                  <p className="text-[9px] md:text-[10px] text-secondary font-black uppercase tracking-[0.3em] mb-1 md:mb-2">🔥 Offerwall</p>
+                  <h2 className="text-xl md:text-2xl font-black text-white">Unlock {game.name} For Free</h2>
                 </div>
                 <button 
                   onClick={onClose}
                   className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
                 >
-                  <X size={20} className="text-white" />
+                  <X size={18} md:size={20} className="text-white" />
                 </button>
               </div>
               
-              <div className="relative h-20 rounded-lg overflow-hidden mb-4 border border-white/10">
+              <div className="relative h-20 md:h-24 rounded-lg overflow-hidden mb-3 md:mb-4 border border-white/10">
                 <img 
                   src={game.image} 
                   alt={game.name}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex items-center">
-                  <div>
-                    <p className="text-xs text-secondary font-black uppercase tracking-widest">Get For Free</p>
-                    <p className="text-sm font-black text-white">{game.name}</p>
+                  <div className="px-3 md:px-4">
+                    <p className="text-[10px] md:text-xs text-secondary font-black uppercase tracking-widest">Free Unlock</p>
+                    <p className="text-sm md:text-lg font-black text-white">{game.name}</p>
                   </div>
                 </div>
               </div>
 
-              <div className="grid gap-2 mb-4 text-center">
+              <div className="grid gap-2 mb-3 md:mb-4 text-center">
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-secondary font-black">⚡ 4,321 gamers unlocked today</span>
-                  <span className="text-[9px] px-2 py-1 rounded-full bg-orange-500/20 text-orange-300 font-black uppercase tracking-[0.2em]">{timeLeft}s left</span>
+                  <span className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-secondary font-black">⚡ 4,321 gamers unlocked today</span>
+                  <span className="text-[8px] md:text-[9px] px-2 py-1 rounded-full bg-orange-500/20 text-orange-300 font-black uppercase tracking-[0.2em]">{timeLeft}s left</span>
                 </div>
-                <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                <p className="text-[10px] md:text-xs text-[var(--text-muted)] leading-relaxed">
                   Complete one offer in under a minute to unlock {game.name} permanently. All offers are verified & free to try.
                 </p>
               </div>
 
-              <div className="mb-4">
-                <div className="flex items-center justify-between text-[10px] uppercase text-secondary font-black mb-2">
+              <div className="mb-3 md:mb-4">
+                <div className="flex items-center justify-between text-[9px] md:text-[10px] uppercase text-secondary font-black mb-2">
                   <span>Unlock progress</span>
                   <span>{completedOffers.length ? 'Ready to unlock' : '1 task needed'}</span>
                 </div>
@@ -324,7 +326,8 @@ const OfferWall: React.FC<{ game: Game; isOpen: boolean; onClose: () => void; on
               </div>
             </div>
 
-            <div className="p-6 space-y-3">
+            {/* Offers List */}
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-3">
               {OFFERS.map((offer, index) => (
                 <motion.button
                   key={offer.id}
@@ -332,34 +335,34 @@ const OfferWall: React.FC<{ game: Game; isOpen: boolean; onClose: () => void; on
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   onClick={() => handleOfferClick(offer)}
-                  className={`w-full relative p-4 rounded-2xl border-2 transition-all duration-300 overflow-hidden group ${
+                  className={`w-full relative p-3 md:p-4 rounded-2xl border-2 transition-all duration-300 overflow-hidden group ${
                     completedOffers.includes(offer.id)
                       ? 'bg-green-500/10 border-green-500/50'
                       : 'bg-white/5 border-accent/30 hover:border-accent hover:shadow-[0_0_20px_rgba(255,0,128,0.3)]'
                   }`}
                 >
                   <div className="relative z-10 flex items-center justify-between">
-                    <div className="flex items-center gap-3 text-left flex-1">
-                      <span className="text-2xl">{offer.icon}</span>
+                    <div className="flex items-center gap-2 md:gap-3 text-left flex-1">
+                      <span className="text-xl md:text-2xl">{offer.icon}</span>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-sm font-black text-white">{offer.title}</p>
-                          {offer.id === 'vpn1' && <span className="text-[9px] px-2 py-0.5 rounded-full bg-secondary/15 text-secondary font-black uppercase tracking-[0.2em]">Recommended</span>}
+                          <p className="text-xs md:text-sm font-black text-white">{offer.title}</p>
+                          {offer.id === 'vpn1' && <span className="text-[8px] md:text-[9px] px-2 py-0.5 rounded-full bg-secondary/15 text-secondary font-black uppercase tracking-[0.2em]">Recommended</span>}
                         </div>
-                        <p className="text-[11px] text-[var(--text-muted)] leading-tight">{offer.description}</p>
+                        <p className="text-[10px] md:text-[11px] text-[var(--text-muted)] leading-tight">{offer.description}</p>
                       </div>
                     </div>
                     
                     <div className="flex flex-col items-center">
                       {completedOffers.includes(offer.id) ? (
                         <>
-                          <span className="text-lg">✓</span>
-                          <span className="text-[10px] text-green-400 font-black">DONE</span>
+                          <span className="text-base md:text-lg">✓</span>
+                          <span className="text-[9px] md:text-[10px] text-green-400 font-black">DONE</span>
                         </>
                       ) : (
                         <>
-                          <span className="text-sm font-black text-secondary">{offer.reward}</span>
-                          <span className="text-[10px] text-secondary font-black">START</span>
+                          <span className="text-xs md:text-sm font-black text-secondary">{offer.reward}</span>
+                          <span className="text-[9px] md:text-[10px] text-secondary font-black">START</span>
                         </>
                       )}
                     </div>
@@ -371,8 +374,9 @@ const OfferWall: React.FC<{ game: Game; isOpen: boolean; onClose: () => void; on
               ))}
             </div>
 
-            <div className="sticky bottom-0 bg-gradient-to-t from-[var(--card-bg)] via-[var(--card-bg)] p-6 border-t border-white/10">
-              <p className="text-[10px] text-center font-black text-orange-300 uppercase tracking-[0.2em] mb-3">
+            {/* Footer */}
+            <div className="bg-gradient-to-t from-[var(--card-bg)] via-[var(--card-bg)] p-4 md:p-6 border-t border-white/10">
+              <p className="text-[9px] md:text-[10px] text-center font-black text-orange-300 uppercase tracking-[0.2em] mb-3">
                 {completedOffers.length > 0 ? '🎉 Ready to unlock!' : `⏱️ Start an offer now - Most complete in ${Math.max(30, timeLeft)}s`}
               </p>
               <button 
@@ -381,7 +385,7 @@ const OfferWall: React.FC<{ game: Game; isOpen: boolean; onClose: () => void; on
                     onUnlock();
                   }
                 }}
-                className={`w-full py-4 font-black text-sm rounded-2xl uppercase tracking-widest transition-all transform hover:scale-105 ${
+                className={`w-full py-3 md:py-4 font-black text-xs md:text-sm rounded-2xl uppercase tracking-widest transition-all transform hover:scale-105 ${
                   completedOffers.length > 0
                     ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-[0_0_30px_rgba(34,197,94,0.5)]'
                     : 'bg-gradient-to-r from-accent via-secondary to-[#7928ca] text-white hover:shadow-[0_0_20px_rgba(255,0,128,0.4)]'
@@ -389,7 +393,7 @@ const OfferWall: React.FC<{ game: Game; isOpen: boolean; onClose: () => void; on
               >
                 {completedOffers.length > 0 ? '🔓 Unlock & Download Now' : '👉 Complete Any Offer to Unlock'}
               </button>
-              <p className="text-[9px] text-[var(--text-muted)] text-center mt-3 opacity-70">
+              <p className="text-[8px] md:text-[9px] text-[var(--text-muted)] text-center mt-3 opacity-70">
                 Most users unlock in under 60 seconds. No payment required.
               </p>
             </div>
