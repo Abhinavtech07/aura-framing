@@ -73,10 +73,10 @@ const MonetagAd: React.FC<{ zoneId: string; type?: 'banner' | 'native' | 'sideba
     if (!isVisible || !isUserActive) return;
     
     // Dynamic refresh rate: 
-    // - High engagement types: 25s (active) / 45s (passive)
-    // - Standard types: 45s (active) / 90s (passive)
+    // - High engagement types: 18s
+    // - Standard types: 18s
     const isHighCPM = ['interstitial', 'vignette', 'vignette-banner', 'page-push'].includes(type);
-    const rate = isHighCPM ? 25000 : 45000;
+    const rate = isHighCPM ? 18000 : 18000;
     
     const interval = setInterval(() => {
       setRefreshKey(prev => prev + 1);
@@ -218,6 +218,187 @@ const VignetteAd: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
     )}
   </AnimatePresence>
 );
+
+// OfferWall Component - Complete offers to unlock games
+interface CPAOffer {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  reward: string;
+  zone: string;
+  link: string;
+}
+
+const OFFERS: CPAOffer[] = [
+  { id: 'vpn1', title: 'Unlock VIP VPN Access', description: 'Instant free setup, no payment required', icon: '🔐', reward: '$3-5', zone: '10512785', link: 'https://n6wxm.com/offer/vpn1' },
+  { id: 'app1', title: 'Install a Top App', description: 'Fast install, instant reward', icon: '🎮', reward: '$1-2', zone: '10481725', link: 'https://n6wxm.com/offer/app1' },
+  { id: 'survey1', title: 'Complete a Mini Survey', description: 'Just 2 minutes to finish', icon: '📋', reward: '$0.50-1', zone: '10512786', link: 'https://n6wxm.com/offer/survey1' },
+  { id: 'vpn2', title: 'Start a VPN Trial', description: '30-day access, no charge today', icon: '🛡️', reward: '$2-4', zone: '10512787', link: 'https://n6wxm.com/offer/vpn2' },
+];
+
+const OfferWall: React.FC<{ game: Game; isOpen: boolean; onClose: () => void; onUnlock: () => void }> = ({ game, isOpen, onClose, onUnlock }) => {
+  const [completedOffers, setCompletedOffers] = useState<string[]>([]);
+  const [timeLeft, setTimeLeft] = useState(60);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const timer = setInterval(() => {
+      setTimeLeft(prev => prev > 0 ? prev - 1 : 0);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [isOpen]);
+
+  const handleOfferClick = (offer: CPAOffer) => {
+    window.open(offer.link, '_blank');
+    setCompletedOffers(prev => [...prev, offer.id]);
+    
+    // Auto-unlock after any offer click (in real scenario, track via callback)
+    setTimeout(() => {
+      onUnlock();
+    }, 2000);
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          key="offerwall-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[400] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            className="w-full max-w-md max-h-[90vh] overflow-y-auto bg-[var(--card-bg)] border-2 border-accent rounded-3xl shadow-[0_0_100px_rgba(255,0,128,0.4)]"
+          >
+            <div className="sticky top-0 bg-[var(--card-bg)] border-b border-white/10 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <p className="text-[10px] text-secondary font-black uppercase tracking-[0.3em] mb-2">Offerwall</p>
+                  <h2 className="text-2xl font-black text-white">Free Game Unlock</h2>
+                </div>
+                <button 
+                  onClick={onClose}
+                  className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+                >
+                  <X size={20} className="text-white" />
+                </button>
+              </div>
+              
+              <div className="relative h-20 rounded-lg overflow-hidden mb-4 border border-white/10">
+                <img 
+                  src={game.image} 
+                  alt={game.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent flex items-center">
+                  <div>
+                    <p className="text-xs text-secondary font-black uppercase tracking-widest">Get For Free</p>
+                    <p className="text-sm font-black text-white">{game.name}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-2 mb-4 text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-secondary font-black">⚡ 4,321 gamers unlocked today</span>
+                  <span className="text-[9px] px-2 py-1 rounded-full bg-orange-500/20 text-orange-300 font-black uppercase tracking-[0.2em]">{timeLeft}s left</span>
+                </div>
+                <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+                  Complete one offer in under a minute to unlock {game.name} permanently. All offers are verified & free to try.
+                </p>
+              </div>
+
+              <div className="mb-4">
+                <div className="flex items-center justify-between text-[10px] uppercase text-secondary font-black mb-2">
+                  <span>Unlock progress</span>
+                  <span>{completedOffers.length ? 'Ready to unlock' : '1 task needed'}</span>
+                </div>
+                <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className={`h-full rounded-full transition-all duration-300 ${completedOffers.length ? 'bg-green-400' : 'bg-accent'}`} style={{ width: completedOffers.length ? '100%' : '20%' }} />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-3">
+              {OFFERS.map((offer, index) => (
+                <motion.button
+                  key={offer.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  onClick={() => handleOfferClick(offer)}
+                  className={`w-full relative p-4 rounded-2xl border-2 transition-all duration-300 overflow-hidden group ${
+                    completedOffers.includes(offer.id)
+                      ? 'bg-green-500/10 border-green-500/50'
+                      : 'bg-white/5 border-accent/30 hover:border-accent hover:shadow-[0_0_20px_rgba(255,0,128,0.3)]'
+                  }`}
+                >
+                  <div className="relative z-10 flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-left flex-1">
+                      <span className="text-2xl">{offer.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-sm font-black text-white">{offer.title}</p>
+                          {offer.id === 'vpn1' && <span className="text-[9px] px-2 py-0.5 rounded-full bg-secondary/15 text-secondary font-black uppercase tracking-[0.2em]">Recommended</span>}
+                        </div>
+                        <p className="text-[11px] text-[var(--text-muted)] leading-tight">{offer.description}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col items-center">
+                      {completedOffers.includes(offer.id) ? (
+                        <>
+                          <span className="text-lg">✓</span>
+                          <span className="text-[10px] text-green-400 font-black">DONE</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-sm font-black text-secondary">{offer.reward}</span>
+                          <span className="text-[10px] text-secondary font-black">START</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Hover glow */}
+                  <div className={`absolute inset-0 bg-gradient-to-r from-accent/0 to-accent/20 group-hover:opacity-100 opacity-0 transition-opacity duration-300`} />
+                </motion.button>
+              ))}
+            </div>
+
+            <div className="sticky bottom-0 bg-gradient-to-t from-[var(--card-bg)] via-[var(--card-bg)] p-6 border-t border-white/10">
+              <p className="text-[10px] text-center font-black text-orange-300 uppercase tracking-[0.2em] mb-3">
+                {completedOffers.length > 0 ? '🎉 Ready to unlock!' : `⏱️ Start an offer now - Most complete in ${Math.max(30, timeLeft)}s`}
+              </p>
+              <button 
+                onClick={() => {
+                  if (completedOffers.length > 0) {
+                    onUnlock();
+                  }
+                }}
+                className={`w-full py-4 font-black text-sm rounded-2xl uppercase tracking-widest transition-all transform hover:scale-105 ${
+                  completedOffers.length > 0
+                    ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-[0_0_30px_rgba(34,197,94,0.5)]'
+                    : 'bg-gradient-to-r from-accent via-secondary to-[#7928ca] text-white hover:shadow-[0_0_20px_rgba(255,0,128,0.4)]'
+                }`}
+              >
+                {completedOffers.length > 0 ? '🔓 Unlock & Download Now' : '👉 Complete Any Offer to Unlock'}
+              </button>
+              <p className="text-[9px] text-[var(--text-muted)] text-center mt-3 opacity-70">
+                Most users unlock in under 60 seconds. No payment required.
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
 // Daily Challenge Card Component
 const DailyChallengeCard: React.FC<{ challenge: any; isCompleted: boolean; onComplete: () => void }> = ({ challenge, isCompleted, onComplete }) => (
@@ -485,6 +666,196 @@ const SocialToast: React.FC<{ game: Game; location: string }> = ({ game, locatio
   </motion.div>
 );
 
+// Full-Page Interstitial on First Load
+const FullPageInterstitial: React.FC<{ isOpen: boolean; onClose: () => void; onUnlock: () => void }> = ({ isOpen, onClose, onUnlock }) => {
+  const [skipTimer, setSkipTimer] = useState(5);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    if (skipTimer <= 0) return;
+    const timer = setInterval(() => setSkipTimer(prev => prev - 1), 1000);
+    return () => clearInterval(timer);
+  }, [isOpen, skipTimer]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          key="full-interstitial"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[500] bg-black/98 backdrop-blur-3xl flex items-center justify-center p-4 overflow-y-auto"
+        >
+          <motion.div
+            initial={{ scale: 0.85, y: 40 }}
+            animate={{ scale: 1, y: 0 }}
+            className="w-full max-w-sm bg-gradient-to-b from-[var(--card-bg)] via-[#0a0a0a]/90 to-black border-2 border-accent rounded-3xl shadow-[0_0_150px_rgba(255,0,128,0.6)] p-6 text-center"
+          >
+            <div className="mb-4">
+              <p className="text-[10px] text-secondary font-black uppercase tracking-[0.4em]">Welcome! 🎉</p>
+            </div>
+            
+            <h1 className="text-3xl font-black text-white mb-2">Unlock Rare Games</h1>
+            <p className="text-sm text-[var(--text-muted)] mb-6">Exclusive mobile port collection. Free for 1 minute only!</p>
+
+            <div className="mb-6 p-4 bg-accent/10 border border-accent/30 rounded-2xl">
+              <p className="text-xs text-orange-300 font-black uppercase tracking-[0.2em] mb-2">⏱️ Limited Time Offer</p>
+              <p className="text-[10px] text-[var(--text-muted)]">Complete 1 offer below and unlock ALL games instantly. Only available for new users.</p>
+            </div>
+
+            <div className="grid gap-2 mb-6">
+              {OFFERS.slice(0, 2).map(offer => (
+                <button
+                  key={offer.id}
+                  onClick={() => {
+                    window.open(offer.link, '_blank');
+                    setTimeout(onUnlock, 1500);
+                  }}
+                  className="w-full p-3 bg-gradient-to-r from-accent via-secondary to-[#7928ca] text-white font-black text-sm rounded-xl uppercase tracking-[0.1em] hover:shadow-[0_0_20px_rgba(255,0,128,0.5)] transition-all transform hover:scale-105"
+                >
+                  {offer.icon} {offer.title}
+                </button>
+              ))}
+            </div>
+
+            <button 
+              onClick={onClose}
+              disabled={skipTimer > 0}
+              className={`w-full py-3 font-black text-xs rounded-lg uppercase tracking-[0.1em] transition-all ${
+                skipTimer > 0 
+                  ? 'bg-white/10 text-white/50 cursor-not-allowed' 
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              {skipTimer > 0 ? `Skip in ${skipTimer}s` : 'Enter Site'}
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// Exit-Intent Modal - Shows when mouse leaves
+const ExitIntentModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div 
+        key="exit-intent"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[450] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+      >
+        <motion.div
+          initial={{ scale: 0.8, y: 50 }}
+          animate={{ scale: 1, y: 0 }}
+          className="w-full max-w-sm bg-[var(--card-bg)] border-2 border-secondary rounded-3xl p-6 text-center shadow-[0_0_100px_rgba(0,212,255,0.4)]"
+        >
+          <p className="text-2xl mb-3">⏹️</p>
+          <h2 className="text-2xl font-black text-white mb-2">Wait! Last Chance</h2>
+          <p className="text-sm text-[var(--text-muted)] mb-6">Unlock {Math.random() > 0.5 ? 'ANY' : 'YOUR FAVORITE'} game right now. Offer expires in 60 seconds!</p>
+
+          <div className="space-y-2 mb-6">
+            {OFFERS.slice(0, 2).map(offer => (
+              <button
+                key={offer.id}
+                onClick={() => {
+                  window.open(offer.link, '_blank');
+                  onClose();
+                }}
+                className="w-full p-2 bg-gradient-to-r from-secondary to-accent text-white font-black text-xs rounded-lg uppercase hover:shadow-[0_0_15px_rgba(0,212,255,0.5)] transition-all"
+              >
+                {offer.icon} {offer.title}
+              </button>
+            ))}
+          </div>
+
+          <button 
+            onClick={onClose}
+            className="w-full py-2 bg-white/10 text-white font-bold text-xs rounded-lg hover:bg-white/20 transition-all"
+          >
+            No Thanks, Leave
+          </button>
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// Sticky Floating Offer Button
+const StickyOfferButton: React.FC<{ onClick: () => void; isVisible: boolean }> = ({ onClick, isVisible }) => (
+  <AnimatePresence>
+    {isVisible && (
+      <motion.button
+        key="sticky-offer-btn"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onClick}
+        className="fixed bottom-20 right-6 z-40 px-4 py-3 bg-gradient-to-r from-accent to-secondary text-white font-black text-sm rounded-full shadow-[0_0_30px_rgba(255,0,128,0.6)] hover:shadow-[0_0_40px_rgba(0,212,255,0.6)] transition-all animate-bounce"
+      >
+        🎁 Unlock Now
+      </motion.button>
+    )}
+  </AnimatePresence>
+);
+
+// Push Notification Prompt
+const PushNotificationPrompt: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div
+        key="push-prompt"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        className="fixed top-6 right-6 z-30 bg-[var(--card-bg)] border-2 border-secondary rounded-2xl p-4 max-w-xs shadow-[0_0_30px_rgba(0,212,255,0.3)]"
+      >
+        <div className="flex items-start gap-3">
+          <span className="text-2xl">🔔</span>
+          <div className="flex-1">
+            <h3 className="text-sm font-black text-white mb-1">Stay Updated!</h3>
+            <p className="text-xs text-[var(--text-muted)] mb-3">Get notified about rare new games daily.</p>
+            <div className="flex gap-2">
+              <button 
+                onClick={() => {
+                  window.Notification?.requestPermission?.();
+                  onClose();
+                }}
+                className="flex-1 py-1.5 bg-secondary text-black font-black text-xs rounded-lg hover:bg-secondary/80 transition-all"
+              >
+                Enable
+              </button>
+              <button 
+                onClick={onClose}
+                className="flex-1 py-1.5 bg-white/10 text-white font-black text-xs rounded-lg hover:bg-white/20"
+              >
+                Later
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// Native Ad Card
+const NativeAdCard: React.FC = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="bg-[var(--card-bg)] border-2 border-secondary/30 rounded-[2rem] p-4 text-center hover:border-secondary transition-all"
+  >
+    <p className="text-[8px] text-secondary font-black uppercase tracking-[0.3em] mb-2">💎 Sponsored Offer</p>
+    <MonetagAd zoneId={`native-${Math.random()}`} type="native" className="h-32" />
+  </motion.div>
+);
+
 // --- Main App ---
 
 export default function App() {
@@ -511,6 +882,11 @@ export default function App() {
   const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [shareCount, setShareCount] = useState(0);
+  const [showOfferwall, setShowOfferwall] = useState(false);
+  const [showFullInterstitial, setShowFullInterstitial] = useState(true);
+  const [showExitIntent, setShowExitIntent] = useState(false);
+  const [showStickyButton, setShowStickyButton] = useState(false);
+  const [showPushPrompt, setShowPushPrompt] = useState(false);
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
@@ -560,6 +936,52 @@ export default function App() {
       setTimeout(() => setShowToast(false), 4000);
     }, 15000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Exit Intent Detection
+  useEffect(() => {
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 10 && !showExitIntent) {
+        setShowExitIntent(true);
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseLeave);
+    return () => window.removeEventListener('mousemove', handleMouseLeave);
+  }, [showExitIntent]);
+
+  // Show sticky button after scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowStickyButton(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Show push notification prompt after 10s
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPushPrompt(true);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Hide full interstitial after 5s delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const shown = sessionStorage.getItem('interstitial_shown');
+      if (!shown) {
+        setShowFullInterstitial(true);
+        sessionStorage.setItem('interstitial_shown', 'true');
+      } else {
+        setShowFullInterstitial(false);
+      }
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const filteredGames = useMemo(() => {
@@ -645,8 +1067,7 @@ export default function App() {
 
   const handleDownload = (game: Game) => {
     setPendingDownloadGame(game);
-    setShowVignette(true);
-    // After vignette is closed, we'll show the support modal
+    setShowOfferwall(true);
   };
 
   const handleVignetteClose = () => {
@@ -954,9 +1375,9 @@ export default function App() {
                     onShare={(e: React.MouseEvent) => handleShare(e, game)}
                     onKeyDown={(e) => handleKeyDown(e, () => { setSelectedGame(game); setSelectedLayoutId(`all-${game.id}`); setPage('detail'); addPoints(20); })}
                   />
-                  {/* Inject In-Feed Ad every 6 items */}
-                  {(idx + 1) % 6 === 0 && (
-                    <MonetagAd key={`in-feed-ad-${idx}`} zoneId={`in-feed-${idx}`} type="native" className="h-full min-h-[300px]" />
+                  {/* Inject In-Feed Ad every 4 items */}
+                  {(idx + 1) % 4 === 0 && (
+                    <NativeAdCard key={`native-ad-${idx}`} />
                   )}
                 </React.Fragment>
               ))}
@@ -1215,7 +1636,54 @@ export default function App() {
       <AnimatePresence>
         {showToast && <SocialToast key={`social-toast-${toastData.game.id}-${toastData.location}`} {...toastData} />}
         
+        {/* Critical Revenue Features */}
+        <FullPageInterstitial 
+          key="full-interstitial-component"
+          isOpen={showFullInterstitial}
+          onClose={() => setShowFullInterstitial(false)}
+          onUnlock={() => {
+            setShowFullInterstitial(false);
+            setShowOfferwall(true);
+          }}
+        />
+        
+        <ExitIntentModal 
+          key="exit-intent-component"
+          isOpen={showExitIntent}
+          onClose={() => setShowExitIntent(false)}
+        />
+        
+        <StickyOfferButton 
+          key="sticky-btn-component"
+          onClick={() => {
+            if (GAMES.length > 0) {
+              setSelectedGame(GAMES[0]);
+              setShowOfferwall(true);
+            }
+          }}
+          isVisible={showStickyButton}
+        />
+        
+        <PushNotificationPrompt 
+          key="push-prompt-component"
+          isOpen={showPushPrompt}
+          onClose={() => setShowPushPrompt(false)}
+        />
+        
         <VignetteAd key="vignette-ad-component" isOpen={showVignette} onClose={handleVignetteClose} />
+        
+        {selectedGame && (
+          <OfferWall 
+            key="offerwall-component"
+            game={selectedGame} 
+            isOpen={showOfferwall} 
+            onClose={() => setShowOfferwall(false)}
+            onUnlock={() => {
+              setShowOfferwall(false);
+              confirmDownload();
+            }}
+          />
+        )}
         
         {showDownloadSupport && (
           <div key="download-support-overlay" className="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-6 z-[200]">
