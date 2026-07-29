@@ -13,9 +13,8 @@ import {
   Star, 
   Download, 
   ArrowLeft, 
-  Share2, 
-  Bell, 
-  X, 
+  Share2,
+  X,
   Flame, 
   Zap,
   TrendingUp,
@@ -907,7 +906,6 @@ export default function App() {
   const [scanResult, setScanResult] = useState<string | null>(null);
   const [device, setDevice] = useState('');
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [showPushModal, setShowPushModal] = useState(false);
   const [showDetailInterstitial, setShowDetailInterstitial] = useState(false);
   const [visibleCount, setVisibleCount] = useState(6);
   const [selectedLayoutId, setSelectedLayoutId] = useState<string | null>(null);
@@ -950,10 +948,6 @@ export default function App() {
   useEffect(() => {
     const saved = localStorage.getItem('viral_games_stats');
     if (saved) setStats(JSON.parse(saved));
-    
-    // Show push modal after 10s
-    const timer = setTimeout(() => setShowPushModal(true), 10000);
-    return () => clearTimeout(timer);
   }, []);
 
   // Save stats
@@ -1772,41 +1766,6 @@ export default function App() {
                   className="text-[9px] md:text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest hover:text-white transition-colors"
                 >
                   Cancel Download
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-
-        {showPushModal && (
-          <div key="push-modal-overlay" className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 z-[100]">
-            <motion.div 
-              key="push-modal-content"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-[var(--card-bg)] border-2 border-accent p-6 md:p-8 rounded-[2rem] md:rounded-3xl text-center max-w-sm max-h-[90vh] overflow-y-auto shadow-[0_0_50px_rgba(255,0,128,0.3)] relative"
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-accent animate-pulse" />
-              <Bell className="mx-auto text-accent mb-4" size={40} />
-              <h3 className="text-xl md:text-2xl font-black text-[var(--text-main)] mb-2">GET EARLY ACCESS!</h3>
-              <p className="text-xs md:text-sm text-[var(--text-muted)] mb-6">Want an instant alert when the <strong>GTA VI Mobile Port</strong> officially drops?</p>
-              
-              <div className="mb-6">
-                <MonetagAd zoneId="push-modal-ad" type="interstitial" className="h-20" />
-              </div>
-
-              <div className="flex gap-4">
-                <button 
-                  onClick={() => setShowPushModal(false)}
-                  className="flex-1 py-3 bg-white/10 text-[var(--text-muted)] font-black rounded-xl uppercase text-[10px] md:text-xs"
-                >
-                  Later
-                </button>
-                <button 
-                  onClick={() => { setShowPushModal(false); addPoints(100); unlockBadge('early-adopter'); }}
-                  className="flex-1 py-3 bg-gradient-to-r from-accent to-[#7928ca] text-white font-black rounded-xl uppercase text-[10px] md:text-xs"
-                >
-                  Notify Me!
                 </button>
               </div>
             </motion.div>
