@@ -1249,9 +1249,6 @@ export default function App() {
       <main className="container mx-auto px-6 relative" role="main">
         {/* --- Home Content (Always Mounted) --- */}
         <div className={`transition-all duration-500 ${page === 'detail' ? 'blur-xl scale-95 opacity-30 pointer-events-none' : ''}`}>
-          {/* --- Monetag Banner Placeholder --- */}
-          <MonetagAd zoneId="top-banner" type="banner" className="max-w-4xl mx-auto mb-8 h-24" />
-          
           {/* --- Search & Filters --- */}
           <div className="max-w-2xl mx-auto mb-8 space-y-4">
             <div className="relative">
@@ -1585,15 +1582,6 @@ export default function App() {
         />
       </motion.div>
 
-      {/* --- Sticky Footer Ad --- */}
-      <motion.div 
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        className="fixed bottom-0 left-0 right-0 z-[100] bg-black/90 border-t border-white/10 p-2 md:hidden"
-      >
-        <MonetagAd zoneId="sticky-footer-mobile" type="banner" className="h-12 w-full border-none bg-transparent" />
-      </motion.div>
-
       {/* --- Floating Ad --- */}
       <motion.div 
         initial={{ x: 100, opacity: 0 }}
@@ -1625,10 +1613,7 @@ export default function App() {
           <Gamepad2 size={24} />
           <span className="text-[10px] font-black uppercase tracking-tighter">Games</span>
         </button>
-        <div className="w-64 h-12">
-          <MonetagAd zoneId="bottom-nav-ad" type="banner" className="h-full" />
-        </div>
-        <button 
+        <button
           onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); document.querySelector('input')?.focus(); }}
           className="flex flex-col items-center gap-1 text-[var(--text-muted)] opacity-60"
           aria-label="Search games"
