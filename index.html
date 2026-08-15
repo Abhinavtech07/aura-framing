@@ -1,114 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Viral Games Hub - Rare Mobile Ports</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; background-color: #0B0E14; color: white; }
-    h1, h2, h3, .font-oswald { font-family: 'Oswald', sans-serif; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    .glow-text { text-shadow: 0 0 10px rgba(168, 85, 247, 0.7); }
-    .glow-button:hover { box-shadow: 0 0 15px rgba(168, 85, 247, 0.6); }
-  </style>
-</head>
-<body class="pb-24 antialiased selection:bg-purple-500 selection:text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#0A0D14" />
+    
+    <!-- SEO & Social Sharing Tags -->
+    <title>Viral Games Hub | High-Graphics Mobile Ports & APK Rewards</title>
+    <meta name="description" content="Discover verified mobile ports, 60FPS sensitivity configs, and daily redeem rewards for top viral games." />
 
-  <header class="sticky top-0 z-40 bg-[#0B0E14]/90 backdrop-blur-md border-b border-gray-800 py-4">
-    <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
-      <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 glow-text tracking-wide">
-        VIRAL GAMES HUB
-      </h1>
-      <div class="flex items-center gap-2 bg-gray-900 border border-gray-700 rounded-full px-3 py-1">
-        <span class="text-yellow-400 text-sm font-bold">🏆 25 PTS</span>
-      </div>
-    </div>
-  </header>
+    <!-- Google Fonts (Inter & Oswald) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
 
-  <main class="max-w-5xl mx-auto px-4 mt-6">
-    <section class="mb-8">
-      <div class="relative w-full mb-4">
-        <input type="text" placeholder="Search rare ports..." class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl py-3 px-4 focus:outline-none focus:border-purple-500 transition-colors">
-        <button class="absolute right-3 top-3 text-gray-400 hover:text-purple-400">🔍</button>
-      </div>
+    <!-- Global Monetag Header Tags -->
+    <script src="https://a.realsrv.com/88/tag.min.js" data-zone="10512785" data-cfasync="false" async></script>
+    <script src="https://a.realsrv.com/88/tag.min.js" data-zone="10481725" data-cfasync="false" async></script>
 
-      <div class="flex gap-3 overflow-x-auto no-scrollbar pb-2">
-        <button class="shrink-0 bg-purple-600 hover:bg-purple-500 text-white px-5 py-1.5 rounded-full font-semibold transition">ALL</button>
-        <button class="shrink-0 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 px-5 py-1.5 rounded-full font-semibold transition">RACING</button>
-        <button class="shrink-0 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 px-5 py-1.5 rounded-full font-semibold transition">ACTION</button>
-        <button class="shrink-0 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 px-5 py-1.5 rounded-full font-semibold transition">LOW MB</button>
-        <button class="shrink-0 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-gray-300 px-5 py-1.5 rounded-full font-semibold transition">60 FPS</button>
-      </div>
-    </section>
+    <style>
+      /* Custom Scrollbar Handling */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      /* Base Theme Colors */
+      body {
+        background-color: #0A0D14;
+        color: #FFFFFF;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+      }
+    </style>
+  </head>
+  <body class="bg-[#0A0D14] text-white antialiased">
+    <!-- React Mount Root -->
+    <div id="root"></div>
 
-    <section>
-      <h2 class="text-xl font-oswald text-gray-200 mb-4 tracking-wider flex items-center gap-2">
-        <span class="text-purple-500">⚡</span> RECOMMENDED PORTS
-      </h2>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-purple-500/50 transition duration-300 group flex flex-col">
-          <div class="relative h-48 bg-gray-800 overflow-hidden">
-            <img src="https://via.placeholder.com/400x200/1f2937/a855f7?text=Black+Myth" alt="Black Myth Mobile" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <span class="absolute top-2 left-2 bg-black/80 backdrop-blur text-xs font-bold px-2 py-1 rounded text-green-400 border border-green-500/30">🔥 60 FPS</span>
-          </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="font-bold text-lg mb-1 line-clamp-1">Black Myth: Wukong (Mobile)</h3>
-              <p class="text-gray-400 text-sm mb-3">Action • 3.2 GB • Android/iOS</p>
-            </div>
-            <button class="w-full bg-gray-800 border border-purple-500/50 hover:bg-purple-600 text-white font-bold py-2 rounded-lg glow-button transition">Get Port</button>
-          </div>
-        </div>
-
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden flex flex-col relative">
-           <span class="absolute top-0 right-0 bg-yellow-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-bl-lg z-10">AD</span>
-           <div id="monetag-native-1" class="w-full h-full min-h-[300px] flex items-center justify-center bg-gray-800/50"></div>
-        </div>
-
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden hover:border-purple-500/50 transition duration-300 group flex flex-col">
-          <div class="relative h-48 bg-gray-800 overflow-hidden">
-            <img src="https://via.placeholder.com/400x200/1f2937/3b82f6?text=GTA+V+Mobile" alt="GTA V Beta" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <span class="absolute top-2 left-2 bg-black/80 backdrop-blur text-xs font-bold px-2 py-1 rounded text-cyan-400 border border-cyan-500/30">🎮 Controller Ready</span>
-          </div>
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div>
-              <h3 class="font-bold text-lg mb-1 line-clamp-1">Grand Theft Auto V: Beta</h3>
-              <p class="text-gray-400 text-sm mb-3">Open World • 1.8 GB • Android</p>
-            </div>
-            <button class="w-full bg-gray-800 border border-purple-500/50 hover:bg-purple-600 text-white font-bold py-2 rounded-lg glow-button transition">Get Port</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div id="floating-ad" class="fixed bottom-[80px] left-0 right-0 z-40 px-4 pointer-events-none flex justify-center">
-    <div class="bg-gray-900 border border-gray-700 shadow-2xl shadow-black rounded-xl p-1 pointer-events-auto relative max-w-md w-full">
-      <button onclick="document.getElementById('floating-ad').style.display='none'" class="absolute -top-3 -right-3 bg-gray-800 border border-gray-600 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-red-500 z-50 transition">✕</button>
-      <span class="absolute top-1 right-2 bg-yellow-500 text-black text-[10px] font-bold px-1.5 rounded z-10">AD</span>
-      <div id="monetag-bottom-banner" class="w-full h-[60px] bg-gray-800 rounded-lg flex items-center justify-center"></div>
-    </div>
-  </div>
-
-  <nav class="fixed bottom-0 w-full bg-[#0B0E14] border-t border-gray-800 z-50 pb-safe">
-    <div class="flex justify-around items-center h-16 max-w-md mx-auto">
-      <a href="#" class="flex flex-col items-center justify-center w-full h-full text-purple-400">
-        <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-1 4h2v5h-2V6zm1 9a1 1 0 110-2 1 1 0 010 2z"></path></svg>
-        <span class="text-[10px] font-bold tracking-wider">GAMES</span>
-      </a>
-      <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-gray-300 transition">
-        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-        <span class="text-[10px] font-bold tracking-wider">SEARCH</span>
-      </a>
-      <a href="#" class="flex flex-col items-center justify-center w-full h-full text-gray-500 hover:text-gray-300 transition">
-        <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
-        <span class="text-[10px] font-bold tracking-wider">AI SCAN</span>
-      </a>
-    </div>
-  </nav>
-</body>
+    <!-- Vite Entry Point (Loads your React app) -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

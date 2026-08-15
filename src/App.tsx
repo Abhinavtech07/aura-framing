@@ -1,407 +1,552 @@
-import React, { useMemo, useState } from 'react';
-import { Download, Flame, Search, ShieldCheck, Sparkles, Star, Trophy, Zap } from 'lucide-react';
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
-type Game = {
-  id: string;
-  title: string;
-  category: string;
-  size: string;
-  rating: number;
-  badge: string;
-  image: string;
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  Gamepad2, Search, Cpu, Trophy, Star, Download, 
+  ArrowLeft, Share2, X, Flame, Zap, TrendingUp, Award, Sun, Moon, CheckCircle2, ShieldCheck
+} from 'lucide-react';
+import { Game, GAMES, UserStats, DAILY_CHALLENGES, LEADERBOARD } from './types';
+
+const DIRECT_LINK = 'https://omg10.com/4/10446433';
+
+// --- Background Global Monetag Script Injector ---
+const GlobalAds: React.FC = () => {
+  useEffect(() => {
+    const injectGlobalScript = (zoneId: string) => {
+      if (document.getElementById(`monetag-tag-${zoneId}`)) return;
+      const script = document.createElement('script');
+      script.id = `monetag-tag-${zoneId}`;
+      script.async = true;
+      script.dataset.cfasync = 'false';
+      script.src = 'https://a.realsrv.com/88/tag.min.js';
+      script.setAttribute('data-zone', zoneId);
+      document.head.appendChild(script);
+    };
+
+    injectGlobalScript('10512785');
+    injectGlobalScript('10481725');
+  }, []);
+
+  return null;
 };
 
-const games: Game[] = [
-  {
-    id: 'black-myth',
-    title: 'Black Myth: Wukong',
-    category: 'Action',
-    size: '3.2 GB',
-    rating: 4.9,
-    badge: '🔥 60 FPS',
-    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'gta-v',
-    title: 'GTA V Mobile Beta',
-    category: 'Action',
-    size: '1.8 GB',
-    rating: 4.8,
-    badge: '🎮 Controller',
-    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'asphalt-pulse',
-    title: 'Asphalt Pulse',
-    category: 'Racing',
-    size: '960 MB',
-    rating: 4.7,
-    badge: '⚡ Low MB',
-    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'shadow-ops',
-    title: 'Shadow Ops X',
-    category: 'Action',
-    size: '2.7 GB',
-    rating: 4.9,
-    badge: '🧨 Ultra HD',
-    image: 'https://images.unsplash.com/photo-1528819622761-6bcf9e6b8a4f?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'cyber-drift',
-    title: 'Cyber Drift',
-    category: 'Racing',
-    size: '1.2 GB',
-    rating: 4.6,
-    badge: '🏁 Turbo',
-    image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'storm-arena',
-    title: 'Storm Arena',
-    category: 'Action',
-    size: '2.5 GB',
-    rating: 4.8,
-    badge: '🔥 Arena',
-    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'pixel-reign',
-    title: 'Pixel Reign',
-    category: 'Adventure',
-    size: '1.4 GB',
-    rating: 4.5,
-    badge: '🎯 Smooth',
-    image: 'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    id: 'iron-siege',
-    title: 'Iron Siege',
-    category: 'Action',
-    size: '4.2 GB',
-    rating: 4.8,
-    badge: '⚔️ 4K Port',
-    image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80',
-  },
-];
+// --- Monetag Ad Card Component ---
+const MonetagAd: React.FC<{ 
+  zoneId: string; 
+  className?: string;
+  label?: string;
+}> = ({ zoneId, className = '', label = 'Featured Partner' }) => {
+  const adRef = useRef<HTMLDivElement>(null);
 
-const categories = ['All', 'Racing', 'Action', 'Low MB', '60FPS Verified'];
+  const getAdContent = () => {
+    const ads = [
+      { title: 'Play GTA V Mobile', desc: 'The official port is finally here. High graphics, 60 FPS verified.', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80', cta: 'Play Now' },
+      { title: 'Win $100 Gaming Gift Card', desc: 'Complete simple verification tasks and claim today!', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80', cta: 'Claim Loot' },
+      { title: 'Ultra 60FPS Optimizer Tool', desc: 'Official performance booster for high-end mobile ports.', image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=600&q=80', cta: 'Boost Device' },
+      { title: 'Cyberpunk 2077 Mobile Port', desc: 'Download the newly released community 60 FPS port build.', image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80', cta: 'Get APK' }
+    ];
+    const adIndex = Math.abs(parseInt(zoneId.replace(/\D/g, '') || '0')) % ads.length;
+    return ads[adIndex] || ads[0];
+  };
 
-const quests = [
-  { title: 'Install 2 ports', detail: 'Complete in 2 hrs', cta: 'Claim', accent: 'from-cyan-500 to-blue-500' },
-  { title: 'Share a game', detail: 'Gain 75 XP per referral', cta: 'Share', accent: 'from-orange-500 to-amber-400' },
-  { title: 'Use AI Scan', detail: 'Check device support', cta: 'Go', accent: 'from-purple-500 to-violet-500' },
-];
+  const ad = getAdContent();
 
-const leaderboard = [
-  { rank: 1, name: 'RogueX', xp: '9,840 XP', level: 'Lv 29', tone: 'from-yellow-300 to-orange-400', text: 'text-yellow-300' },
-  { rank: 2, name: 'Nebula', xp: '8,960 XP', level: 'Lv 27', tone: 'from-slate-200 to-slate-400', text: 'text-slate-300' },
-  { rank: 3, name: 'ByteRush', xp: '8,620 XP', level: 'Lv 26', tone: 'from-orange-300 to-amber-500', text: 'text-orange-300' },
-];
+  return (
+    <div 
+      ref={adRef}
+      onClick={() => window.open(DIRECT_LINK, '_blank')}
+      className={`relative overflow-hidden group cursor-pointer bg-gradient-to-br from-[#181c26] to-[#0f1219] border-2 border-purple-500/20 rounded-[2rem] flex flex-col transition-all hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] ${className}`}
+    >
+      <div className="relative h-full w-full flex flex-col justify-between">
+        <div className="absolute inset-0 opacity-25 group-hover:opacity-40 transition-opacity">
+          <img src={ad.image} alt={ad.title} className="w-full h-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0D14] via-[#0A0D14]/70 to-transparent" />
+        </div>
+        
+        <div className="relative z-10 p-5 flex flex-col h-full justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[9px] font-black text-cyan-400 uppercase tracking-[0.2em]">{label}</span>
+              <span className="bg-yellow-500 text-black px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-wider shadow">AD</span>
+            </div>
+            <h4 className="text-base font-black text-white mb-1 group-hover:text-cyan-400 transition-colors line-clamp-1 font-oswald">{ad.title}</h4>
+            <p className="text-xs text-gray-300 leading-snug line-clamp-2 italic">"{ad.desc}"</p>
+          </div>
+          
+          <div className="mt-4 flex items-center justify-between">
+            <div className="flex gap-0.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={`ad-star-${i}`} size={12} className="text-yellow-400 fill-yellow-400" />
+              ))}
+            </div>
+            <span className="bg-gradient-to-r from-purple-500 to-cyan-500 text-white text-[10px] font-black px-4 py-1.5 rounded-xl uppercase tracking-wider group-hover:scale-105 transition-transform shadow-md">
+              {ad.cta}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
+// --- Trust-Builder Device Scanner & Download Modal ---
+const DeviceTrustModal: React.FC<{ 
+  game: Game; 
+  isOpen: boolean; 
+  onClose: () => void; 
+  onConfirmDownload: () => void;
+}> = ({ game, isOpen, onClose, onConfirmDownload }) => {
+  const [scanStep, setScanStep] = useState<'analyzing' | 'optimizing' | 'verified'>('analyzing');
+  const [detectedPhone, setDetectedPhone] = useState('Android Gaming Device');
+
+  useEffect(() => {
+    if (!isOpen) {
+      setScanStep('analyzing');
+      return;
+    }
+
+    // Attempt intelligent device identification from userAgent
+    const ua = navigator.userAgent;
+    if (/iPhone/i.test(ua)) setDetectedPhone('Apple iPhone (iOS 17+)');
+    else if (/Samsung/i.test(ua)) setDetectedPhone('Samsung Galaxy Exynos/Snapdragon');
+    else if (/Redmi|Xiaomi/i.test(ua)) setDetectedPhone('Xiaomi/Redmi High-Performance Engine');
+    else if (/Realme/i.test(ua)) setDetectedPhone('Realme Ultra Gaming Hardware');
+    else setDetectedPhone('Universal ARM64 Mobile Hardware');
+
+    const timer1 = setTimeout(() => setScanStep('optimizing'), 1200);
+    const timer2 = setTimeout(() => setScanStep('verified'), 2600);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, [isOpen]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          key="trust-modal-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[10000] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.9, y: 30 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 30 }}
+            className="w-full max-w-lg bg-[#131720] border-2 border-purple-500/50 rounded-[2.5rem] p-6 sm:p-8 shadow-[0_0_80px_rgba(168,85,247,0.35)] relative overflow-hidden"
+          >
+            <button 
+              onClick={onClose}
+              className="absolute top-5 right-5 p-2.5 bg-white/10 rounded-full hover:bg-red-500 transition-colors text-white"
+            >
+              <X size={18} />
+            </button>
+
+            {/* Header info */}
+            <div className="flex items-center gap-4 mb-6 pb-5 border-b border-gray-800">
+              <img src={game.image} alt={game.name} className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-500/40" />
+              <div>
+                <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest bg-purple-500/10 px-2 py-0.5 rounded">
+                  PORT VERIFICATION
+                </span>
+                <h3 className="text-xl font-black text-white font-oswald tracking-wide mt-0.5">{game.name}</h3>
+                <p className="text-xs text-gray-400">{game.size} • 60 FPS Certified</p>
+              </div>
+            </div>
+
+            {/* Hardware Scanner Status Box */}
+            <div className="bg-[#0A0D14] border-2 border-cyan-500/30 rounded-2xl p-5 mb-6 text-center relative overflow-hidden">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Cpu size={20} className={scanStep !== 'verified' ? 'text-cyan-400 animate-spin' : 'text-green-400'} />
+                <span className="text-xs font-black tracking-widest uppercase text-cyan-300">
+                  {scanStep === 'analyzing' && 'Analyzing Hardware GPU...'}
+                  {scanStep === 'optimizing' && 'Unlocking 60 FPS Configuration...'}
+                  {scanStep === 'verified' && 'Hardware Approved & Optimized'}
+                </span>
+              </div>
+
+              <p className="text-sm font-bold text-white mb-2">{detectedPhone}</p>
+
+              {/* Progress visual */}
+              <div className="w-full bg-gray-800 h-2 rounded-full overflow-hidden mb-2">
+                <div 
+                  className={`h-full transition-all duration-700 ${scanStep === 'verified' ? 'bg-green-500 w-full' : scanStep === 'optimizing' ? 'bg-cyan-400 w-3/4' : 'bg-purple-500 w-1/3'}`} 
+                />
+              </div>
+
+              {scanStep === 'verified' ? (
+                <div className="flex items-center justify-center gap-1.5 text-xs text-green-400 font-bold mt-2">
+                  <CheckCircle2 size={16} /> 100% Compatible (Direct CDN Slot Assigned)
+                </div>
+              ) : (
+                <span className="text-[10px] text-gray-400">Benchmarking Vulkan & OpenGL Engine...</span>
+              )}
+            </div>
+
+            {/* Download Action */}
+            {scanStep === 'verified' ? (
+              <div className="space-y-3">
+                <button
+                  onClick={onConfirmDownload}
+                  className="w-full py-5 bg-gradient-to-r from-purple-600 via-purple-500 to-cyan-400 text-white font-black text-base rounded-2xl uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(168,85,247,0.6)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
+                >
+                  <Download size={22} className="animate-bounce" />
+                  <span>DOWNLOAD VERIFIED PORT</span>
+                </button>
+                <div className="flex items-center justify-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
+                  <ShieldCheck size={14} className="text-green-400" /> Antivirus Scanned • No Root Required
+                </div>
+              </div>
+            ) : (
+              <button 
+                disabled 
+                className="w-full py-4 bg-gray-800 text-gray-400 font-black text-xs rounded-2xl uppercase tracking-widest cursor-not-allowed opacity-70 flex items-center justify-center gap-2"
+              >
+                <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                VERIFYING SYSTEM DRIVERS...
+              </button>
+            )}
+
+            {/* Sponsor banner embedded cleanly inside modal */}
+            <div className="mt-6 pt-4 border-t border-gray-800">
+              <MonetagAd zoneId="10512786" className="h-20 w-full" label="Verified Sponsor" />
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+// --- Game Card Component ---
+const GameCard: React.FC<{ 
+  game: Game; 
+  onDownload: () => void; 
+}> = ({ game, onDownload }) => (
+  <motion.article 
+    whileHover={{ y: -6 }}
+    className="group relative bg-[#131720] border-2 border-gray-800 rounded-[2rem] overflow-hidden transition-all hover:border-purple-500 hover:shadow-[0_10px_40px_rgba(168,85,247,0.25)] flex flex-col justify-between"
+  >
+    <div>
+      <div className="relative h-48 overflow-hidden bg-gray-900">
+        <img 
+          src={game.image} 
+          alt={game.name} 
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+          loading="lazy" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#131720] via-transparent to-transparent opacity-80" />
+        
+        <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg flex items-center gap-1">
+          <Star size={11} className="text-yellow-400 fill-yellow-400" />
+          <span className="text-[11px] font-bold text-white">{game.rating}</span>
+        </div>
+        
+        <div className="absolute bottom-3 left-3 flex gap-2">
+          <span className="bg-purple-600/90 backdrop-blur-md text-white text-[9px] font-black px-2.5 py-0.5 rounded uppercase tracking-wider">
+            {game.category}
+          </span>
+          <span className="bg-cyan-500/90 backdrop-blur-md text-black text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-wider">
+            60 FPS
+          </span>
+        </div>
+      </div>
+
+      <div className="p-5">
+        <h3 className="text-white font-black text-lg group-hover:text-purple-400 transition-colors line-clamp-1 mb-1.5 font-oswald tracking-wide">
+          {game.name}
+        </h3>
+        
+        <div className="flex items-center gap-3 text-[10px] text-gray-400 mb-3 font-bold uppercase tracking-widest">
+          <span className="flex items-center gap-1 text-cyan-400"><Zap size={12} /> {game.size}</span>
+          <span>•</span>
+          <span>{game.version}</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-1.5 mb-2">
+          {game.features.slice(0, 2).map((f, i) => (
+            <div key={`feat-${game.id}-${i}`} className="bg-white/5 border border-white/5 px-2.5 py-1 rounded-md flex items-center gap-1.5 overflow-hidden">
+              <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
+              <span className="text-[10px] text-gray-300 truncate font-medium">{f}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div className="p-5 pt-0">
+      <button 
+        onClick={onDownload}
+        className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-black text-xs rounded-xl uppercase tracking-[0.2em] transition-all hover:shadow-[0_0_25px_rgba(168,85,247,0.5)] active:scale-95 flex items-center justify-center gap-2"
+      >
+        <Download size={15} /> Download Port
+      </button>
+    </div>
+  </motion.article>
+);
+
+// --- Main Application Component ---
 export default function App() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
-  const [floatingAdVisible, setFloatingAdVisible] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [stats, setStats] = useState<UserStats>({ points: 250, level: 2, badges: [] });
+  const [selectedGameForModal, setSelectedGameForModal] = useState<Game | null>(null);
+  const [isTrustModalOpen, setIsTrustModalOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const observerTarget = useRef<HTMLDivElement>(null);
 
   const filteredGames = useMemo(() => {
-    return games.filter((game) => {
-      const matchesSearch =
-        game.title.toLowerCase().includes(search.toLowerCase()) ||
-        game.category.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory =
-        category === 'All' ||
-        (category === 'Low MB' && game.size.includes('MB')) ||
-        (category === '60FPS Verified' && game.badge.includes('60 FPS')) ||
-        game.category === category;
-
+    return GAMES.filter(g => {
+      const matchesSearch = g.name.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = category === 'All' || g.category === category;
       return matchesSearch && matchesCategory;
     });
   }, [search, category]);
 
-  const gridItems = useMemo(() => {
-    const items: Array<{ type: 'game'; game: Game } | { type: 'ad'; id: string }> = [];
+  const handleOpenDownloadFlow = (game: Game) => {
+    setSelectedGameForModal(game);
+    setIsTrustModalOpen(true);
+  };
 
-    filteredGames.forEach((game, index) => {
-      items.push({ type: 'game', game });
-      if ((index + 1) % 2 === 0) {
-        items.push({ type: 'ad', id: `monetag-native-${index + 1}` });
-      }
-    });
+  const handleConfirmDirectDownload = () => {
+    setStats(prev => ({ ...prev, points: prev.points + 100 }));
+    window.open(DIRECT_LINK, '_blank');
+    setIsTrustModalOpen(false);
+  };
 
-    return items;
-  }, [filteredGames]);
+  const completeChallenge = (id: string) => {
+    if (completedChallenges.includes(id)) return;
+    setCompletedChallenges(prev => [...prev, id]);
+    setStats(prev => ({ ...prev, points: prev.points + 50 }));
+  };
+
+  // Infinite Scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount(prev => prev + 6);
+        }
+      },
+      { threshold: 1.0 }
+    );
+    if (observerTarget.current) observer.observe(observerTarget.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#090d17] pb-24 text-white antialiased">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0b0e14]/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-5">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 via-violet-500 to-cyan-400 shadow-[0_0_22px_rgba(168,85,247,0.55)]">
-              <span className="font-display text-xl font-bold leading-none">VG</span>
-            </div>
-            <div>
-              <p className="font-display text-xl uppercase tracking-[0.12em] text-white">Viral</p>
-              <p className="-mt-1 text-[10px] uppercase tracking-[0.28em] text-slate-400">Games Hub</p>
-            </div>
-          </div>
+    <div className={`min-h-screen pb-32 ${!isDarkMode ? 'bg-gray-100 text-black' : 'bg-[#0A0D14] text-white'} font-['Inter'] selection:bg-purple-500 selection:text-white`}>
+      
+      {/* 🔴 Background Monetag Scripts 🔴 */}
+      <GlobalAds />
 
-          <div className="flex items-center gap-2 rounded-full border border-gray-700 bg-gray-900 px-3 py-1.5">
-            <span className="text-sm text-yellow-400">🏆</span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-white">25 PTS</span>
+      {/* --- Header --- */}
+      <header className="p-5 sm:p-6 text-center relative max-w-5xl mx-auto pt-6">
+        <button 
+          onClick={() => setIsDarkMode(!isDarkMode)}
+          className="absolute top-6 right-6 p-3 bg-purple-500/10 border border-purple-500/30 text-purple-400 rounded-full hover:scale-110 transition-transform"
+        >
+          {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+
+        <h1 className="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-500 font-oswald tracking-tight drop-shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+          VIRAL GAMES HUB
+        </h1>
+        <p className="text-xs sm:text-sm text-gray-400 font-medium max-w-md mx-auto mb-5 mt-1">
+          Rare Mobile Ports, APK Redeem Drops & 60FPS Verified Configs
+        </p>
+
+        {/* Gamification Bar */}
+        <div className="flex flex-wrap justify-center items-center gap-3">
+          <a 
+            href={DIRECT_LINK} 
+            target="_blank"
+            rel="noreferrer"
+            className="bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-2 rounded-xl flex items-center gap-2 font-black text-xs uppercase tracking-widest shadow-md hover:scale-105 transition-transform"
+          >
+            <TrendingUp size={15} /> Free Rewards 💰
+          </a>
+          <div className="bg-[#131720] border border-gray-800 px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs font-black text-white">
+            <Trophy className="text-yellow-400" size={16} />
+            <span>{stats.points} PTS (LVL {stats.level})</span>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 pt-5 sm:px-5">
-        {/* Hero Section */}
-        <section className="mb-6 overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-purple-900/20 via-slate-900 to-cyan-900/20 p-6 shadow-[0_0_40px_rgba(168,85,247,0.12)]">
-          <div className="mb-6 flex items-start justify-between gap-4">
-            <div>
-              <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.3em] text-cyan-300">⚡ Daily drops</p>
-              <h1 className="font-display text-5xl uppercase leading-tight text-white">
-                Rare ports <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-400">for your device</span>
-              </h1>
+      <main className="max-w-6xl mx-auto px-4 relative">
+        
+        {/* ========================================================= */}
+        {/* 1. TOP SECTION: IMMEDIATE SEARCH & PORTS CATALOG (PRIMARY) */}
+        {/* ========================================================= */}
+        <section className="mt-2 mb-8">
+          
+          {/* Top Banner Ad */}
+          <div className="mb-6 max-w-4xl mx-auto">
+            <MonetagAd zoneId="10512785" className="h-[80px] sm:h-[90px] w-full" label="Featured Partner" />
+          </div>
+
+          {/* Search & Category Pills */}
+          <div className="mb-8 space-y-4">
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-purple-400 transition-colors" size={20} />
+              <input 
+                type="text" 
+                placeholder="Search rare ports, GTA V, Black Myth, 60FPS mods..." 
+                className="w-full pl-12 pr-4 py-3.5 bg-[#131720] border-2 border-gray-800 rounded-2xl focus:border-purple-500 outline-none text-white transition-all shadow-sm text-sm"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             </div>
-            <span className="flex-shrink-0 rounded-full border border-cyan-400/50 bg-cyan-400/15 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-cyan-300 shadow-[0_0_15px_rgba(34,211,238,0.3)]">
-              🔴 LIVE
-            </span>
-          </div>
-
-          <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-500/10 to-cyan-500/10 p-4 backdrop-blur-sm">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">📦 High-priority pack</p>
-            <div className="mt-3 flex items-center justify-between gap-4">
-              <div>
-                <p className="text-base font-black text-white">GTA V Mobile Ultra HD</p>
-                <p className="text-[11px] text-cyan-300/80">Exclusive beta access</p>
-              </div>
-              <button className="flex-shrink-0 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 px-5 py-2.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-[0_0_20px_rgba(168,85,247,0.5)] hover:shadow-[0_0_30px_rgba(34,211,238,0.6)] transition">
-                🔓 Unlock
-              </button>
+            
+            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+              {['All', 'Racing', 'Action', 'Low MB', 'Adventure', 'Simulation'].map((cat, idx) => (
+                <button 
+                  key={`cat-btn-${cat}-${idx}`}
+                  onClick={() => setCategory(cat)}
+                  className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap ${category === cat ? 'bg-gradient-to-r from-purple-600 to-purple-500 text-white shadow-md shadow-purple-500/30' : 'bg-[#131720] text-gray-400 border border-gray-800 hover:bg-gray-800'}`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
-        </section>
 
-        {/* Search & Categories */}
-        <section className="mb-6">
-          <div className="relative mb-4">
-            <input
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search rare ports..."
-              className="w-full rounded-xl border border-purple-500/30 bg-slate-900 py-3 pl-4 pr-11 text-white placeholder-slate-400 outline-none transition focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20"
-            />
-            <span className="absolute right-3 top-3.5 text-lg text-slate-400">🔍</span>
-          </div>
-
-          <div className="hide-scrollbar flex gap-2 overflow-x-auto pb-2">
-            {categories.map((item) => (
-              <button
-                key={item}
-                type="button"
-                onClick={() => setCategory(item)}
-                className={`shrink-0 rounded-full border px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] transition ${
-                  category === item
-                    ? 'border-purple-500/70 bg-purple-500/25 text-purple-200 shadow-[0_0_15px_rgba(168,85,247,0.4)]'
-                    : 'border-white/10 bg-white/5 text-slate-300 hover:border-white/20 hover:bg-white/10'
-                }`}
-              >
-                {item}
-              </button>
+          {/* Game Catalog Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredGames.slice(0, visibleCount).map((game, idx) => (
+              <React.Fragment key={`game-${game.id}`}>
+                <GameCard 
+                  game={game} 
+                  onDownload={() => handleOpenDownloadFlow(game)}
+                />
+                {/* Blended In-Feed Native Ad Unit */}
+                {(idx + 1) % 4 === 0 && (
+                  <MonetagAd zoneId="10481725" className="min-h-[360px]" label="Sponsored Partner" />
+                )}
+              </React.Fragment>
             ))}
           </div>
+
+          {visibleCount < filteredGames.length && (
+            <div ref={observerTarget} className="h-14 flex items-center justify-center mt-6">
+              <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
         </section>
 
-        {/* Quests & Leaderboard Grid */}
-        <section className="mb-8 grid gap-4 lg:grid-cols-2">
+        {/* ========================================================= */}
+        {/* 2. BOTTOM SECTION: QUESTS & LEADERBOARDS (SECONDARY)       */}
+        {/* ========================================================= */}
+        <div className="border-t border-gray-800/80 pt-10 space-y-12">
+          
           {/* Daily Quests */}
-          <div className="rounded-[1.8rem] border border-cyan-500/25 bg-gradient-to-br from-cyan-500/10 to-slate-900 p-5">
-            <div className="mb-4 flex items-center justify-between">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-cyan-300">⚡ Quest board</p>
-                <h2 className="font-display text-2xl uppercase text-white">Daily Quests</h2>
-              </div>
-              <span className="rounded-full border border-cyan-400/40 bg-cyan-400/15 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-cyan-300">
-                +225 XP
-              </span>
+          <section>
+            <div className="flex items-center gap-2 mb-4">
+              <Zap size={20} className="text-cyan-400" />
+              <h2 className="text-xl font-black text-white font-oswald tracking-wide">DAILY REWARD QUESTS</h2>
             </div>
-
-            <div className="space-y-3">
-              {quests.map((quest) => (
-                <div key={quest.title} className="group flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-3 hover:bg-white/8 hover:border-cyan-400/30 transition">
-                  <div>
-                    <p className="text-sm font-bold text-white">{quest.title}</p>
-                    <p className="text-[10px] text-slate-400">{quest.detail}</p>
-                  </div>
-                  <button className={`flex-shrink-0 rounded-lg bg-gradient-to-r ${quest.accent} px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] text-white hover:scale-105 transition`}>
-                    {quest.cta}
-                  </button>
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {DAILY_CHALLENGES.map((challenge) => (
+                <DailyChallengeCard
+                  key={`dc-${challenge.id}`}
+                  challenge={challenge}
+                  isCompleted={completedChallenges.includes(challenge.id)}
+                  onComplete={() => completeChallenge(challenge.id)}
+                />
               ))}
             </div>
-          </div>
+          </section>
 
           {/* Leaderboard */}
-          <div className="rounded-[1.8rem] border border-orange-500/25 bg-gradient-to-br from-orange-500/10 to-slate-900 p-5">
-            <div className="mb-4 flex items-center justify-between">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.25em] text-orange-300">🏆 Top rank</p>
-                <h2 className="font-display text-2xl uppercase text-white">Leaderboard</h2>
-              </div>
-              <span className="rounded-full border border-orange-400/40 bg-orange-500/15 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.18em] text-orange-300">
-                #12
-              </span>
+          <section className="bg-[#131720] border border-gray-800 p-6 rounded-3xl">
+            <div className="flex items-center gap-2 mb-4">
+              <Trophy size={20} className="text-yellow-400" />
+              <h2 className="text-xl font-black text-white font-oswald tracking-wide">TOP GAMERS LEADERBOARD</h2>
             </div>
-
             <div className="space-y-2">
-              {leaderboard.map((entry) => (
-                <div key={entry.rank} className="flex items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 hover:bg-white/8 transition">
-                  <div className="flex items-center gap-3 flex-1">
-                    <span className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${entry.tone} font-black text-sm text-slate-900`}>
-                      {entry.rank}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-white">{entry.name}</p>
-                      <p className="text-[10px] text-slate-400">{entry.xp}</p>
-                    </div>
-                  </div>
-                  <span className={`text-[10px] font-black uppercase tracking-[0.16em] ${entry.text}`}>{entry.level}</span>
-                </div>
+              {LEADERBOARD.slice(0, 4).map((entry) => (
+                <LeaderboardRow key={`lb-${entry.rank}`} entry={entry} />
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* Games Grid with Ad Slots */}
-        <section className="mb-8">
-          <div className="mb-5 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Flame className="h-6 w-6 text-orange-400 animate-bounce" />
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-orange-300">Trending</p>
-                <h2 className="font-display text-3xl uppercase text-white">Hot Ports</h2>
-              </div>
-            </div>
-            <button className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-200 hover:bg-white/10 transition">
-              View All
-            </button>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {gridItems.map((item, index) => {
-              if (item.type === 'ad') {
-                return (
-                  <div
-                    key={`${item.id}-${index}`}
-                    className="relative overflow-hidden rounded-[2rem] border-2 border-purple-500/40 bg-gradient-to-br from-purple-600/20 via-slate-900/40 to-cyan-600/20 p-4 shadow-[0_0_30px_rgba(168,85,247,0.25)] hover:shadow-[0_0_40px_rgba(168,85,247,0.35)] transition"
-                  >
-                    <span className="absolute right-4 top-4 z-10 inline-flex items-center gap-1 rounded-full bg-yellow-500 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-black shadow-[0_0_12px_rgba(234,179,8,0.5)]">
-                      🎁 AD
-                    </span>
-                    <div id={item.id} className="min-h-[320px] w-full rounded-xl border border-white/5 bg-gradient-to-b from-white/5 to-transparent flex items-center justify-center text-center">
-                      <p className="text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Ad Slot Here</p>
-                    </div>
-                  </div>
-                );
-              }
-
-              const game = item.game;
-              return (
-                <article
-                  key={game.id}
-                  className="group relative overflow-hidden rounded-[2rem] border-2 border-white/10 bg-gradient-to-b from-slate-800/50 to-slate-900/80 transition duration-300 hover:border-purple-500/50 hover:shadow-[0_0_40px_rgba(168,85,247,0.25)]"
-                >
-                  {/* Image & Badge Layer */}
-                  <div className="relative h-52 overflow-hidden bg-slate-800">
-                    <img src={game.image} alt={game.title} className="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-70" />
-
-                    {/* Badges Top-Left & Top-Right */}
-                    <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-cyan-400/50 bg-slate-900/85 px-2.5 py-1.5 backdrop-blur-sm">
-                      <span className="text-lg">{game.badge.split(' ')[0]}</span>
-                      <span className="text-[9px] font-black uppercase tracking-[0.16em] text-cyan-200">{game.badge.split(' ').slice(1).join(' ')}</span>
-                    </div>
-
-                    <span className="absolute right-3 top-3 rounded-full border border-white/20 bg-slate-900/80 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.16em] text-slate-300 backdrop-blur-sm">
-                      {game.size}
-                    </span>
-
-                    {/* Rating Badge */}
-                    <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-yellow-400/40 bg-slate-900/90 px-2.5 py-1 backdrop-blur-sm">
-                      <Star size={12} className="fill-yellow-400 text-yellow-400" />
-                      <span className="text-[10px] font-bold text-yellow-300">{game.rating}</span>
-                    </div>
-                  </div>
-
-                  {/* Content Layer */}
-                  <div className="p-5">
-                    <div className="mb-3 flex items-start justify-between gap-2">
-                      <h3 className="font-display text-xl uppercase leading-tight text-white group-hover:text-purple-300 transition">{game.title}</h3>
-                    </div>
-
-                    {/* Meta Info */}
-                    <div className="mb-4 flex items-center justify-between text-[10px] text-slate-400 font-bold uppercase tracking-[0.14em]">
-                      <span>{game.category}</span>
-                      <span>Android 11+</span>
-                    </div>
-
-                    {/* Review Snippet */}
-                    <div className="mb-4 rounded-lg border border-white/10 bg-white/5 p-3 backdrop-blur-sm">
-                      <p className="text-[8px] font-black uppercase tracking-[0.18em] text-purple-300 mb-1.5">⭐ Top Review</p>
-                      <p className="text-[10px] text-slate-300 italic leading-snug line-clamp-2">"Best mobile port ever! Graphics are incredible."</p>
-                      <p className="text-[8px] text-cyan-300 font-bold mt-1.5">— @GamerPro99</p>
-                    </div>
-
-                    {/* CTA Button */}
-                    <button
-                      type="button"
-                      className="w-full rounded-xl bg-gradient-to-r from-purple-600 via-violet-600 to-cyan-600 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] transition active:scale-95"
-                    >
-                      <span className="flex items-center justify-center gap-2">
-                        <Download size={14} /> Get Port
-                      </span>
-                    </button>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </section>
+          </section>
+        </div>
       </main>
 
-      {floatingAdVisible && (
-        <div className="fixed bottom-[84px] left-1/2 z-40 w-[92%] max-w-md -translate-x-1/2 rounded-[1.5rem] border border-gray-700 bg-[#0b0e14]/90 p-2 shadow-[0_0_30px_rgba(34,211,238,0.14)] backdrop-blur-xl">
-          <button
-            type="button"
-            onClick={() => setFloatingAdVisible(false)}
-            className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-slate-900 text-sm font-bold text-white transition hover:border-red-400/60 hover:text-red-300"
-          >
-            ✕
-          </button>
-          <div id="monetag-bottom-banner" className="h-[60px] w-full rounded-2xl border border-white/10 bg-gradient-to-r from-purple-500/10 via-cyan-500/10 to-orange-500/10" />
-        </div>
+      {/* --- Sticky Bottom App Bar --- */}
+      <nav className="fixed bottom-0 w-full bg-[#0A0D14]/95 backdrop-blur-xl border-t border-gray-800 z-50 h-16 flex justify-around items-center px-4 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex flex-col items-center gap-1 text-purple-400">
+          <Gamepad2 size={20} /><span className="text-[9px] font-bold tracking-widest">PORTS</span>
+        </button>
+        <button onClick={() => window.open(DIRECT_LINK, '_blank')} className="flex flex-col items-center gap-1 text-gray-500 hover:text-cyan-400 transition-colors">
+          <Trophy size={20} /><span className="text-[9px] font-bold tracking-widest">REWARDS</span>
+        </button>
+        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-400 transition-colors">
+          <Search size={20} /><span className="text-[9px] font-bold tracking-widest">SEARCH</span>
+        </button>
+      </nav>
+
+      {/* --- Trust-Builder Scanner Modal (Opens on Get Port click) --- */}
+      {selectedGameForModal && (
+        <DeviceTrustModal 
+          game={selectedGameForModal}
+          isOpen={isTrustModalOpen}
+          onClose={() => setIsTrustModalOpen(false)}
+          onConfirmDownload={handleConfirmDirectDownload}
+        />
       )}
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-[#090d17]/95 backdrop-blur-2xl">
-        <div className="mx-auto grid max-w-5xl grid-cols-3 px-4 py-2.5 sm:px-6">
-          <button type="button" className="flex flex-col items-center justify-center gap-1 rounded-2xl bg-purple-500/10 py-2 text-violet-200">
-            <Sparkles className="h-5 w-5" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.12em]">Games</span>
-          </button>
-
-          <button type="button" className="flex flex-col items-center justify-center gap-1 rounded-2xl py-2 text-slate-300 transition hover:bg-white/5 hover:text-white">
-            <Search className="h-5 w-5" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.12em]">Search</span>
-          </button>
-
-          <button type="button" className="flex flex-col items-center justify-center gap-1 rounded-2xl py-2 text-slate-300 transition hover:bg-white/5 hover:text-white">
-            <ShieldCheck className="h-5 w-5" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.12em]">AI Scan</span>
-          </button>
-        </div>
-      </nav>
     </div>
   );
 }
+
+// Sub-components for Daily Challenge Card and Leaderboard Row
+const DailyChallengeCard: React.FC<{ challenge: any; isCompleted: boolean; onComplete: () => void }> = ({ challenge, isCompleted, onComplete }) => (
+  <div 
+    className="bg-[#131720] border border-purple-500/20 rounded-2xl p-4 cursor-pointer hover:border-purple-500/60 transition-all"
+    onClick={onComplete}
+  >
+    <div className="flex items-start justify-between mb-2">
+      <span className="text-2xl">{challenge.icon}</span>
+      <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${isCompleted ? 'bg-green-500/20 text-green-400' : 'bg-purple-500/20 text-purple-400'}`}>
+        {isCompleted ? '✓ DONE' : `+${challenge.reward} PTS`}
+      </span>
+    </div>
+    <h4 className="text-sm font-bold text-white mb-0.5">{challenge.title}</h4>
+    <p className="text-xs text-gray-400 mb-2.5">{challenge.description}</p>
+    <div className="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden">
+      <div className="bg-gradient-to-r from-purple-500 to-cyan-400 h-full rounded-full transition-all" style={{ width: `${isCompleted ? 100 : 30}%` }} />
+    </div>
+  </div>
+);
+
+const LeaderboardRow: React.FC<{ entry: any }> = ({ entry }) => (
+  <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+    <div className="flex items-center gap-3">
+      <div className={`w-7 h-7 rounded-full flex items-center justify-center font-black text-xs ${
+        entry.rank === 1 ? 'bg-yellow-500/20 text-yellow-300' :
+        entry.rank === 2 ? 'bg-gray-400/20 text-gray-300' :
+        entry.rank === 3 ? 'bg-orange-500/20 text-orange-300' :
+        'bg-purple-500/20 text-purple-300'
+      }`}>
+        {entry.rank}
+      </div>
+      <div>
+        <p className="text-sm font-bold text-white">{entry.username}</p>
+        <p className="text-[10px] text-gray-400">Level {entry.level}</p>
+      </div>
+    </div>
+    <div className="flex items-center gap-2">
+      <span className="text-base">{entry.badge}</span>
+      <span className="text-xs font-black text-purple-400">{entry.points.toLocaleString()} PTS</span>
+    </div>
+  </div>
+);
