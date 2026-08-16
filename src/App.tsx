@@ -19,6 +19,26 @@ const MONETIZATION_LINKS = [
   'https://otieu.com/4/10446433'
 ];
 
+const trackEvent = (event: string, payload: Record<string, string | number | boolean> = {}) => {
+  const eventData = {
+    event,
+    timestamp: Date.now(),
+    ...payload,
+  };
+
+  try {
+    const existing = JSON.parse(localStorage.getItem('vgh_events') || '[]');
+    existing.push(eventData);
+    localStorage.setItem('vgh_events', JSON.stringify(existing.slice(-25)));
+  } catch {
+    // Ignore localStorage errors in private mode or restricted browsers
+  }
+
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('vgh_event', { detail: eventData }));
+  }
+};
+
 const getRandomDirectLink = () =>
   MONETIZATION_LINKS[Math.floor(Math.random() * MONETIZATION_LINKS.length)] || DIRECT_LINK;
 
@@ -614,6 +634,7 @@ export default function App() {
 
   const handleSelectGame = (game: Game) => {
     triggerHaptic(30);
+    trackEvent('game_selected', { game_id: game.id, game_name: game.name });
     setSelectedGame(game);
     setPage('scanner');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -621,6 +642,7 @@ export default function App() {
 
   const handleDirectLink = () => {
     const link = getRandomDirectLink();
+    trackEvent('direct_link_click', { link, source: sessionStorage.getItem('traffic_source') || 'direct' });
     window.open(link, '_blank');
     return link;
   };
@@ -643,9 +665,11 @@ export default function App() {
       }
 
       setStats(prev => ({ ...prev, points: prev.points + 50 }));
+      trackEvent('share_game', { game_id: game.id, game_name: game.name });
       setToast('Copied to Clipboard (+50 PTS)');
       triggerHaptic([25, 35, 25]);
     } catch {
+      trackEvent('share_game_failed', { game_id: game.id, game_name: game.name });
       setToast('Share link ready to copy');
     }
 
@@ -704,6 +728,7 @@ export default function App() {
             href={DIRECT_LINK} 
             target="_blank"
             rel="noreferrer"
+            onClick={() => trackEvent('header_reward_click', { source: sessionStorage.getItem('traffic_source') || 'direct' })}
             className="bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-2 rounded-xl flex items-center gap-2 font-black text-xs uppercase tracking-widest shadow-md hover:scale-105 transition-transform"
           >
             <TrendingUp size={15} /> Free Rewards 💰
@@ -919,7 +944,7 @@ export default function App() {
         <button onClick={() => { triggerHaptic(20); setPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex flex-col items-center gap-1 text-purple-400">
           <Gamepad2 size={20} /><span className="text-[9px] font-bold tracking-widest">PORTS</span>
         </button>
-        <button onClick={() => { triggerHaptic(20); window.open(DIRECT_LINK, '_blank'); }} className="flex flex-col items-center gap-1 text-gray-500 hover:text-cyan-400 transition-colors">
+        <button onClick={() => { triggerHaptic(20); handleDirectLink(); }} className="flex flex-col items-center gap-1 text-gray-500 hover:text-cyan-400 transition-colors">
           <Trophy size={20} /><span className="text-[9px] font-bold tracking-widest">REWARDS</span>
         </button>
         <button onClick={() => { triggerHaptic(20); setPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-400 transition-colors">
