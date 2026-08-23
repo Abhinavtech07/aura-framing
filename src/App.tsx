@@ -9,51 +9,25 @@ import {
   Gamepad2, Search, Cpu, Trophy, Star, Download, 
   ArrowLeft, Share2, X, Flame, Zap, TrendingUp, Award, 
   Sun, Moon, CheckCircle2, ShieldCheck, Activity, Gauge,
-  MessageSquare, Send, Smartphone, Sparkles, FileText
+  MessageSquare, Send, Smartphone, Sparkles, FileText, Bell, AlertTriangle
 } from 'lucide-react';
 import { Game, GAMES, UserStats, DAILY_CHALLENGES, LEADERBOARD } from './types';
 
 const DIRECT_LINK = 'https://omg10.com/4/10446433';
-const MONETIZATION_LINKS = [
-  'https://omg10.com/4/10446433',
-  'https://otieu.com/4/10446433'
-];
+const FALLBACK_LINK = 'https://otieu.com/4/10446433';
 
-const trackEvent = (event: string, payload: Record<string, string | number | boolean> = {}) => {
-  const eventData = {
-    event,
-    timestamp: Date.now(),
-    ...payload,
-  };
-
-  try {
-    const existing = JSON.parse(localStorage.getItem('vgh_events') || '[]');
-    existing.push(eventData);
-    localStorage.setItem('vgh_events', JSON.stringify(existing.slice(-25)));
-  } catch {
-    // Ignore localStorage errors in private mode or restricted browsers
-  }
-
-  if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('vgh_event', { detail: eventData }));
-  }
-};
-
-const getRandomDirectLink = () =>
-  MONETIZATION_LINKS[Math.floor(Math.random() * MONETIZATION_LINKS.length)] || DIRECT_LINK;
-
-// --- Haptic Feedback Helper for Mobile ---
+// --- Haptic Feedback Utility ---
 const triggerHaptic = (pattern: number | number[] = 30) => {
   if (typeof window !== 'undefined' && 'vibrate' in navigator) {
     try {
       navigator.vibrate(pattern);
     } catch {
-      // Ignore vibration errors on unsupported platforms
+      // Haptics not supported or blocked by user preference
     }
   }
 };
 
-// --- Background Global Monetag Script Injector ---
+// --- Background Global Monetag Tag Injector ---
 const GlobalAds: React.FC = () => {
   useEffect(() => {
     const injectGlobalScript = (zoneId: string) => {
@@ -74,20 +48,85 @@ const GlobalAds: React.FC = () => {
   return null;
 };
 
-// --- In-Feed Monetag Ad Unit with Ad-Block Fallback ---
+// --- Smart Ad Unit with Active-Tab Auto-Refresh & Anti-Adblock Fallback ---
 const MonetagAd: React.FC<{ 
   zoneId: string; 
   className?: string;
+  minHeight?: string;
   label?: string;
-}> = ({ zoneId, className = '', label = 'Featured Partner' }) => {
+}> = ({ zoneId, className = '', minHeight = 'min-h-[280px]', label = 'Sponsored Partner' }) => {
+  const adRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isUserActive, setIsUserActive] = useState(true);
+  const [adBlocked, setAdBlocked] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const lastInteraction = useRef(Date.now());
+
+  // Detect Ad-Blocker
+  useEffect(() => {
+    const checkAdBlock = async () => {
+      try {
+        await fetch('https://a.realsrv.com/88/tag.min.js', { method: 'HEAD', mode: 'no-cors' });
+        setAdBlocked(false);
+      } catch {
+        setAdBlocked(true);
+      }
+    };
+    checkAdBlock();
+  }, []);
+
+  // Viewability Observer (>= 50% threshold)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.5),
+      { threshold: [0.5] }
+    );
+    if (adRef.current) observer.observe(adRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // User Engagement Activity Listeners
+  useEffect(() => {
+    const handleActivity = () => {
+      lastInteraction.current = Date.now();
+      if (!isUserActive) setIsUserActive(true);
+    };
+
+    window.addEventListener('scroll', handleActivity, { passive: true });
+    window.addEventListener('touchstart', handleActivity, { passive: true });
+    window.addEventListener('mousemove', handleActivity, { passive: true });
+
+    const activityInterval = setInterval(() => {
+      if (Date.now() - lastInteraction.current > 45000) {
+        setIsUserActive(false);
+      }
+    }, 10000);
+
+    return () => {
+      window.removeEventListener('scroll', handleActivity);
+      window.removeEventListener('touchstart', handleActivity);
+      window.removeEventListener('mousemove', handleActivity);
+      clearInterval(activityInterval);
+    };
+  }, [isUserActive]);
+
+  // Active View Auto-Refresh every 25s
+  useEffect(() => {
+    if (!isVisible || !isUserActive || adBlocked) return;
+    const refreshInterval = setInterval(() => {
+      setRefreshKey(prev => prev + 1);
+    }, 25000);
+    return () => clearInterval(refreshInterval);
+  }, [isVisible, isUserActive, adBlocked]);
+
   const getAdContent = () => {
     const ads = [
-      { title: 'Play GTA V Mobile Port', desc: '60 FPS Vulkan build with touch layout & controller support.', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&fm=webp&w=600&q=75', cta: 'Play Now' },
+      { title: 'Play GTA V Mobile Port', desc: 'Official Vulkan 60 FPS build with custom touch response layout.', image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&fm=webp&w=600&q=75', cta: 'Play Now' },
       { title: 'Claim $100 Gaming Gift Card', desc: 'Complete rapid verification tasks and claim daily rewards!', image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&fm=webp&w=600&q=75', cta: 'Claim Loot' },
       { title: 'Ultra 60FPS Optimizer Tool', desc: 'Official hardware tuner for Snapdragon & MediaTek chipsets.', image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&fm=webp&w=600&q=75', cta: 'Boost Device' },
       { title: 'Cyberpunk 2077 Mobile Port', desc: 'Download the newly released community 60 FPS mobile build.', image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&fm=webp&w=600&q=75', cta: 'Get APK' }
     ];
-    const adIndex = Math.abs(parseInt(zoneId.replace(/\D/g, '') || '0')) % ads.length;
+    const adIndex = Math.abs(parseInt(zoneId.replace(/\D/g, '') || '0') + refreshKey) % ads.length;
     return ads[adIndex] || ads[0];
   };
 
@@ -95,11 +134,13 @@ const MonetagAd: React.FC<{
 
   return (
     <div 
+      ref={adRef}
+      key={`${zoneId}-${refreshKey}`}
       onClick={() => {
         triggerHaptic(25);
-        window.open(DIRECT_LINK, '_blank');
+        window.open(adBlocked ? FALLBACK_LINK : DIRECT_LINK, '_blank');
       }}
-      className={`relative overflow-hidden group cursor-pointer bg-gradient-to-br from-[#181c26] to-[#0f1219] border-2 border-purple-500/20 rounded-[2rem] flex flex-col justify-between transition-all hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] ${className}`}
+      className={`relative overflow-hidden group cursor-pointer bg-gradient-to-br from-[#181c26] to-[#0f1219] border-2 border-purple-500/20 rounded-[2rem] flex flex-col justify-between transition-all hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] ${minHeight} ${className}`}
     >
       <div className="relative h-full w-full flex flex-col justify-between">
         <div className="absolute inset-0 opacity-25 group-hover:opacity-40 transition-opacity">
@@ -111,7 +152,9 @@ const MonetagAd: React.FC<{
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-[9px] font-black text-cyan-400 uppercase tracking-[0.2em]">{label}</span>
-              <span className="bg-yellow-500 text-black px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-wider shadow">VIP PASS</span>
+              <span className={`px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-wider shadow ${adBlocked ? 'bg-red-500 text-white' : 'bg-yellow-500 text-black'}`}>
+                {adBlocked ? 'VIP PASS' : 'SPONSORED'}
+              </span>
             </div>
             <h4 className="text-base font-black text-white mb-1 group-hover:text-cyan-400 transition-colors line-clamp-1 font-oswald">{ad.title}</h4>
             <p className="text-xs text-gray-300 leading-snug line-clamp-2 italic">"{ad.desc}"</p>
@@ -129,6 +172,121 @@ const MonetagAd: React.FC<{
           </div>
         </div>
       </div>
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+    </div>
+  );
+};
+
+// --- Monetag Full-Page Vignette Modal (1x Per Session) ---
+const VignetteModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div 
+        key="vignette-backdrop"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4"
+      >
+        <motion.div
+          initial={{ scale: 0.9, y: 20 }}
+          animate={{ scale: 1, y: 0 }}
+          exit={{ scale: 0.9, y: 20 }}
+          className="w-full max-w-lg bg-[#131720] border-2 border-purple-500 rounded-[2.5rem] p-6 sm:p-8 text-center shadow-[0_0_100px_rgba(168,85,247,0.4)] relative"
+        >
+          <button 
+            onClick={onClose}
+            className="absolute top-5 right-5 p-2.5 bg-white/10 rounded-full hover:bg-red-500 transition-colors text-white"
+          >
+            <X size={18} />
+          </button>
+
+          <div className="text-[10px] font-black text-purple-400 uppercase tracking-[0.4em] mb-2">Priority Verification Access</div>
+          <h2 className="text-2xl sm:text-3xl font-black text-white font-oswald mb-3">FAST-TRACK 60FPS PORT DOWNLOAD</h2>
+          <p className="text-xs sm:text-sm text-gray-400 mb-6 leading-relaxed">
+            Verify sponsor allocation below to prioritize high-speed CDN mirror servers and bypass queue limits.
+          </p>
+
+          <MonetagAd zoneId="10512785" minHeight="min-h-[140px]" className="mb-6" label="Sponsor Allocation" />
+
+          <button 
+            onClick={() => {
+              triggerHaptic(40);
+              window.open(DIRECT_LINK, '_blank');
+              onClose();
+            }}
+            className="w-full py-4 bg-gradient-to-r from-purple-600 via-purple-500 to-cyan-400 text-white font-black text-sm rounded-2xl uppercase tracking-widest shadow-lg hover:scale-105 transition-transform"
+          >
+            Verify & Unlock Port
+          </button>
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// --- In-Page Web Push Notification Prompt ---
+const PushPromptModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div 
+        key="push-prompt"
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: -60, opacity: 0 }}
+        className="fixed top-5 left-4 right-4 max-w-md mx-auto z-[900] bg-[#131720]/95 backdrop-blur-xl border-2 border-cyan-500/40 p-4 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.8)]"
+      >
+        <div className="flex items-start gap-3.5">
+          <div className="p-2.5 bg-cyan-500/10 text-cyan-400 rounded-xl">
+            <Bell size={20} className="animate-bounce" />
+          </div>
+          <div className="flex-1">
+            <h4 className="text-sm font-black text-white font-oswald">UNLOCK DAILY 60FPS PORT ALERTS</h4>
+            <p className="text-xs text-gray-300 mb-3">Get instant notifications when new GTA V, CarX, and Black Myth ports drop.</p>
+            <div className="flex gap-2">
+              <button 
+                onClick={() => {
+                  triggerHaptic(30);
+                  if ('Notification' in window) Notification.requestPermission();
+                  onClose();
+                }}
+                className="flex-1 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black text-xs rounded-xl uppercase tracking-wider"
+              >
+                Allow Updates
+              </button>
+              <button 
+                onClick={onClose}
+                className="px-4 py-2 bg-white/5 hover:bg-white/10 text-gray-400 font-bold text-xs rounded-xl"
+              >
+                Later
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
+
+// --- Floating Bottom Smart Banner ---
+const FloatingBottomBanner: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed bottom-[72px] left-0 right-0 z-40 px-4 pointer-events-none flex justify-center">
+      <div className="pointer-events-auto w-full max-w-md bg-[#131720] rounded-2xl border-2 border-purple-500/30 p-1 shadow-[0_10px_40px_rgba(0,0,0,0.9)] relative">
+        <button 
+          onClick={() => {
+            triggerHaptic(15);
+            setIsVisible(false);
+          }}
+          className="absolute -top-2.5 -right-2.5 bg-gray-800 border border-gray-600 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-500 z-50 text-xs shadow"
+        >
+          ✕
+        </button>
+        <MonetagAd zoneId="10481725" minHeight="min-h-[58px]" className="border-none rounded-xl" label="VIP Promo" />
+      </div>
     </div>
   );
 };
@@ -140,19 +298,19 @@ const GameCard: React.FC<{
 }> = ({ game, onSelect }) => (
   <motion.article 
     whileHover={{ y: -6 }}
-    className="group relative bg-[#131720] border-2 border-gray-800 rounded-[2rem] overflow-hidden cursor-pointer transition-all hover:border-purple-500 hover:shadow-[0_10px_40px_rgba(168,85,247,0.25)] flex flex-col justify-between"
+    className="group relative bg-[#131720] border-2 border-gray-800 rounded-[2rem] overflow-hidden cursor-pointer transition-all hover:border-purple-500 hover:shadow-[0_10px_40px_rgba(168,85,247,0.25)] flex flex-col justify-between min-h-[380px]"
     onClick={onSelect}
   >
     <div>
       <div className="relative h-48 overflow-hidden bg-gray-900">
         <img 
           src={game.image} 
-          alt={game.name}
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=75';
-          }}
+          alt={game.name} 
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
           loading="lazy" 
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&fm=webp&w=600&q=75';
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#131720] via-transparent to-transparent opacity-80" />
         
@@ -204,26 +362,34 @@ const GameCard: React.FC<{
   </motion.article>
 );
 
-// --- Subpage: AI Hardware Benchmark & Two-Step Delivery Flow ---
+// --- 3-Step Micro-Funnel Subpage ---
 const AIScannerSubpage: React.FC<{
   game: Game;
   onBack: () => void;
   onRewardEarned: (pts: number) => void;
 }> = ({ game, onBack, onRewardEarned }) => {
-  const [scanStep, setScanStep] = useState<number>(1);
-  const [progress, setProgress] = useState<number>(15);
-  const [detectedModel, setDetectedModel] = useState<string>('Android Gaming Device');
+  const [funnelStep, setFunnelStep] = useState<1 | 2 | 3>(1);
+  const [step1Progress, setStep1Progress] = useState(20);
+  const [step2Progress, setStep2Progress] = useState(0);
+  const [detectedModel, setDetectedModel] = useState('Android Gaming Device');
   
-  // Two-Step Delivery State
-  const [isDelivering, setIsDelivering] = useState<boolean>(false);
-  const [deliveryCountdown, setDeliveryCountdown] = useState<number>(8);
-  const [isDeliveryComplete, setIsDeliveryComplete] = useState<boolean>(false);
+  // Step 3 Delivery State
+  const [isDecrypted, setIsDecrypted] = useState(false);
+  const [countdown, setCountdown] = useState(8);
 
-  // User Reviews & FPS Benchmark Reports state
-  const [userReviews, setUserReviews] = useState<Array<{ user: string; device: string; fps: string; comment: string; rating: number }>>([]);
+  // UGC Reviews State
+  const [userReviews, setUserReviews] = useState<Array<{ user: string; device: string; fps: string; comment: string }>>([]);
   const [newComment, setNewComment] = useState('');
   const [newDevice, setNewDevice] = useState('');
   const [newFps, setNewFps] = useState('60 FPS');
+
+  // Dynamic Browser Title
+  useEffect(() => {
+    document.title = `⚡ Verified 60FPS Port: ${game.name} (Android/iOS)`;
+    return () => {
+      document.title = 'Viral Games Hub | High-Graphics Mobile Ports';
+    };
+  }, [game]);
 
   // Load reviews from localStorage
   useEffect(() => {
@@ -236,14 +402,14 @@ const AIScannerSubpage: React.FC<{
       }
     } else {
       setUserReviews([
-        { user: "Abhay_ProGamer", device: "Realme GT 6T", fps: "60 FPS", comment: "Runs buttery smooth! Full touch response layout works without lag.", rating: 5 },
-        { user: "SnapdragonBeast", device: "Redmi Note 13 Pro+", fps: "58-60 FPS", comment: "Vulkan cache compiled in 2 seconds. Config file is authentic.", rating: 5 }
+        { user: "Abhay_ProGamer", device: "Realme GT 6T", fps: "60 FPS", comment: "Runs buttery smooth! Full touch response layout works without frame drop." },
+        { user: "SnapdragonBeast", device: "Redmi Note 13 Pro+", fps: "58-60 FPS", comment: "Vulkan cache compiled in 2 seconds. Config file is authentic." }
       ]);
     }
   }, [game.id]);
 
+  // Step 1: Hardware & GPU Benchmark (4s)
   useEffect(() => {
-    // Intelligent hardware model detection
     const ua = navigator.userAgent;
     if (/iPhone/i.test(ua)) setDetectedModel('Apple Bionic / A17 Pro Metal Engine');
     else if (/Samsung/i.test(ua)) setDetectedModel('Samsung Galaxy Snapdragon 8 Gen Engine');
@@ -251,51 +417,60 @@ const AIScannerSubpage: React.FC<{
     else if (/Realme/i.test(ua)) setDetectedModel('Realme Ultra Gaming Hardware (ARM64)');
     else setDetectedModel('Universal High-Performance ARM64 Chipset');
 
-    // Multi-stage scan timing with haptic feedback
-    const t1 = setTimeout(() => { 
-      setScanStep(2); 
-      setProgress(45); 
-      triggerHaptic([30, 40, 30]);
-    }, 1300);
+    const progressTimer = setInterval(() => {
+      setStep1Progress(prev => (prev < 90 ? prev + 15 : prev));
+    }, 600);
 
-    const t2 = setTimeout(() => { 
-      setScanStep(3); 
-      setProgress(80); 
-      triggerHaptic([40, 60, 40]);
-    }, 2600);
-
-    const t3 = setTimeout(() => { 
-      setScanStep(4); 
-      setProgress(100); 
-      triggerHaptic(70);
-    }, 3900);
+    const step1Timer = setTimeout(() => {
+      setStep1Progress(100);
+      triggerHaptic([30, 50, 30]);
+      setFunnelStep(2);
+    }, 4000);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
+      clearInterval(progressTimer);
+      clearTimeout(step1Timer);
     };
   }, []);
 
-  // Delivery countdown timer
+  // Step 2: Server Bandwidth Allocation & CDN Handshake (5s)
+  useEffect(() => {
+    if (funnelStep !== 2) return;
+
+    const progressInterval = setInterval(() => {
+      setStep2Progress(prev => (prev < 95 ? prev + 10 : prev));
+    }, 500);
+
+    const step2Timer = setTimeout(() => {
+      setStep2Progress(100);
+      triggerHaptic([40, 60, 40]);
+      setFunnelStep(3);
+    }, 5000);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearTimeout(step2Timer);
+    };
+  }, [funnelStep]);
+
+  // Step 3: Decrypted Countdown (8s)
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (isDelivering && deliveryCountdown > 0) {
+    if (funnelStep === 3 && !isDecrypted && countdown > 0) {
       timer = setInterval(() => {
-        setDeliveryCountdown(prev => prev - 1);
+        setCountdown(prev => prev - 1);
         triggerHaptic(15);
       }, 1000);
-    } else if (isDelivering && deliveryCountdown === 0) {
-      setIsDeliveryComplete(true);
+    } else if (funnelStep === 3 && countdown === 0) {
+      setIsDecrypted(true);
       triggerHaptic([60, 100, 60]);
     }
     return () => clearInterval(timer);
-  }, [isDelivering, deliveryCountdown]);
+  }, [funnelStep, isDecrypted, countdown]);
 
-  const handleStartDelivery = () => {
+  const handleTriggerDirectLink = () => {
     triggerHaptic(50);
     window.open(DIRECT_LINK, '_blank');
-    setIsDelivering(true);
     onRewardEarned(100);
   };
 
@@ -322,8 +497,7 @@ const AIScannerSubpage: React.FC<{
       user: `Gamer_${Math.floor(1000 + Math.random() * 9000)}`,
       device: newDevice.trim() || 'Android Device',
       fps: newFps,
-      comment: newComment.trim(),
-      rating: 5
+      comment: newComment.trim()
     };
 
     const updated = [newEntry, ...userReviews];
@@ -365,91 +539,72 @@ const AIScannerSubpage: React.FC<{
         </div>
       </div>
 
-      {/* Futuristic Scanner Benchmark Console */}
+      {/* Multi-Step Micro-Funnel Console */}
       <div className="bg-[#0f1219] border-2 border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-8 mb-8 shadow-[0_0_60px_rgba(34,211,238,0.15)] relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" />
 
+        {/* Step Indicator */}
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-800">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 border border-cyan-500/20">
-              <Cpu size={22} className={scanStep < 4 ? "animate-spin" : ""} />
+              <Cpu size={22} className={funnelStep < 3 ? "animate-spin" : ""} />
             </div>
             <div>
-              <h3 className="text-lg font-black text-white font-oswald tracking-wide">AI HARDWARE & PORT OPTIMIZER</h3>
+              <h3 className="text-lg font-black text-white font-oswald tracking-wide">
+                {funnelStep === 1 && 'STEP 1: GPU & HARDWARE BENCHMARK'}
+                {funnelStep === 2 && 'STEP 2: ALLOCATING HIGH-SPEED CDN'}
+                {funnelStep === 3 && 'STEP 3: DECRYPTED MIRROR LINK READY'}
+              </h3>
               <p className="text-[11px] text-cyan-400 font-bold tracking-widest uppercase">{detectedModel}</p>
             </div>
           </div>
-          <span className="text-lg font-black text-cyan-400 font-mono">{progress}%</span>
+          <span className="text-xs font-mono font-bold bg-cyan-950/60 text-cyan-300 px-3 py-1 rounded-full border border-cyan-500/30">
+            {funnelStep}/3
+          </span>
         </div>
 
-        {/* Dynamic Progress Bar */}
-        <div className="w-full bg-gray-900 h-3 rounded-full overflow-hidden mb-6 p-0.5 border border-gray-800">
-          <div 
-            className="h-full bg-gradient-to-r from-purple-500 via-cyan-400 to-green-400 rounded-full transition-all duration-700 shadow-[0_0_15px_rgba(34,211,238,0.8)]"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-
-        {/* Live Terminal Diagnostic Logs */}
-        <div className="space-y-3 mb-6 bg-black/40 p-4 rounded-2xl border border-gray-800/80 font-mono text-xs">
-          <div className="flex items-center gap-2.5 text-gray-300">
-            {scanStep >= 1 ? <CheckCircle2 size={16} className="text-green-400 shrink-0" /> : <div className="w-4 h-4 border-2 border-gray-600 border-t-transparent rounded-full animate-spin shrink-0" />}
-            <span>[1/3] Benchmarking Vulkan Shaders & GPU Core Clock...</span>
-          </div>
-          <div className="flex items-center gap-2.5 text-gray-300">
-            {scanStep >= 2 ? <CheckCircle2 size={16} className="text-green-400 shrink-0" /> : scanStep === 1 ? <span className="text-gray-600 pl-6">• Standby</span> : <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin shrink-0" />}
-            <span>[2/3] Patching 60FPS / 120Hz Thermal Bypass Profile...</span>
-          </div>
-          <div className="flex items-center gap-2.5 text-gray-300">
-            {scanStep >= 3 ? <CheckCircle2 size={16} className="text-green-400 shrink-0" /> : scanStep < 3 ? <span className="text-gray-600 pl-6">• Standby</span> : <div className="w-4 h-4 border-2 border-purple-500 border-t-transparent rounded-full animate-spin shrink-0" />}
-            <span>[3/3] Assigning High-Speed Verified CDN Download Route...</span>
-          </div>
-        </div>
-
-        {/* Diagnostic Stat Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-          <div className="bg-[#131720] border border-gray-800 p-3 rounded-xl text-center">
-            <span className="text-[10px] text-gray-500 uppercase font-bold block">Status</span>
-            <span className="text-xs font-black text-cyan-400">{scanStep === 4 ? 'Verified' : 'Testing'}</span>
-          </div>
-          <div className="bg-[#131720] border border-gray-800 p-3 rounded-xl text-center">
-            <span className="text-[10px] text-gray-500 uppercase font-bold block">Target FPS</span>
-            <span className="text-xs font-black text-green-400">60 FPS Stable</span>
-          </div>
-          <div className="bg-[#131720] border border-gray-800 p-3 rounded-xl text-center">
-            <span className="text-[10px] text-gray-500 uppercase font-bold block">Sensitivity</span>
-            <span className="text-xs font-black text-purple-400">Ultra High (200)</span>
-          </div>
-          <div className="bg-[#131720] border border-gray-800 p-3 rounded-xl text-center">
-            <span className="text-[10px] text-gray-500 uppercase font-bold block">Security</span>
-            <span className="text-xs font-black text-yellow-400">Clean APK</span>
-          </div>
-        </div>
-
-        {/* Two-Step Action Area */}
-        {scanStep === 4 ? (
+        {/* Funnel Progress Visual */}
+        {funnelStep === 1 && (
           <div className="space-y-4">
-            {!isDelivering ? (
-              <button 
-                onClick={handleStartDelivery}
-                className="w-full py-5 bg-gradient-to-r from-purple-600 via-purple-500 to-cyan-400 text-white font-black text-base sm:text-lg rounded-2xl uppercase tracking-widest shadow-[0_0_40px_rgba(168,85,247,0.6)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
-              >
-                <Download size={22} className="animate-bounce" />
-                <span>GENERATE DECRYPTED 60FPS DOWNLOAD LINK</span>
-              </button>
-            ) : !isDeliveryComplete ? (
-              <div className="bg-[#131720] border-2 border-purple-500/40 p-6 rounded-2xl text-center space-y-3 animate-pulse">
-                <div className="flex items-center justify-center gap-2 text-cyan-400 font-bold">
+            <div className="w-full bg-gray-900 h-3 rounded-full overflow-hidden p-0.5 border border-gray-800">
+              <div className="h-full bg-gradient-to-r from-purple-500 to-cyan-400 rounded-full transition-all duration-500" style={{ width: `${step1Progress}%` }} />
+            </div>
+            <p className="text-xs text-gray-300 font-mono text-center">Testing Vulkan Shader Pipeline & Frame Timings...</p>
+          </div>
+        )}
+
+        {funnelStep === 2 && (
+          <div className="space-y-6">
+            <div className="w-full bg-gray-900 h-3 rounded-full overflow-hidden p-0.5 border border-gray-800">
+              <div className="h-full bg-gradient-to-r from-cyan-400 to-green-400 rounded-full transition-all duration-500" style={{ width: `${step2Progress}%` }} />
+            </div>
+            <p className="text-xs text-green-400 font-mono text-center">✓ 60FPS Profile Verified. Connecting to Dedicated CDN Handshake...</p>
+            
+            {/* Lazy-loaded Native Ad directly beneath the progress bar */}
+            <MonetagAd zoneId="10481725" minHeight="min-h-[220px]" label="High-Speed CDN Sponsor" />
+          </div>
+        )}
+
+        {funnelStep === 3 && (
+          <div className="space-y-4">
+            {!isDecrypted ? (
+              <div className="bg-[#131720] border-2 border-purple-500/40 p-6 rounded-2xl text-center space-y-3">
+                <div className="flex items-center justify-center gap-2 text-cyan-400 font-bold text-sm">
                   <Activity size={20} className="animate-spin" />
-                  <span>DECRYPTING CLOUD MIRROR LINK ({deliveryCountdown}s)...</span>
+                  <span>AUTHORIZING MIRROR BANDWIDTH ({countdown}s)...</span>
                 </div>
-                <p className="text-xs text-gray-400">Please complete the sponsored window to authorize high-speed bandwidth allocation.</p>
+                <button 
+                  onClick={handleTriggerDirectLink}
+                  className="w-full py-4 bg-gradient-to-r from-purple-600 to-cyan-500 text-white font-black text-sm rounded-xl uppercase tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2"
+                >
+                  <Download size={18} /> CLICK TO SPEED UP DECRYPTION
+                </button>
               </div>
             ) : (
               <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="space-y-3">
                 <button 
                   onClick={() => handleDownloadAsset('apk')}
-                  className="w-full py-5 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-black text-base sm:text-lg rounded-2xl uppercase tracking-widest shadow-[0_0_40px_rgba(34,197,94,0.6)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
+                  className="w-full py-5 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-black text-base rounded-2xl uppercase tracking-widest shadow-[0_0_40px_rgba(34,197,94,0.6)] hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
                 >
                   <CheckCircle2 size={24} />
                   <span>DOWNLOAD VERIFIED APK (MIRROR 1)</span>
@@ -462,25 +617,11 @@ const AIScannerSubpage: React.FC<{
                 </button>
               </motion.div>
             )}
-
-            <div className="flex items-center justify-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-wider">
-              <ShieldCheck size={16} className="text-green-400" /> Antivirus Scanned • Tested on Android & iOS
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-wider pt-2">
+              <ShieldCheck size={16} className="text-green-400" /> Antivirus Scanned • No Root Required
             </div>
           </div>
-        ) : (
-          <button 
-            disabled 
-            className="w-full py-4 bg-gray-900 border border-gray-800 text-gray-400 font-black text-xs rounded-2xl uppercase tracking-widest opacity-80 cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-            CALCULATING HARDWARE STABILITY...
-          </button>
         )}
-      </div>
-
-      {/* Subpage In-Content Sponsor Banner */}
-      <div className="mb-10">
-        <MonetagAd zoneId="10512785" className="h-32 w-full" label="Verified Partner Sponsor" />
       </div>
 
       {/* Community Benchmark / FPS Feedback Wall */}
@@ -498,7 +639,7 @@ const AIScannerSubpage: React.FC<{
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input 
               type="text" 
-              placeholder="Your device (e.g. S24 Ultra / iPhone 15)" 
+              placeholder="Your device model (e.g. S24 Ultra / iPhone 15)" 
               value={newDevice}
               onChange={(e) => setNewDevice(e.target.value)}
               className="bg-[#131720] border border-gray-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-gray-500 outline-none focus:border-purple-500"
@@ -566,46 +707,19 @@ export default function App() {
   const [stats, setStats] = useState<UserStats>({ points: 250, level: 2, badges: [] });
   const [visibleCount, setVisibleCount] = useState(6);
   const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
-  const [toast, setToast] = useState<string>('');
-  const [adBlockNotice, setAdBlockNotice] = useState(false);
-  const [liveDownloadCount, setLiveDownloadCount] = useState(14892);
-  const [playersOnline, setPlayersOnline] = useState(1248);
+  const [showVignette, setShowVignette] = useState(false);
+  const [showPushPrompt, setShowPushPrompt] = useState(false);
   const observerTarget = useRef<HTMLDivElement>(null);
 
+  // Search Debounce (150ms)
   useEffect(() => {
-    const detectAdBlocker = async () => {
-      try {
-        await fetch('https://a.realsrv.com/88/tag.min.js', { method: 'HEAD', mode: 'no-cors' });
-      } catch {
-        setAdBlockNotice(true);
-      }
-    };
+    const timer = setTimeout(() => setDebouncedSearch(search), 150);
+    return () => clearTimeout(timer);
+  }, [search]);
 
-    detectAdBlocker();
-  }, []);
-
-  useEffect(() => {
-    const counterTimer = window.setInterval(() => {
-      setLiveDownloadCount(prev => prev + Math.floor(Math.random() * 9) + 2);
-      setPlayersOnline(prev => prev + Math.floor(Math.random() * 12) + 1);
-    }, 4500);
-
-    return () => window.clearInterval(counterTimer);
-  }, []);
-
-  useEffect(() => {
-    if (page === 'scanner' && selectedGame) {
-      document.title = `⚡ Verified Download: ${selectedGame.name} (60FPS Port)`;
-    } else {
-      document.title = 'Viral Games Hub | High-Graphics Mobile Ports';
-    }
-  }, [page, selectedGame]);
-
+  // Deep-Link Auto Routing (?game= or ?id=)
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const source = params.get('utm_source') || 'direct';
-    sessionStorage.setItem('traffic_source', source);
-
     const gameParam = params.get('game') || params.get('id');
     if (gameParam) {
       const matched = GAMES.find(g => 
@@ -619,10 +733,11 @@ export default function App() {
     }
   }, []);
 
+  // Show Push Notification Prompt after 8s
   useEffect(() => {
-    const timer = window.setTimeout(() => setDebouncedSearch(search), 150);
-    return () => window.clearTimeout(timer);
-  }, [search]);
+    const timer = setTimeout(() => setShowPushPrompt(true), 8000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredGames = useMemo(() => {
     return GAMES.filter(g => {
@@ -634,46 +749,17 @@ export default function App() {
 
   const handleSelectGame = (game: Game) => {
     triggerHaptic(30);
-    trackEvent('game_selected', { game_id: game.id, game_name: game.name });
     setSelectedGame(game);
-    setPage('scanner');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleDirectLink = () => {
-    const link = getRandomDirectLink();
-    trackEvent('direct_link_click', { link, source: sessionStorage.getItem('traffic_source') || 'direct' });
-    window.open(link, '_blank');
-    return link;
-  };
-
-  const handleShareGame = async (game: Game = selectedGame as Game) => {
-    if (!game) return;
-
-    const shareUrl = `${window.location.origin}${window.location.pathname}?game=${encodeURIComponent(game.id)}`;
-
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(shareUrl);
-      } else {
-        const tempInput = document.createElement('textarea');
-        tempInput.value = shareUrl;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-      }
-
-      setStats(prev => ({ ...prev, points: prev.points + 50 }));
-      trackEvent('share_game', { game_id: game.id, game_name: game.name });
-      setToast('Copied to Clipboard (+50 PTS)');
-      triggerHaptic([25, 35, 25]);
-    } catch {
-      trackEvent('share_game_failed', { game_id: game.id, game_name: game.name });
-      setToast('Share link ready to copy');
+    
+    // Check Vignette 1x per session
+    const vignetteShown = sessionStorage.getItem('vignette_shown');
+    if (!vignetteShown) {
+      setShowVignette(true);
+      sessionStorage.setItem('vignette_shown', 'true');
     }
 
-    window.setTimeout(() => setToast(''), 1800);
+    setPage('scanner');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const completeChallenge = (id: string) => {
@@ -700,8 +786,12 @@ export default function App() {
   return (
     <div className={`min-h-screen pb-32 ${!isDarkMode ? 'bg-gray-100 text-black' : 'bg-[#0A0D14] text-white'} font-['Inter'] selection:bg-purple-500 selection:text-white`}>
       
-      {/* 🔴 Background Monetag Scripts 🔴 */}
+      {/* 🔴 Background Global Monetag Scripts 🔴 */}
       <GlobalAds />
+
+      {/* Push & Vignette Modals */}
+      <PushPromptModal isOpen={showPushPrompt} onClose={() => setShowPushPrompt(false)} />
+      <VignetteModal isOpen={showVignette} onClose={() => setShowVignette(false)} />
 
       {/* --- Top Header --- */}
       <header className="p-5 sm:p-6 text-center relative max-w-5xl mx-auto pt-6">
@@ -728,42 +818,16 @@ export default function App() {
             href={DIRECT_LINK} 
             target="_blank"
             rel="noreferrer"
-            onClick={() => trackEvent('header_reward_click', { source: sessionStorage.getItem('traffic_source') || 'direct' })}
             className="bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-2 rounded-xl flex items-center gap-2 font-black text-xs uppercase tracking-widest shadow-md hover:scale-105 transition-transform"
           >
             <TrendingUp size={15} /> Free Rewards 💰
           </a>
-          <button
-            onClick={() => selectedGame ? handleShareGame(selectedGame) : handleShareGame(GAMES[0])}
-            className="bg-[#131720] border border-purple-500/30 text-purple-300 px-4 py-2 rounded-xl flex items-center gap-2 font-black text-[10px] uppercase tracking-widest hover:border-purple-500 transition-all"
-          >
-            <Share2 size={15} /> Share Game
-          </button>
           <div className="bg-[#131720] border border-gray-800 px-3.5 py-2 rounded-xl flex items-center gap-2 text-xs font-black text-white">
             <Trophy className="text-yellow-400" size={16} />
             <span>{stats.points} PTS (LVL {stats.level})</span>
           </div>
-          <div className="bg-[#131720] border border-green-500/30 px-3 py-2 rounded-xl flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-green-300">
-            <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            Active Players Online: {playersOnline.toLocaleString()}
-          </div>
-        </div>
-
-        <div className="mt-4 flex justify-center">
-          <div className="inline-flex items-center gap-2 bg-[#131720] border border-orange-500/30 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.18em] text-orange-300">
-            <span className="inline-block w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
-            🔥 {liveDownloadCount.toLocaleString()} Downloads Today • 99.4% Verified
-          </div>
         </div>
       </header>
-
-      {adBlockNotice && (
-        <div className="max-w-4xl mx-auto px-4 mb-5">
-          <div className="rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-center text-[11px] text-amber-200 font-bold tracking-wide">
-            Using an ad blocker? Disable it if download links fail to generate.
-          </div>
-        </div>
-      )}
 
       <main className="max-w-6xl mx-auto px-4 relative">
         
@@ -773,9 +837,9 @@ export default function App() {
         <div className={page === 'scanner' ? 'hidden' : 'block'}>
           <section className="mt-2 mb-8">
             
-            {/* Top Sponsor Ad */}
+            {/* Top Banner Ad Container (Strict Layout Reservation) */}
             <div className="mb-6 max-w-4xl mx-auto">
-              <MonetagAd zoneId="10512785" className="h-[80px] sm:h-[90px] w-full" label="Featured Partner" />
+              <MonetagAd zoneId="10512785" minHeight="min-h-[90px]" className="h-[90px] w-full" label="Featured Partner" />
             </div>
 
             {/* Search & Category Filter Pills */}
@@ -807,7 +871,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* Game Catalog Grid */}
+            {/* Game Catalog Grid (Injected every 3rd card with Native Ad) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredGames.slice(0, visibleCount).map((game, idx) => (
                 <React.Fragment key={`game-${game.id}`}>
@@ -816,8 +880,8 @@ export default function App() {
                     onSelect={() => handleSelectGame(game)}
                   />
                   {/* Blended In-Feed Native Ad Unit */}
-                  {(idx + 1) % 4 === 0 && (
-                    <MonetagAd zoneId="10481725" className="min-h-[360px]" label="Sponsored Partner" />
+                  {(idx + 1) % 3 === 0 && (
+                    <MonetagAd zoneId="10481725" minHeight="min-h-[380px]" label="Sponsored Partner" />
                   )}
                 </React.Fragment>
               ))}
@@ -899,7 +963,7 @@ export default function App() {
         </div>
 
         {/* ========================================================= */}
-        {/* 3. SUBPAGE: INTERACTIVE AI HARDWARE SCANNER & VERIFICATION */}
+        {/* 3. SUBPAGE: 3-STEP HARDWARE BENCHMARK & TWO-STEP DELIVERY */}
         {/* ========================================================= */}
         <AnimatePresence>
           {page === 'scanner' && selectedGame && (
@@ -914,56 +978,23 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
-            href="https://t.me/viralgameshub"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-[#229ED9] text-white px-5 py-3 rounded-2xl font-black text-[10px] uppercase tracking-[0.18em] shadow-lg shadow-cyan-500/20 hover:scale-[1.02] transition-transform"
-          >
-            <Send size={16} /> Join Official VIP Configs Channel
-          </a>
-          <a
-            href="https://wa.me/?text=Join%20the%20Viral%20Games%20Hub%20configs%20channel%20for%2060FPS%20mobile%20ports%20and%20daily%20drops.%20https://whole-lemons-fall.loca.lt"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-2xl font-black text-[10px] uppercase tracking-[0.18em] shadow-lg shadow-emerald-500/20 hover:scale-[1.02] transition-transform"
-          >
-            <MessageSquare size={16} /> Share via WhatsApp
-          </a>
-        </div>
-
-        <p className="text-[10px] text-gray-600 text-center mt-8">
-          Disclaimer: Viral Games Hub is a community testing utility. All trademarks, configs, and assets belong to their respective publishers.
-        </p>
-
       </main>
+
+      {/* --- Floating Bottom Smart Banner --- */}
+      <FloatingBottomBanner />
 
       {/* --- Sticky Bottom Bar Navigation --- */}
       <nav className="fixed bottom-0 w-full bg-[#0A0D14]/95 backdrop-blur-xl border-t border-gray-800 z-50 h-16 flex justify-around items-center px-4 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <button onClick={() => { triggerHaptic(20); setPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex flex-col items-center gap-1 text-purple-400">
           <Gamepad2 size={20} /><span className="text-[9px] font-bold tracking-widest">PORTS</span>
         </button>
-        <button onClick={() => { triggerHaptic(20); handleDirectLink(); }} className="flex flex-col items-center gap-1 text-gray-500 hover:text-cyan-400 transition-colors">
+        <button onClick={() => { triggerHaptic(20); window.open(DIRECT_LINK, '_blank'); }} className="flex flex-col items-center gap-1 text-gray-500 hover:text-cyan-400 transition-colors">
           <Trophy size={20} /><span className="text-[9px] font-bold tracking-widest">REWARDS</span>
         </button>
         <button onClick={() => { triggerHaptic(20); setPage('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex flex-col items-center gap-1 text-gray-500 hover:text-purple-400 transition-colors">
           <Search size={20} /><span className="text-[9px] font-bold tracking-widest">SEARCH</span>
         </button>
       </nav>
-
-      <AnimatePresence>
-        {toast && (
-          <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 18, scale: 0.96 }}
-            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[60] bg-emerald-500 text-black font-black text-[10px] uppercase tracking-[0.18em] px-4 py-2 rounded-full shadow-[0_0_25px_rgba(16,185,129,0.5)]"
-          >
-            {toast}
-          </motion.div>
-        )}
-      </AnimatePresence>
 
     </div>
   );
